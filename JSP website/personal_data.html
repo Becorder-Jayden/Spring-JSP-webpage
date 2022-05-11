@@ -115,15 +115,24 @@
         
       <!-- 페이지 본문 내용 -->
       <div class="container" style="left:200px; width:100%;">
-        <div class="row">
-          <img src="imgs/main.jpg" alt="main-img"/>
-        </div>
-        <div class="row">
-          <!-- C. 이미지 배치시 사이즈 조절 필요-->
-          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
-          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
-          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
-        </div>
+
+        <section>
+          <h3>일일 기록 등록</h3>
+          <table>
+            <tr>
+              <!-- C. 사진 위치 클릭: 사진 업로드, 등록 버튼: 게시판 등록-->
+              <th rowspan="2"><input type="image"><br><button>인증사진 업로드</button></th> 
+              <th><input type="number" placeholder="현재 체중"></th>
+              <th><button>등록</button></th>
+            </tr>
+            <tr>
+              <td colspan="2"><textarea name="memo" id="memo" cols="30" rows="10" placeholder="운동/식단/기록 등"></textarea></td>
+            </tr>
+          </table>
+        </section>
+
+
+
       </div>
       </div>
     </div>
