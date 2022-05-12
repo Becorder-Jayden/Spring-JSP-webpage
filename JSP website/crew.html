@@ -14,7 +14,7 @@
     <link href="main.css" id="stylesheet" />
   </head>
   <body>
-    <div class="layout-container" style="max-width: 1280px">
+    <div class="layout-container" style="max-width: 1000px">
       <!-- 사이드 메뉴 바 -->
       <div
         class="side_menu"
@@ -114,12 +114,11 @@
           <a href="#" style="text-decoration: none">회원가입</a>
         </div>
       </div>
-      
+
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        class="page"
-        id="page"
+        id="index"
         style="
           position: relative;
           left: 200px;
@@ -127,71 +126,79 @@
           position: flex;
         "
       >
-
         <!-- 페이지 본문 내용 -->
-        <div class="container" style="left: 200px; width: 100%">
+        <div class="container" style="left: 200px; width: 90%">
           <div>
             <h1>크루 모집</h1>
           </div>
-          <section>
+
+          <div class="row">
             <h3>나의 운동 그룹</h3>
-            <div>
-              <button>크루 만들기</button>
-              <button>홍보</button>
-              <button>수정</button>
-              <button>삭제</button>
+            <div class="row">
+              <div class="container">
+                <button>크루 만들기</button>
+                <button>홍보</button>
+                <button>수정</button>
+                <button>삭제</button>
+              </div>
+              <table class="table">
+                <tr>
+                  <th>크루명</th>
+                  <th>크루 목표</th>
+                  <th>참여멤버</th>
+                  <th>정원</th>
+                </tr>
+                <tr>
+                  <td>말년을 건강하게</td>
+                  <td>youtube 다이어트 프로그램</td>
+                  <td>침착맨, 주펄, 기안84, 전무님</td>
+                  <td>4/4</td>
+                </tr>
+                <tr>
+                  <td>배성재의 텐</td>
+                  <td>sbs 라디오 진행 매주 몸무게 발표</td>
+                  <td>배성재, 침착맨, 윤태진</td>
+                  <td>3/4</td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    <a href="" style="text-decoration: none">+ 멤버 추가</a>
+                  </td>
+                </tr>
+              </table>
             </div>
-            <table border="1">
-              <tr>
-                <th>크루명</th>
-                <th>크루 목표</th>
-                <th>참여멤버</th>
-              </tr>
-              <tr>
-                <td>말년을 건강하게</td>
-                <td>건강한 말년 보내기</td>
-                <td>침착맨, 주펄, 기안84, 김풍</td>
-              </tr>
-              <tr>
-                <td>배성재의 텐</td>
-                <td>sbs 라디오 진행</td>
-                <td>배성재, 침착맨, 주펄</td>
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <a href="" style="text-decoration: none">+ 추가</a>
-                </td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </section>
-          <section>
+          </div>
+          <div class="row">
             <h3>팀원 모집 중인 그룹</h3>
-            <table>
-              <tr>
-                <th>번호</th>
-                <th>목표</th>
-                <th>기간</th>
-                <th>팀장</th>
-                <th>모집정원</th>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>전주시 이젠컴퓨터 학원</td>
-                <td>2022/05/01 ~ 2022/08/31</td>
-                <td>침착맨</td>
-                <td>3/5</td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>전주시 이젠컴퓨터 학원</td>
-                <td>2022/05/01 ~ 2022/08/31</td>
-                <td>침착맨</td>
-                <td>3/5</td>
-              </tr>
-            </table>
-          </section>
+            <div class="row">
+              <table class="table">
+                <tr>
+                  <th>번호</th>
+                  <th>크루명</th>
+                  <th>크루 목표</th>
+                  <th>참여멤버</th>
+                  <th>정원</th>
+                  <th>기간</th>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>이젠 컴퓨터 학원</td>
+                  <td>개발자 양성과정 마무리 때까지 2kg 빼기</td>
+                  <td>학생1, 학생2, 강사님1</td>
+                  <td>3/8</td>
+                  <td>2022/03/15 ~ 2022/08/31</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>롯데 슈퍼</td>
+                  <td>과자 안먹고 운동</td>
+                  <td>점장님, 알바생, 직원</td>
+                  <td>2/4</td>
+                  <td>2022/03/00 ~ 2022/10/31</td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

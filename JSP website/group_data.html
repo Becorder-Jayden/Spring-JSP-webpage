@@ -14,7 +14,7 @@
     <link href="main.css" id="stylesheet" />
   </head>
   <body>
-    <div class="layout-container" style="max-width: 1280px">
+    <div class="layout-container" style="max-width: 1000px">
       <!-- 사이드 메뉴 바 -->
       <div
         class="side_menu"
@@ -126,7 +126,7 @@
       >
 
         <!-- 페이지 본문 내용 -->
-        <div class="container" style="left: 200px; width: 100%">
+        <div class="container" style="left: 200px; width: 90%">
           <div>
             <h1>그룹 데이터</h1>
           </div>
@@ -204,12 +204,24 @@
 
           <div class="row">
             <h3>참여도 랭킹</h3>
-            <div>
-              다른 그룹과 비교한 성실도 티어
+            <div class="row">
+              <!-- C.다른 그룹과 비교한 성실도 티어 -->
+              <div class="col-sm-4">
+                <img src="/JSP website/imgs/representative_img.PNG" alt="" style="width:100%">
+              </div>
+              <!-- C.재미로 보는 랭킹 -->
+              <!-- Q.질문과 이름을 양 끝 배열해야 함  -->
+              <div class="col-sm-8">
+                <ul class="list-group-flush">
+                  <li class="list-group-item">고지가 눈앞에 있는 <strong>기안84</strong></li>
+                  <li class="list-group-item">한다면 한다! 끈질긴 <strong>전무님</strong></li>
+                  <li class="list-group-item">내가 이 구역의 고인물 <strong>침착맨</strong></li>
+                  <li class="list-group-item">AI 가라사대 아마도 부크루장? <strong>주펄</strong></li>
+                </ul>
+              </div>
             </div>
-            <div>
-              재미로 보는 랭링 ex) 가장 목표치에 근접한 사람, 가장 꾸준히 참여한 사람 등 
-            </div>
+          </div>
+
             
             <!-- C.공지글 배경색 다르게 설정 -->
             <div class="row">
@@ -222,40 +234,46 @@
                   <th scope="col">게시일</th>
                   <th scope="col">조회수</th>
                 </thead>
+                <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
                 <tbody>
                   <tr>
                     <td>1</th>
-                      <td>[공지] 안녕하세요 첫 게시글 입니다. (3)</td>
+                      <td>[공지] 안녕하세요 첫 공지글 입니다. (3)</td>
                       <td>침착맨</td>
-                      <td>5</td>
+                      <td>1달 전</td>
+                      <td>234</td>
                     </tr>
 
                   <tr>
                     <td>4</th>
                       <td>나 혼자 산다 (3)</td>
                       <td>기안84</td>
-                      <td>5</td>
+                      <td>10분 전</td>
+                      <td>123</td>
                     </tr>
 
                   <tr>
                     <td>3</th>
                       <td>옾카페 영업종료 안내 (2)</td>
                       <td>김풍</td>
-                      <td>5</td>
+                      <td>3시간 전</td>
+                      <td>14</td>
                     </tr>
 
                   <tr>
                     <td>2</th>
                       <td>나 주펄 전장점수 555점. 나같이 살지 마시오</td>
                       <td>주펄</td>
-                      <td>5</td>
+                      <td>2일 전</td>
+                      <td>11</td>
                     </tr>
 
                   <tr>
                     <td>1</th>
-                      <td>[공지] 안녕하세요 첫 게시글 입니다. (3)</td>
+                      <td>[공지] 안녕하세요 첫 공지글 입니다. (3)</td>
                       <td>침착맨</td>
-                      <td>5</td>
+                      <td>1달 전</td>
+                      <td>123</td>
                     </tr>
                 </tbody>
               </table>
@@ -264,16 +282,36 @@
             <div>
               <h3>그룹 통계 및 그래프</h3>
               <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
-              <img src="/imgs/delta_graph.png" alt="그룹 통계 그래프">
+              <!-- 1차 목표: 데이터 표 그리기, 2차 목표: 통계 그래프 그리기 -->
+              <!-- 데이터 표 그리기 -->
+              <div class="row">
+                <img src="imgs/delta_graph.png" alt="그룹 통계 그래프">
+              </div>
+              <div class="row col-sm-5">
+                <div class="list-group">
+                  <li class="list-group-item">종료일 까지 D-</li>
+                  <li class="list-group-item">시작일로부터</li>
+                  <li class="list-group-item">합산 감량 몸무게</li>
+                  <li class="list-group-item">크루원 몸무게 평균</li>
+                  <li class="list-group-item">시작일로부터</li>
+                </div>
+              </div>
             </div>
 
-            <div>
+            <div class="row col-sm-3">
               <h3>그룹 내 랭킹</h3>
-              <table border="1">
-                <tr>
-                  <td>theme</td><td>크루 이름</td>
-                </tr>
-              </table>
+              <!-- C.순위와 이름이 떨어지도록 설정 -->
+              <div class="list-group">
+                <div class="list-group-item">
+                  1 <span>기안84</span>
+                </div>
+                <div class="list-group-item">
+                  2 <span>전무님</span>
+                </div>
+                <div class="list-group-item">
+                  3 <span>주펄</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
