@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,150 +14,120 @@
     <link href="main.css" id="stylesheet" />
   </head>
   <body>
-    <div class="layout-container" style="max-width: 1280px">
-      <!-- 사이드 메뉴 바 -->
-      <div
-        class="side_menu"
-        id="menu"
-        style="
-          width: 200px;
-          height: 100%;
-          position: fixed;
-          background-color: lightgray;
-          text-align: center;
-        "
-      >
-        <!-- 페이지 로고 -->
-        <div class="logo">
-          <a href="index.html">
-            <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
-          </a>
-        </div>
+  <div class="layout-container" style="max-width: 1280px;">
 
-        <!-- 프로필 -->
-        <div class="profile_img">
-          <img
-            src="imgs/profile_ex.jpg"
-            alt="profile_img"
-            style="
-              height: 100px;
-              width: 100px;
-              border-radius: 50px;
-              margin-top: 50px;
-            "
-          />
-        </div>
-
-        <!-- 각오 -->
-        <div class="motto">
-          <p class="p p-sm-12">
-            OOO님<br />
-            n일 째 방문을 환영합니다.
-          </p>
-          <p class="p p-sm-12">어제보다 나은 오늘 ☆★</p>
-        </div>
-
-        <!-- 메뉴 -->
-        <ul
-          style="
-            list-style-type: none;
-            background-color: lightyellow;
-            text-align: center;
-            display: inline-flexbox;
-            position: relative;
-            text-align: left;
-            margin-top: 50px;
+    <!-- 사이드 메뉴 바 -->
+    <div
+    class="side_menu"
+    id="menu"
+    style="
+      width: 200px;
+      height: 100%;
+      position: fixed;
+      background-color: lightgray;
+      text-align: center;
+    "
+    >
+  <!-- 페이지 로고 -->
+  <div class="logo">
+    <a href="index.html">
+      <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
+    </a>
+  </div>
+  
+    <!-- 프로필 -->
+    <div class="profile_img">
+      <img
+      src="imgs/profile_ex.jpg"
+      alt="profile_img"
+      style="
+          height: 100px;
+          width: 100px;
+          border-radius: 50px;
+          margin-top: 50px;
           "
-        >
-          <div style="padding: 20px 0 20px 0">
-            <li>
-              <a href="personal_data.html" style="text-decoration: none"
-                >퍼스널 데이터</a
-              >
-            </li>
-          </div>
-          <div style="padding: 20px 0 20px 0">
-            <li>
-              <a href="group_data.html" style="text-decoration: none"
-                >그룹 데이터</a
-              >
-            </li>
-          </div>
-          <div style="padding: 20px 0 20px 0">
-            <li>
-              <a href="crew.html" style="text-decoration: none">크루 모집</a>
-            </li>
-          </div>
-          <div style="padding: 20px 0 20px 0">
-            <li>
-              <a href="bulletin_board.html" style="text-decoration: none"
-                >자유게시판</a
-              >
-            </li>
-          </div>
-          <div style="padding: 20px 0 20px 0">
-            <li>
-              <a href="faq.html" style="text-decoration: none">이용 문의</a>
-            </li>
-          </div>
-        </ul>
+      />
+    </div>
+    
+    <!-- 각오 -->
+    <div class="motto">
+      <!-- C. HTML교재 12-1 참고할 것  -->
+      <p class="p p-sm-12">OOO님<br> n일 째 방문을 환영합니다.</p>
+      <p class="p p-sm-12">어제보다 나은 오늘 ☆★</p>
+    </div>
+    
+    <!-- 메뉴 -->
+    <ul
+    style="
+        list-style-type: none;
+        background-color: lightyellow;
+        text-align: center;
+        display: inline-flexbox;
+        position: relative;
+        text-align: left;
+        margin-top: 50px;
+        "
+    >
+    <div style="padding: 20px 0 20px 0">
+      <li>
+        <a href="personal_data.html" style="text-decoration: none">퍼스널 데이터</a>
+      </li>
+    </div>
+    <div style="padding: 20px 0 20px 0">
+      <li>
+        <a href="group_data.html" style="text-decoration: none">그룹 데이터</a>
+      </li>
+    </div>
+    <div style="padding: 20px 0 20px 0">  
+      <li>
+        <a href="crew.html" style="text-decoration: none">크루 모집</a>
+      </li>
+    </div>
+      <div style="padding: 20px 0 20px 0">
+        <li>
+          <a href="bulletin_board.html" style="text-decoration: none">자유게시판</a>
+        </li>
       </div>
+      <div style="padding: 20px 0 20px 0">
+        <li>
+          <a href="faq.html" style="text-decoration: none">이용 문의</a>
+        </li>
+      </div>
+    </ul>
+    </div>
 
-      <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
-      <!-- 페이지 부분 -->
-      <div
-        class="page"
-        id="page"
-        style="
+    <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
+    <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
+    <div class="nav" style="justify-content: end;">
+      <div class="end" name="login"><a href="#" style="text-decoration:none;">로그인</a></div> &nbsp;&nbsp;
+      <div class="end" name="enroll"><a href="#" style="text-decoration:none;">회원가입</a></div>
+    </div>
+    
+    <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
+    <!-- 페이지 부분 -->
+    <div
+    id="index"
+    style="
           position: relative;
           left: 200px;
           background-color: none;
           position: flex;
-        "
-      >
-        <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
-        <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
-        <div class="nav" style="justify-content: end">
-          <div class="end" name="login">
-            <a href="#" style="text-decoration: none">로그인</a>
-          </div>
-          &nbsp;&nbsp;
-          <div class="end" name="enroll">
-            <a href="#" style="text-decoration: none">회원가입</a>
-          </div>
+          ">
+        
+      <!-- 페이지 본문 내용 -->
+      <div class="container" style="left:200px; width:100%;">
+        <div class="row">
+          <img src="imgs/main.jpg" alt="메인 이미지"/>
         </div>
-
-        <!-- 페이지 본문 내용 -->
-        <div class="container" style="left: 200px; width: 100%">
-          <div class="row">
-            <img src="imgs/main.jpg" alt="main-img" />
-          </div>
-          <div class="row">
-            <!-- C. 이미지 배치시 사이즈 조절 필요-->
-            <div class="col-sm-4">
-              <img
-                src="./imgs/main-part.jpg"
-                alt="main-part"
-                style="width: 100%"
-              />
-            </div>
-            <div class="col-sm-4">
-              <img
-                src="./imgs/main-part.jpg"
-                alt="main-part"
-                style="width: 100%"
-              />
-            </div>
-            <div class="col-sm-4">
-              <img
-                src="./imgs/main-part.jpg"
-                alt="main-part"
-                style="width: 100%"
-              />
-            </div>
-          </div>
+        <div class="row">
+          <!-- C. 이미지 배치시 사이즈 조절 필요-->
+          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
+          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
+          <div class="col-sm-4"><img src="./imgs/main-part.jpg" alt="main-part" style="width: 100%"></div>
         </div>
+      </div>
       </div>
     </div>
   </body>
-</html>
+  </html>
+  

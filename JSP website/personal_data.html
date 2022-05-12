@@ -96,12 +96,23 @@
           </div>
         </ul>
       </div>
+      
+      <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
+      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
+      <div class="nav" style="justify-content: end">
+        <div class="end" name="login">
+          <a href="#" style="text-decoration: none">로그인</a>
+        </div>
+        &nbsp;&nbsp;
+        <div class="end" name="enroll">
+          <a href="#" style="text-decoration: none">회원가입</a>
+        </div>
+      </div>
 
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        class="page"
-        id="page"
+        id="index"
         style="
           position: relative;
           left: 200px;
@@ -109,111 +120,88 @@
           position: flex;
         "
       >
-        <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
-        <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
-        <div class="nav" style="justify-content: end">
-          <div class="end" name="login">
-            <a href="#" style="text-decoration: none">로그인</a>
-          </div>
-          &nbsp;&nbsp;
-          <div class="end" name="enroll">
-            <a href="#" style="text-decoration: none">회원가입</a>
-          </div>
-        </div>
 
         <!-- 페이지 본문 내용 -->
-        <div class="container" style="left: 200px; width: 100%">
+        <div class="container" style="left: 200px; width: 90%">
+          <!-- 페이지 이름 -->
           <div>
             <h1>퍼스널 데이터</h1>
           </div>
-          <section>
+
+          <!-- 기록 등록 -->
+          <div class="row">
             <h3>일일 기록 등록</h3>
-            <table border="1" style="width: 80%">
-              <tr>
-                <!-- C. 사진 위치 클릭: 사진 업로드, 등록 버튼: 게시판 등록-->
-                <th rowspan="2">
-                  <input type="image" /><br /><button>인증사진 업로드</button>
-                </th>
-                <th><input type="number" placeholder="현재 체중" /></th>
-                <th><button>등록</button></th>
-              </trb>
-              <tr>
-                <td colspan="2">
-                  <textarea
-                    name="memo"
-                    id="memo"
-                    cols="30"
-                    rows="10"
-                    placeholder="운동/식단/기록 등"
-                  ></textarea>
-                </td>
-                <td></td>
-              </tr>
-            </table>
-          </section>
-          <section>
+            <div class="row">
+              <div class="col-sm-3"><input type="image" alt="인증사진 업로드"><button>사진 업로드</button></div>
+              <div class="col-sm-7">
+                <div class="row">
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input type="text" placeholder="현재 체중">
+                    </div>
+                    <div class="col-sm-3">
+                      <button>등록</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <textarea name="" id="" cols="30" rows="10" placeholder="운동/식단/기록 등"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 잔디형 그래프 -->
+          <div class="row">
             <h3>잔디 그래프</h3>
-            <!-- 이미지로 하드코딩 -->
-            <img
-              src="/imgs/grass_graph.PNG"
-              alt="잔디 그래프"
-              style="width: 100%"
-            />
-          </section>
-          <section>
+            <div class="row">
+              <!-- C.이미지 삽입으로 대체해야 함 -->
+              <img src="imgs/grass_graph.PNG" alt="잔디 그래프">
+            </div>
+          </div>
+          
+          <!-- 주간 기록 확인  -->
+          <div class="row">
             <h3>주간 기록</h3>
-            <table border="1">
-              <tr>
-                <td style="text-align: center">월</td>
-                <td style="text-align: center">화</td>
-                <td style="text-align: center">수</td>
-                <td style="text-align: center">목</td>
-                <td style="text-align: center">금</td>
-                <td style="text-align: center">토</td>
-                <td style="text-align: center">일</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-                <td>
-                  <img src="/imgs/scale.jpg" alt="" style="width: 180px" />
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-                <td style="text-align: center">OOO kg</td>
-              </tr>
-            </table>
-          </section>
-          <section>
+            <div class="row">
+              <table>
+                <tr>
+                  <th>요일</th>
+                  <th>월</th>
+                  <th>화</th>
+                  <th>수</th>
+                  <th>목</th>
+                  <th>금</th>
+                  <th>토</th>
+                  <th>일</th>
+                </tr>
+                <tr>
+                  <th>사진 등록</th>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                  <td><input type="image" alt=" "></td>
+                </tr>
+                <tr>
+                  <th>기록</th>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- 아래 편집 -->
+          <div class="row">
             <h3>체중 변화</h3>
-            <img
+            <div class="row">
+              <img
               src="/imgs/delta_graph.png"
               alt="체중 변화 그래프"
-              style="width: 80%"
-            />
-          </section>
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

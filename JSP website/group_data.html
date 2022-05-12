@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -101,11 +101,22 @@
         </ul>
       </div>
 
+      <!-- navbar, 모든 페이지 공통, 수정 x -->
+      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
+      <div class="nav" style="justify-content: end">
+        <div class="end" name="login">
+          <a href="#" style="text-decoration: none">로그인</a>
+        </div>
+        &nbsp;&nbsp;
+        <div class="end" name="enroll">
+          <a href="#" style="text-decoration: none">회원가입</a>
+        </div>
+      </div>
+
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        class="page"
-        id="page"
+        id="index"
         style="
           position: relative;
           left: 200px;
@@ -113,17 +124,6 @@
           position: flex;
         "
       >
-        <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
-        <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
-        <div class="nav" style="justify-content: end">
-          <div class="end" name="login">
-            <a href="#" style="text-decoration: none">로그인</a>
-          </div>
-          &nbsp;&nbsp;
-          <div class="end" name="enroll">
-            <a href="#" style="text-decoration: none">회원가입</a>
-          </div>
-        </div>
 
         <!-- 페이지 본문 내용 -->
         <div class="container" style="left: 200px; width: 100%">
@@ -131,117 +131,151 @@
             <h1>그룹 데이터</h1>
           </div>
 
-          <section>
-            <h3>크루 개요</h3>
-            <table border="1">
-              <tr>
-                <td>크루 목표</td><td>80kg 달성</td>
-              </tr>
-              <tr>
-                <td>크루원 목표</td>
-                <!-- C.자바 스크립트 사용, 5초마다 보여지는 글 회전 -->
-                <td>침 : 이정돈 껌이지 <br>펄 : 에이 설마 <br>풍 : 10만원 내기 콜?</td>
-              </tr>
-            </table>
-          </section>
-          <section>
-            <h3>00/00/00</h3>
-            <table border="1">
-              <tr>
-                <td>침</td>
-                <td>인증 완료</td>
-              </tr>
-              <tr>
-                <td>펄</td>
-                <td>인증 완료</td>
-              </tr>
-              <tr>
-                <td>풍</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>기</td>
-                <td></td>
-                <tr>
-                  <td colspan="2">+ 추가</td>
-                  <td></td>
-                </tr>
-                  </tr>
-            </table>
-          </section>
-          <section>
+          <div class="row">
+            <div class="col-sm-6">
+              <h3>크루 개요</h3>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p>크루 목표</p>
+                </div>
+                <div class="col-sm-9">
+                  <p>80kg 달성</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm 3">
+                  <p>각오 한마디</p>
+                </div>
+                <div class="col-sm-9">
+                  <div class="row">
+                    <!-- C. 5초마다 돌아가면서 나타날 수 있도록 함 -->
+                    <div class="col-sm-2">
+                      <p>침착맨</p>
+                    </div>
+                    <div class="col-sm-10">
+                      <p>이 정돈 껌이지</p>
+                    </div>
+                    <div class="col-sm-2">
+                      <p>주펄</p>
+                    </div>
+                    <div class="col-sm-10">
+                      <p>에이 설마</p>
+                    </div>
+                    <div class="col-sm-2">
+                      <p>김풍</p>
+                    </div>
+                    <div class="col-sm-10">
+                      <p>10만원 내기 정도는 해야겠지?</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <h3>2020/00/00</h3>
+              <div class="row">
+                <div class="col-sm-2">
+                  <p>침착맨</p>
+                </div>
+                <div class="col-sm-10">
+                  <p>인증 완료</p>
+                </div>
+                <div class="col-sm-2">
+                  <p>주펄</p>
+                </div>
+                <div class="col-sm-10">
+                  <p>인증 완료</p>
+                </div>
+                <div class="col-sm-2">
+                  <p>전무님</p>
+                </div>
+                <div class="col-sm-10">
+                  <p>인증 완료</p>
+                </div>
+                <div class="col-sm-2">
+                  <p>기안84</p>
+                </div>
+                <div class="col-sm-10">
+                  <p>인증 완료</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
             <h3>참여도 랭킹</h3>
-            <section>
+            <div>
               다른 그룹과 비교한 성실도 티어
-            </section>
-            <section>
+            </div>
+            <div>
               재미로 보는 랭링 ex) 가장 목표치에 근접한 사람, 가장 꾸준히 참여한 사람 등 
-            </section>
+            </div>
             
-            <section>
+            <!-- C.공지글 배경색 다르게 설정 -->
+            <div class="row">
               <h3>그룹 게시판</h3>
-              <table border="1">
-                <tr>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>게시일</th>
-                  <th>작성자</th>
-                  <th>조회수</th>
-                </tr>
-                <!-- C.공지글 배경색 다르게 설정 -->
-                <tr>
-                  <td><b>1</b></td>
-                  <td><b>[공지] 안녕하세요 첫 게시글 입니다.(3)</b></td>
-                  <td><b>22/5/11</b></td>
-                  <td><b>침착맨</b></td>
-                  <td><b>5</b></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>[New] 네 번째 게시글 입니다.(1)</td>
-                  <td>22/5/13</td>
-                  <td>기안81</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>세 번째 게시글 입니다.(2)</td>
-                  <td>22/5/13</td>
-                  <td>기안81</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>두 번째 게시글 입니다.(3)</td>
-                  <td>22/5/12</td>
-                  <td>주펄</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>[공지] 안녕하세요 첫 게시글 입니다.(3)</td>
-                  <td>22/5/11</td>
-                  <td>침착맨</td>
-                  <td>5</td>
-                </tr>
+              <table class="table">
+                <thead>
+                  <th scope="col">번호</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">작성자</th>
+                  <th scope="col">게시일</th>
+                  <th scope="col">조회수</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</th>
+                      <td>[공지] 안녕하세요 첫 게시글 입니다. (3)</td>
+                      <td>침착맨</td>
+                      <td>5</td>
+                    </tr>
+
+                  <tr>
+                    <td>4</th>
+                      <td>나 혼자 산다 (3)</td>
+                      <td>기안84</td>
+                      <td>5</td>
+                    </tr>
+
+                  <tr>
+                    <td>3</th>
+                      <td>옾카페 영업종료 안내 (2)</td>
+                      <td>김풍</td>
+                      <td>5</td>
+                    </tr>
+
+                  <tr>
+                    <td>2</th>
+                      <td>나 주펄 전장점수 555점. 나같이 살지 마시오</td>
+                      <td>주펄</td>
+                      <td>5</td>
+                    </tr>
+
+                  <tr>
+                    <td>1</th>
+                      <td>[공지] 안녕하세요 첫 게시글 입니다. (3)</td>
+                      <td>침착맨</td>
+                      <td>5</td>
+                    </tr>
+                </tbody>
               </table>
-            </section>
+            </div>
           
-            <section>
+            <div>
               <h3>그룹 통계 및 그래프</h3>
               <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
               <img src="/imgs/delta_graph.png" alt="그룹 통계 그래프">
-            </section>
+            </div>
 
-            <section>
+            <div>
               <h3>그룹 내 랭킹</h3>
               <table border="1">
                 <tr>
                   <td>theme</td><td>크루 이름</td>
                 </tr>
               </table>
-            </section>
-          </section>
+            </div>
+          </div>
         </div>
       </div>
     </div>
