@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     />
     <link href="main.css" id="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -134,10 +135,28 @@
             <h3>나의 운동 그룹</h3>
             <div class="row" style="margin: auto">
               <div class="container">
-                <button class="btn btn-primary" href="#">크루 만들기</button>
-                <button href="#">홍보</button>
-                <button href="#">수정</button>
-                <button href="#">삭제</button>
+                <!-- 모달 트리거 생성 -->
+                <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#crewMaker">크루 만들기</button>
+                
+                <!-- 모달 창 생성 -->
+                <div class="modal fade" id="crewMaker" tabindex="-1" aria-hidden="false">
+                  <div class="modal-header">
+                    <div class="modal-dialog">
+                      <div class="modal-header">
+                        <h5 class="modal-title">크루 만들기<h5>
+                      </div>
+                      <div class="modal-body">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                
+                <button href="#" class="btn btn-secondary">홍보</button>
+                <button href="#" class="btn btn-secondary">수정</button>
+                <button href="#" class="btn btn-danger">삭제</button>
               </div>
               <table class="table">
                 <tr>
@@ -155,13 +174,8 @@
                 <tr>
                   <td>배성재의 텐</td>
                   <td>sbs 라디오 진행 매주 몸무게 발표</td>
-                  <td>배성재, 침착맨, 윤태진</td>
+                  <td>배성재, 침착맨, 윤태진<a href="" style="text-decoration: none"> + 멤버 추가</a></td>
                   <td>3/4</td>
-                </tr>
-                <tr>
-                  <td colspan="4" style="text-align: center">
-                    <a href="" style="text-decoration: none">+ 멤버 추가</a>
-                  </td>
                 </tr>
               </table>
             </div>
@@ -171,28 +185,25 @@
             <div class="row" style="margin: auto">
               <table class="table">
                 <tr>
-                  <th>번호</th>
                   <th>크루명</th>
                   <th>크루 목표</th>
-                  <th>참여멤버</th>
                   <th>정원</th>
                   <th>기간</th>
+                  <th>비고</th>
                 </tr>
                 <tr>
-                  <td>2</td>
                   <td>이젠 컴퓨터 학원</td>
                   <td>개발자 양성과정 마무리 때까지 2kg 빼기</td>
-                  <td>학생1, 학생2, 강사님1</td>
                   <td>3/8</td>
                   <td>2022/03/15 ~ 2022/08/31</td>
+                  <td><a href="#" style="text-decoration: none;">보기</a></td>
                 </tr>
                 <tr>
-                  <td>1</td>
                   <td>롯데 슈퍼</td>
                   <td>과자 안먹고 운동</td>
-                  <td>점장님, 알바생, 직원</td>
                   <td>2/4</td>
                   <td>2022/03/00 ~ 2022/10/31</td>
+                  <td><a href="#" style="text-decoration: none;">보기</a></td>
                 </tr>
               </table>
             </div>
