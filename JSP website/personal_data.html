@@ -142,7 +142,7 @@
                 </div>
                 <div class="row">
                   <div class="form-floating col-sm-10">
-                    <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="운동/식단/기록 등" style="resize:none;"></textarea>
+                    <textarea name="" id="" cols="40" rows="10" class="form-control" placeholder="운동/식단/기록 등" style="resize:none;"></textarea>
                   </div>
                 </div>
               </div>
@@ -161,7 +161,7 @@
           <!-- 주간 기록 확인  -->
           <div class="row">
             <h3>주간 기록</h3>
-            <div class="row" style="margin:auto;">
+            <div class="row" style="margin:auto; text-align: center;">
               <table>
                 <tr>
                   <th>요일</th>
@@ -175,16 +175,23 @@
                 </tr>
                 <tr>
                   <th>사진 등록</th>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
-                  <td><input type="image" alt="등록" /></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
                 </tr>
                 <tr>
                   <th>기록</th>
+                  <td>70.2kg</td>
+                  <td>74.2kg</td>
+                  <td>70.9kg</td>
+                  <td>70.8kg</td>
+                  <td>70.6kg</td>
+                  <td>70.2kg</td>
+                  <td>70.4kg</td>
                 </tr>
               </table>
             </div>
@@ -192,11 +199,47 @@
 
           <!-- 아래 편집 -->
           <div class="row">
-            <h3>체중 변화</h3>
+            <h3>체중 변화 그래프</h3>
             <div class="row" style="margin:auto;">
-              <img src="/imgs/delta_graph.png" alt="체중 변화 그래프" />
+              <img src="/Back-end/JSP website/imgs/grass_graph.PNG" alt="체중 변화 그래프" />
             </div>
           </div>
+          <div class="row">
+            <h3>업로드 기록</h3>
+          </div>
+          <div class="row">
+            <table class="table" style="text-align: center;">
+              <tr>
+                <th>번호</th><th>날짜</th><th>기록</th><th>연속기록</th><th>상세보기</th>
+              </tr>
+              <!-- C.아코디언 기능에 따라 보기/접기 변환 -->
+              <tr>
+                <td>4</td><td>2022/5/5</td><td>70kg</td></td><td>1일차</td><td><a href="#" style="text-decoration:none;">접기</a></td>
+              </tr>
+              <tr>
+                <td colspan="2">사진 <img src="" alt=""></td><td colspan="2">메모 <p>메모 내용입니다</p></td><td></td>
+              </tr>
+              <tr>
+                <td>3</td><td>2022/5/3</td><td>70kg</td></td><td>3일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
+              </tr>
+              <tr>
+                <td>2</td><td>2022/5/2</td><td>70kg</td></td><td>2일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
+              </tr>
+              <tr>
+                <td>1</td><td>2022/5/1</td><td>70kg</td></td><td>1일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
+              </tr>
+            </table>
+            <div class="row text-center" style="font-size: 20px; margin:auto;">
+              <p>
+                <a href="" style="text-decoration: none"><</a>
+                <a href="" style="text-decoration: none">1</a>
+                <a href="" style="text-decoration: none">2</a>
+                <a href="" style="text-decoration: none">3</a>
+                <a href="" style="text-decoration: none">4</a>
+                <a href="" style="text-decoration: none">5</a>
+                <a href="" style="text-decoration: none">></a>
+              </p>
+            </div>
         </div>
       </div>
     </div>

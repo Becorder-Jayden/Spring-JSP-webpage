@@ -118,7 +118,15 @@
           <div>
             <h1>그룹 데이터</h1>
           </div>
-
+          <div class="row">
+            <h3>크루 선택</h3>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button>말년을 건강하게</button>
+              <button>배성재의 텐</button>
+            </div>
+          </div>
           <div class="row">
             <div class="col-sm-6">
               <h3>크루 개요</h3>
@@ -144,7 +152,7 @@
                           <button class="btn btn-close"></button>
                         </div>
                         <div class="modal-body">
-                            크루 목표 설정 
+                            크루 목표 
                           <div class="input-group">
                             <input type="text" class="form-control">
                           </div> 
@@ -245,7 +253,17 @@
               </div>
             </div>
             <div class="col-sm-6">
-              <h3>2020/00/00</h3>
+              <!-- 5/17 C. 오늘 날짜 입력: 자바스크립트 사용 --> <!-- 완료 -->
+                <h3>
+                  <script>
+                    date = new Date();
+                    year = date.getFullYear();
+                    month = date.getMonth() + 1;
+                    day = date.getDate();
+                    document.write(year+"/"+month+"/"+day);
+                  </script>
+                </h3>
+              <!-- 위 수정 중 -->
               <div class="row">
                 <div class="col-sm-2">
                   <p>침착맨</p>
@@ -280,7 +298,7 @@
             <div class="row" style="margin:auto;">
               <!-- C.다른 그룹과 비교한 성실도 티어 -->
               <div class="col-sm-4">
-                <img src="/JSP website/imgs/representative_img.PNG" alt="" style="width:100%">
+                <img src="/Back-end/JSP website/imgs/representative_img.PNG" alt="" style="width:100%">
               </div>
               <!-- C.재미로 보는 랭킹 -->
               <!-- Q.질문과 이름을 양 끝 배열해야 함  -->
@@ -314,7 +332,7 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <div class="modal-title" id="groupBoard">게시판 글쓰기</div>
+                      <div class="modal-title" id="groupBoard">그룹 게시판 글쓰기</div>
                       <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">

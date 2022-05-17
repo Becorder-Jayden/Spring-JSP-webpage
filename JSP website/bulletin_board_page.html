@@ -100,26 +100,100 @@
           <a href="enrollment.html" style="text-decoration: none">회원가입</a>
         </div>
       </div>
-
+      
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        class="page"
-        id="page"
-        style="
+      class="page"
+      id="page"
+      style="
           position: relative;
           left: 200px;
           background-color: none;
           position: flex;
         "
       >
-        <!-- 페이지 본문 내용 -->
-        <div class="container" style="left: 200px; width: 90%">
-          <div class="row">
-            <h1>자유게시판</h1>
-            <div class="container">
-              <div class="row" style="text-align: right;">
-                <div class="col-sm-11">
+      <!-- 페이지 본문 내용 -->
+      <div class="container" style="left: 200px; width: 90%">
+        <div class="row">
+          <h1>자유게시판</h1>
+          <div class="container">
+
+            <table class="table table-borderd" style="width:80%; margin:auto;">
+              <tr>
+                <tr>
+                  <th scope="row" class="col-sm-2">제목</th><td colspan="3">온라인 예절을 지켜주세요 (2)</td>
+                </tr>
+                <tr>
+                <th scope="row" class="col-sm-2">작성자</th><td>침착맨</td><th scope="row" class="col-sm-2">조회수</th><td>23</td>
+              </tr>
+              <tr>
+                <th>작성일</th><td colspan="3">2022/05/03</td>
+              </tr>
+              <tr>
+                <th>카테고리</th><td>공지</td>
+              </tr>
+                <td colspan="4" style="height:200px;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat aperiam molestiae distinctio sequi ducimus vel praesentium veniam, officiis inventore cum amet id dicta officia ex facere laboriosam enim magni tenetur?</td>
+              </tr>
+
+              <!-- 댓글 -->
+              <tr>
+                <th>게시자</th>
+                <th>내용</th>
+                <th colspan="2" style="width:10%"></th>
+              </tr>
+              <tr>
+                <td>
+                  기안84
+                </td>
+                <td colspan="2">
+                  크루장님이 안지키는데요
+                </td>
+                <td style="text-align: right;">
+                  <a href="#" style="text-decoration:none; text-align: right">댓글</a>
+                  <a href="#" style="text-decoration:none; text-align: right">수정</a>
+                  <a href="#" style="text-decoration:none; text-align: right">삭제</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  ㄴ침착맨
+                </td>
+                <td colspan="2">
+                  일름보는 신고합니다
+                </td>
+                <td style="text-align: right;">
+                  <a href="#" style="text-decoration:none; text-align: right">댓글</a>
+                  <a href="#" style="text-decoration:none; text-align: right">수정</a>
+                  <a href="#" style="text-decoration:none; text-align: right">삭제</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  OOO
+                </td>
+                <td colspan="2">
+                  <input type="text" placeholder="댓글을 입력하세요" style="width:100%">
+                </td>
+                <td style="text-align: right;">
+                  <button class="btn btn-light">댓글 남기기</button>
+                </td>
+              </tr>
+            </table>
+            <div class="row">
+              <div class="col" style="text-align: center;">
+                <button class="btn btn-success">좋아요</button>
+                <button class="btn btn-warning">싫어요</button>
+              </div>
+            </div>
+
+
+
+            
+
+        </div>
+            <div class="row" style="text-align: right;">
+              <div class="col-sm-11">
                   <!-- Q. 토글로 만들 수 있을까? --> <!-- A. 5/17 토글x 아코디언으로 가능 -->
                   <!-- 새 글 쓰기: 아코디언 트리거 -->
                   <div class="accordion" id="accordionParent">
@@ -220,8 +294,7 @@
                     <tr>
                         <td>2</td>
                         <td>공지</td>
-                        <!-- page 이동 예시  -->
-                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
+                        <td><a href="#" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
                         <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
                         <td>2022/05/03</td>
                       </a>
