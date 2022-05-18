@@ -122,30 +122,43 @@
                 </div> 
                 
                 <div class="container">
-                  <div class="row">
-                    <input type="text" placeholder="ID">
-                  </div>
-                  <div class="row">
-                    <input type="text" placeholder="Password">
-                  </div>
-                  <div class="row">
-                    <input type="text" placeholder="Password 확인">
-                  </div>
-                  <div class="row">
-                    <input type="text" placeholder="Email">
-                  </div>
-                  <div class="row">
-                    <input type="text" placeholder="이름 또는 닉네임">
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <input type="checkbox">남성
+                  <div class="input-group">
+                    <div class="row" style="margin: auto;">
+                      <input class="form-control" type="text" placeholder="ID">
                     </div>
-                    <div class="col-sm-4">
-                      <input type="checkbox">여성
+                    <div class="row" style="margin: auto;">
+                      <input class="form-control" type="text" placeholder="Password">
                     </div>
-                    <div class="col-sm-4">
-                      <input type="checkbox">비공개
+                    <div class="row" style="margin: auto;">
+                      <input class="form-control" type="text" placeholder="Password 확인">
+                    </div>
+                    <div class="row" style="margin: auto;">
+                      <input class="form-control" type="text" placeholder="Email">
+                    </div>
+                    <div class="row" style="margin: auto;">
+                      <input class="form-control" type="text" placeholder="이름 또는 닉네임">
+                    </div>
+                    <div class="row" style="margin: auto;">
+                      <div class="btn-group" style="margin:auto;">
+                        <div class="col-sm-4">
+                          <input class="btn-check" type="radio" name="radioBtn" id="radioBtn1">
+                          <label class="btn btn-outline-secondary" for="radioBtn1">
+                            남성
+                          </label> 
+                        </div>
+                        <div class="col-sm-4">
+                          <input class="btn-check" type="radio" name="radioBtn" id="radioBtn2">
+                          <label class="btn btn-outline-secondary" for="radioBtn2">
+                            여성
+                          </label> 
+                        </div>
+                        <div class="col-sm-4">
+                          <input class="btn-check" type="radio" name="radioBtn" id="radioBtn3">
+                          <label class="btn btn-outline-secondary" for="radioBtn3">
+                            비공개
+                          </label> 
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <!-- Q. SNS을 이용한 로그인 기능 -->
@@ -154,11 +167,11 @@
                   </div>
                   <br>
                   <div class="row">
-                    <div class="col-sm-6">
-                      <button>등록</button>
+                    <div class="col-sm-6" style="text-align: center;">
+                      <button class="btn btn-primary">등록</button>
                     </div>
-                    <div class="col-sm-6">
-                      <button>리셋</button>
+                    <div class="col-sm-6" style="text-align: center;">
+                      <button class="btn btn-secondary">리셋</button>
                     </div>
                   </div>
               </div>

@@ -121,7 +121,15 @@
 
           <!-- 기록 등록 -->
           <div class="row">
-            <h3>일일 기록 등록 : 2022년 00월 00일</h3>
+            <h3>일일 기록 등록 : 
+              <script>
+                date = new Date();
+                year = date.getFullYear();
+                month = date.getMonth() + 1;
+                day = date.getDate();
+                document.write(year+"년 "+month+"월 "+day+"일");
+              </script>
+            </h3>
             <div class="row" style="margin:auto;">
               <div class="col-sm-3">
                 <input type="image" alt="인증사진 업로드" />
@@ -213,11 +221,17 @@
                 <th>번호</th><th>날짜</th><th>기록</th><th>연속기록</th><th>상세보기</th>
               </tr>
               <!-- C.아코디언 기능에 따라 보기/접기 변환 -->
+              <!-- Q. 5/18 HELP 필요 -->
               <tr>
-                <td>4</td><td>2022/5/5</td><td>70kg</td></td><td>1일차</td><td><a href="#" style="text-decoration:none;">접기</a></td>
-              </tr>
-              <tr>
-                <td colspan="2">사진 <img src="" alt=""></td><td colspan="2">메모 <p>메모 내용입니다</p></td><td></td>
+                <td>4</td><td>2022/5/5</td><td>70kg</td></td><td>1일차</td>
+                <td>
+                  <a href="" id="seeDetails" style="text-decoration:none;" data-bs-toggle="collapse" data-bs-target="#details" aria-controls="details">
+                    접기
+                  </a>
+                  <tr>
+                    <td colspan="2">사진 <img src="" alt=""></td><td colspan="2">메모 <p>메모 내용입니다</p></td><td></td>
+                  </tr>
+                </td>
               </tr>
               <tr>
                 <td>3</td><td>2022/5/3</td><td>70kg</td></td><td>3일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>

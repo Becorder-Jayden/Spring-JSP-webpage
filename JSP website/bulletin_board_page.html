@@ -173,7 +173,7 @@
                   OOO
                 </td>
                 <td colspan="2">
-                  <input type="text" placeholder="댓글을 입력하세요" style="width:100%">
+                  <input type="text" class="form-control" placeholder="댓글을 입력하세요" style="width:100%">
                 </td>
                 <td style="text-align: right;">
                   <button class="btn btn-light">댓글 남기기</button>
@@ -184,6 +184,11 @@
               <div class="col" style="text-align: center;">
                 <button class="btn btn-success">좋아요</button>
                 <button class="btn btn-warning">싫어요</button>
+              </div>
+            </div>
+            <div class="row" style="text-align:left;">
+              <div class="col">
+                <button class="btn btn-danger">신고</button>
               </div>
             </div>
 
@@ -269,7 +274,7 @@
                 </div>
               </div>
               <div class="row" style="margin:auto;">
-                <div class="col-sm-7">
+                <div class="col">
                   <button herf="#" class="btn btn-light">전체</button>
                   <button herf="#" class="btn btn-light">공지</button>
                   <button herf="#" class="btn btn-light">자유/소통</button>
@@ -277,10 +282,13 @@
                   <button herf="#" class="btn btn-light">식단</button>
                   <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
                 </div>
-                <div class="col-sm-5">
-                  <input type="text" />
-                  <button herf="#" class="btn btn-secondary">검색</button>
-                  <button herf="#" class="btn btn-danger">신고</button>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <input class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <button herf="#" class="btn btn-secondary">검색</button>
+                  </div>
                 </div>
                 <div class="row" style="margin:auto;">
                   <table class="table">
