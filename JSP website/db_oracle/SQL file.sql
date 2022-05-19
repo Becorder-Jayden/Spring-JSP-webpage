@@ -1,4 +1,33 @@
-﻿-- member 테이블 생성
+﻿
+-- 테이블 생성 --
+CREATE TABLE 테이블명 (
+	컬럼명 데이터타입 NOT NULL 우선키 등,
+	컬럼명 데이터타입 NOT NULL 우선키 등,
+	컬럼명 데이터타입 NOT NULL 우선키 등
+);
+
+
+-- 테이블 삭제 --
+DROP TABLE 테이블명;
+
+
+-- 테이블 수정 --
+
+-- 컬럼 데이터 타입, 길이 변경
+ALTER TABLE 테이블명 MODIFY 컬럼명 데이터타입(길이);
+
+-- 컬럼 명 변경
+ALTER TABLE 테이블명 RENAME COLUMN 이전컬럼명 TO 새로운 컬럼명;
+
+
+
+
+----
+
+
+
+
+-- member 테이블 생성
 CREATE TABLE member (
 	mIdx NUMBER NOT NULL PRIMARY KEY,
 	memberId VARCHAR2(20) NOT NULL,
@@ -43,8 +72,8 @@ CREATE TABLE groupBoard (
 	gbIdx NUMBER NOT NULL PRIMARY key,
 	cIdx NUMBER NOT NULL,
 	pIdx NUMBER NOT NULL,
-	gbTitle VARCHAR(20) NOT NULL,
-	gbWriter VARCHAR(10) NOT null,
+	gbTitle VARCHAR2(20) NOT NULL,
+	gbWriter VARCHAR2(10) NOT NULL,
 	gbContent CLOB NOT null,
 	gbWriteTime DATE NOT NULL,
 	gbHits NUMBER NOT NULL,
@@ -65,13 +94,13 @@ CREATE TABLE bulletinBoard (
 	fbIdx NUMBER NOT NULL PRIMARY KEY,
 	mIdx NUMBER NOT NULL,
 	fbCategory NUMBER NOT null,
-	fbTitle VARCHAR(20) NOT NULL,
+	fbTitle VARCHAR2(20) NOT NULL,
 	fbContent CLOB,
 	fbWriter VARCHAR2(10) NOT NULL,
 	fbWriteDate DATE NOT NULL
 );
 
-ALTER TABLE bulletinBoard
+sALTER TABLE bulletinBoard
 ADD CONSTRAINT fk_mIdx3 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
 -- faq 테이블 생성
@@ -81,7 +110,11 @@ CREATE TABLE faq (
 	qAnswer CLOB NOT NULL
 	);
 
+---- 데이터 테이블 생성 5/19
 
 -- 테이블 삭제
 DROP TABLE crewMaker;
+
+
+
 
