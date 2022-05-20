@@ -17,3 +17,6 @@ help - install new software-ermaster.source - 이름: ER Master, 경로 : http:/
 
 정규화* ERD 그리기
 모달창 코드 뜯어보기*
+
+*5/20
+집 컴퓨터 java se 13.0.2 설치. 적용할 것
