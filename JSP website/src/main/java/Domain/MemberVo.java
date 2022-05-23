@@ -1,15 +1,19 @@
 package Domain;
 
-public class memberVo {
+// DB에서 member 컬럼 값을 담는 역할
+
+public class MemberVo {
 	
+	// 데이터 정의
 	private Number midx;
 	private String memberid;
 	private String memberpassword;
 	private String memberemail;
 	private String membername;
 	private String membergender;
+
 	
-	
+	// getter & setter : 클래스 필드에 직접 접근하는 것을 방지
 	public Number getMidx() {
 		return midx;
 	}

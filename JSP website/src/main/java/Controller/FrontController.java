@@ -21,7 +21,7 @@ public class FrontController extends HttpServlet{
 		
 		String[] subpath =  command.split("/");
 		String location = subpath[1];	// JspWebPage
-		
+
 		if (location.equals("member")) {
 			MemberController mc = new MemberController();
 			mc.doGet(request, response);
@@ -41,6 +41,6 @@ public class FrontController extends HttpServlet{
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		doGet(request, response);		// post 방식을 사용할 때 데이터를 전송
 	}
 }

@@ -3,7 +3,7 @@ package Domain;
 import java.sql.Blob;
 import java.sql.Date;
 
-public class personalVo {
+public class PersonalVo {
 
 	private Number midx;
 	private Number pidx;

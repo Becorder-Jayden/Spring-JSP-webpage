@@ -3,7 +3,7 @@ package Domain;
 import java.sql.Clob;
 import java.sql.Date;
 
-public class groupVo {
+public class GroupVo {
 
 	private Number gbidx;
 	private Number cidx;

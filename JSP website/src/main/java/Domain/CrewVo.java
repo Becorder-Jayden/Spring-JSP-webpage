@@ -2,7 +2,7 @@ package Domain;
 
 import java.sql.Date;
 
-public class crewVo {
+public class CrewVo {
 	
 	private Number midx;
 	private Number cidx;

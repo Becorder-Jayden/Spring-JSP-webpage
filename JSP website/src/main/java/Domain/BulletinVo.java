@@ -2,7 +2,7 @@ package Domain;
 
 import java.sql.Date;
 
-public class bulletinVo {
+public class BulletinVo {
 
 	private Number fbidx;
 	private Number midx;

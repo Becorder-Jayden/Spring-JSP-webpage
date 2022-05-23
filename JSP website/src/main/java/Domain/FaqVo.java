@@ -1,6 +1,6 @@
 package Domain;
 
-public class faqVo {
+public class FaqVo {
 	
 	private Number qbidx;
 	private String qquestion;
