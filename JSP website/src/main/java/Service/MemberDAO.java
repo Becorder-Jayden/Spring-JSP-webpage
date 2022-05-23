@@ -79,5 +79,24 @@ public class MemberDAO {
 		}
 		return alist;
 	}
+
+	public MemberVo memberLogin(String memberId, String memberPassword) {		// 로그인 화면에서 접근, ID, Password 기입 
+
+		int value = 0;					// Q. 5/23 사용되지 않은것인가?
+		MemberVo mv = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM member WHERE memberId=? and memberPassword=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt = setString(1, memberId);
+			
+		}
+		
+		
+		
+		return null;
+	}
 	
 }

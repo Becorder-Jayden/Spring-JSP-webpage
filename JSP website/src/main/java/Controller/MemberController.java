@@ -2,13 +2,13 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Domain.MemberVo;
 import Service.MemberDAO;
 
 public class MemberController {
@@ -40,21 +40,18 @@ public class MemberController {
 			
 			PrintWriter out = response.getWriter();
 			
-			System.out.println(value);
-		
 			// 회원가입 성공
 			if (value==1) {
-				response.sendRedirect(request.getContextPath()+"/member/memberLogin.do");	
-//				out.println("<script>alert('회원가입 성공'); location.href='"+request.getContextPath()+"/index.jsp'</script>");
+//				response.sendRedirect(request.getContextPath()+"/member/memberLogin.do");		// response가 있어서 script구문이 씹힌다? Q. 확인 필요 
+				out.println("<script>alert('회원가입 성공'); location.href='"+request.getContextPath()+"/member/memberLogin.do'</script>");
 			}
 			// 회원가입 실패
-//			else {
+			else {
 //				response.sendRedirect(request.getContextPath()+"/member/memberJoin.do");
-//				out.println("<script>alert('회원가입 실패'); location.href='"+request.getContextPath()+"/index.jsp'</script>");
-//			}
+				out.println("<script>alert('회원가입 실패'); location.href='"+request.getContextPath()+"/member/memberJoin.do'</script>");
+			}
 		
 		}
-		
 		
 		
 		// 회원가입 페이지 이동
@@ -67,6 +64,16 @@ public class MemberController {
 		else if (command.equals("/member/memberLogin.do")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.jsp");
 			rd.forward(request, response);
+		}
+		
+		// 로그인 수행 페이지 이동
+		else if (command.equals("member/memberLoginAction.do")) {
+			String memberId = request.getParameter("ID");				// memberJoin.jsp에서 전달한 ID, PASSWORD를 받아옴
+			String memberPassword = request.getParameter("PASSWORD");
+			
+			MemberDAO md = new MemberDAO();				// DB(DAO접근)를 통해 ID와 Password가 일치하는 회원 확인 
+			MemberVo mv = md.memberLogin(memberId, memberPassword);
+			
 		}
 		
 		

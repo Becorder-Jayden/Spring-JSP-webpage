@@ -14,6 +14,32 @@
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+  <script>
+	function login() {
+		var fm = document.frm;
+		
+		if (fm.ID.value == "") {
+			alert("ID를 입력하세요.");
+			fm.ID.focus();
+			return;
+		} else if (fm.PASSWORD.value == "") {
+			alert("Password를 입력하세요.");
+			fm.PASSWORD.focus();
+			return;									// Q. 5/23 입력값이 잘못되었을 때 기록한 입력값이 지워지지 않도록 처리?
+		}
+		
+		fm.action = "<%=request.getContextPath()%>/member/memberLoginAction.do";
+		fm.method = "post";
+		fm.submit();
+		
+		return;
+		
+	}
+  </script>
+  
+  
+  
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -117,30 +143,30 @@
             <h1>로그인</h1>
             
             <!-- Q.페이지 중앙으로 이동 --> <!-- A. col 클래스에 margin:auto 적용: 가운데 정렬이 가능하다. -->
-              <div class="col-sm-4" style="margin:auto;">
-                <div class="row">
-                    <img src="./imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
-                </div> 
-                
-                <div class="container">
-                  <div class="row">
-                    <input class="form-control" type="text" placeholder="ID">
-                  </div>
-                  <div class="row">
-                    <input class="form-control" type="text" placeholder="Password">
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="checkbox">아이디 저장
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="checkbox">자동 로그인
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button class="btn btn-primary">LOGIN</button>
-                  </div>
-                </div>
+            <div class="col-sm-4" style="margin:auto;">
+  				<div class="row">
+                   <img src="./imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
+              	</div> 
+               
+              	<form name="frm" class="container">
+		     		<div class="row">
+		          	  <input class="form-control" type="text" placeholder="ID" name="ID">
+		         	</div>
+		         	<div class="row">
+		          	  <input class="form-control" type="text" placeholder="Password" name="PASSWORD">
+		         	</div>
+	         		<div class="row">
+	       	   		  <div class="col-sm-6">
+	           		 	<input type="checkbox">아이디 저장
+	            	  </div>
+	            	  <div class="col-sm-6">
+		                <input type="checkbox">자동 로그인
+		              </div>
+	          	</form>
+	          	<div class="row">
+        		  <button class="btn btn-primary" onclick="login()">LOGIN</button>
+	          	</div>
+	       	  </div>
             </div>
           </div>
         </div>
