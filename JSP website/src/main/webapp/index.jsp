@@ -1,4 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@page import="javax.swing.text.Document"%>
+<%@page import="java.io.Console"%>
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -31,7 +34,7 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="index.html">
+          <a href="<%=request.getContextPath() %>">																																<!-- Q. #말고 다른 방법이 있을까? --><!-- A. 주소창에 request.getContextPath()를 입력하면 인덱스 페이지로 이동 -->
             <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
           </a>
         </div>
@@ -54,7 +57,11 @@
         <div class="motto">
           <!-- C. HTML교재 12-1 참고할 것  -->
           <p>
-            OOO님
+<%
+	if (session.getAttribute("midx") != null) {
+		out.println(session.getAttribute("memberId") + "님");
+	}
+%>         
             <br>
             n일 째 방문을 환영합니다.
           </p>
@@ -74,7 +81,7 @@
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none"
+            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none"
               ><li>퍼스널 데이터</li></a
             >
           </div>
@@ -89,7 +96,7 @@
             >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/board/board.jsp" style="text-decoration: none"
+            <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"
               ><li>자유게시판</li></a
             >
           </div>
@@ -107,14 +114,34 @@
         class="nav"
         style="position: relative; left: 180px; justify-content: end"
       > 
-        <div class="end" name="login">
-          <a href="<%=request.getContextPath() %>/member/memberLogin.do" style="text-decoration: none">로그인</a>
-        </div>
-        &nbsp;&nbsp;
-        <div class="end" name="join">
-          <a href="<%=request.getContextPath() %>/member/memberJoin.do" style="text-decoration: none">회원가입</a>
-        </div>
+
+				<% 
+				
+				  // 로그인 전 : 로그인 / 회원가입
+					if (session.getAttribute("midx") == null) {
+						out.println("<div name='login'>");
+						out.println("<a href='member/memberLogin.do' style='text-decoration:none'>로그인</a>");
+						out.println("</div>");
+						out.println("&nbsp;&nbsp;");
+						out.println("<div name='memberJoin'>");
+						out.println("<a href='member/memberJoin.do' style='text-decoration:none'>회원가입</a>");
+						out.println("</div>");
+								
+					}
+					// 로그인 후 : 로그아웃/마이페이지
+					else if (session.getAttribute("midx") != null) {
+					
+						out.println("<div name='logout'>");
+						out.println("<a href='member/memberLogout.do' style='text-decoration:none'>로그아웃</a>");
+						out.println("</div>");
+						out.println("&nbsp;&nbsp;");
+						out.println("<div name='myPage'>");
+						out.println("<a href='member/memberMyPage.do' style='text-decoration:none'>마이페이지</a>");
+						out.println("</div>");
+					};
+				%>
       </div>
+
 
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
@@ -130,7 +157,7 @@
         <!-- 페이지 본문 내용 -->
         <div class="row" style="margin: auto">
           <div class="row" style="margin: auto">
-            <img src="imgs/main.jpg" alt="메인 이미지" />
+            <img src="./imgs/main.jpg" alt="메인 이미지" />
           </div>
           <div class="row" style="margin: auto">
             <!-- C. 이미지 배치시 사이즈 조절 필요-->

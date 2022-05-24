@@ -3,6 +3,7 @@ package Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Dbconn.Dbconn;
@@ -62,11 +63,12 @@ public class MemberDAO {
 				mv.setMembername(rs.getString("memberName"));
 				mv.setMemberpassword(rs.getString("memberPassword"));
 				
-				
 				alist.add(mv);												// 데이터를 담은 객체를 ArrayList에 추가
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		
 		} finally {
 			try {
 				rs.close();
@@ -75,14 +77,12 @@ public class MemberDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
 		}
 		return alist;
 	}
 
-	public MemberVo memberLogin(String memberId, String memberPassword) {		// 로그인 화면에서 접근, ID, Password 기입 
+	public MemberVo memberLogin(String memberId, String memberPassword) {				// 로그인 화면에서 접근, ID, Password 기입 
 
-		int value = 0;					// Q. 5/23 사용되지 않은것인가?
 		MemberVo mv = null;
 		ResultSet rs = null;
 		
@@ -90,13 +90,28 @@ public class MemberDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt = setString(1, memberId);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPassword);
+			rs = pstmt.executeQuery();
 			
+			if (rs.next()) {
+				mv = new MemberVo();
+				mv.setMidx(rs.getInt("midx"));
+				mv.setMemberid(rs.getString("memberId"));
+				mv.setMembername(rs.getString("memberName"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				conn.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
-		
-		return null;
+		return mv;
 	}
 	
 }

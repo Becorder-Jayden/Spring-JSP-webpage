@@ -31,15 +31,15 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="index.html">
-            <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
+          <a href="<%=request.getContextPath()%>">
+            <img src="../imgs/logo.jpg" alt="logo" style="width: 100%" />
           </a>
         </div>
 
         <!-- 프로필 -->
         <div class="profile_img">
           <img
-            src="imgs/profile_ex.jpg"
+            src="../imgs/profile_ex.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -53,11 +53,14 @@
         <!-- 각오 -->
         <div class="motto">
           <p>
-            OOO님
-            <br>
+<%
+	if (session.getAttribute("midx") != null) {
+		out.println(session.getAttribute("memberId") + "님");
+	}
+%>    <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p">어제보다 나은 오늘 ☆★</p>
+          <p>어제보다 나은 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -73,7 +76,7 @@
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
@@ -82,7 +85,7 @@
             <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/board/board.jsp" style="text-decoration: none"><li>자유게시판</li></a>
+            <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
@@ -90,18 +93,40 @@
         </ul>
       </div>
 
-      <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
-      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
-      <div class="nav" style="position:relative; left:180px; justify-content: end">
-        <div class="end" name="login">
-          <a href="<%=request.getContextPath() %>/member/memberLogin.do" style="text-decoration: none">로그인</a>
-        </div>
-        &nbsp;&nbsp;
-        <div class="end" name="enroll">
-          <a href="<%=request.getContextPath() %>/member/memberJoin.do" style="text-decoration: none">회원가입</a>
-        </div>
-      </div>
 
+      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
+      <div
+        class="nav"
+        style="position: relative; left: 180px; justify-content: end"
+      > 
+
+				<% 
+				
+				  // 로그인 전 : 로그인 / 회원가입
+					if (session.getAttribute("midx") == null) {
+						out.println("<div name='login'>");
+						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+						out.println("</div>");
+						out.println("&nbsp;&nbsp;");
+						out.println("<div name='memberJoin'>");
+						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+						out.println("</div>");
+								
+					}
+					// 로그인 후 : 로그아웃/마이페이지
+					else if (session.getAttribute("midx") != null) {
+					
+						out.println("<div name='logout'>");
+						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+						out.println("</div>");
+						out.println("&nbsp;&nbsp;");
+						out.println("<div name='myPage'>");
+						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
+						out.println("</div>");
+					};
+				%>
+      </div>
+      
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
@@ -163,7 +188,7 @@
             <h3>잔디 그래프</h3>
             <div class="row" style="margin:auto;">
               <!-- C.이미지 삽입으로 대체해야 함 -->
-              <img src="imgs/grass_graph.PNG" alt="잔디 그래프" />
+              <img src="../imgs/grass_graph.PNG" alt="잔디 그래프" />
             </div>
           </div>
 
@@ -184,13 +209,13 @@
                 </tr>
                 <tr>
                   <th>사진 등록</th>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
-                  <td><img src="imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
+                  <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
                 </tr>
                 <tr>
                   <th>기록</th>
@@ -210,7 +235,7 @@
           <div class="row">
             <h3>체중 변화 그래프</h3>
             <div class="row" style="margin:auto;">
-              <img src="/Back-end/JSP website/imgs/grass_graph.PNG" alt="체중 변화 그래프" />
+              <img src="../imgs/grass_graph.PNG" alt="체중 변화 그래프" />
             </div>
           </div>
           <div class="row">

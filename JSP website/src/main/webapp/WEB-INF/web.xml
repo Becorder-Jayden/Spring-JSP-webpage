@@ -9,14 +9,12 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  
-  <!-- 서블릿 등록 -->
   <servlet>
-  <servlet-name>FrontController</servlet-name>
-  <servlet-class>Controller.FrontController</servlet-class>
+    <servlet-name>FrontController</servlet-name>
+    <servlet-class>Controller.FrontController</servlet-class>
   </servlet>
   <servlet-mapping>
-  <servlet-name>FrontController</servlet-name>
-  <url-pattern>*.do</url-pattern>
+    <servlet-name>FrontController</servlet-name>
+    <url-pattern>*.do</url-pattern>
   </servlet-mapping>
 </web-app>

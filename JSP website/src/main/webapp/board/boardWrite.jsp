@@ -14,7 +14,6 @@
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -32,7 +31,7 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath()%>">
+          <a href="../index.jsp">
             <img src="../imgs/logo.jpg" alt="logo" style="width: 100%" />
           </a>
         </div>
@@ -59,7 +58,7 @@
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
-            <br>
+	         <br>
             n일 째 방문을 환영합니다.
           </p>
           <p>어제보다 나은 오늘 ☆★</p>
@@ -95,40 +94,18 @@
         </ul>
       </div>
 
-
+      <!-- nav에 해당, 모든 페이지 공통, 수정 x -->
       <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
-      <div
-        class="nav"
-        style="position: relative; left: 180px; justify-content: end"
-      > 
-
-				<% 
-				
-				  // 로그인 전 : 로그인 / 회원가입
-					if (session.getAttribute("midx") == null) {
-						out.println("<div name='login'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
-						out.println("</div>");
-						out.println("&nbsp;&nbsp;");
-						out.println("<div name='memberJoin'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
-						out.println("</div>");
-								
-					}
-					// 로그인 후 : 로그아웃/마이페이지
-					else if (session.getAttribute("midx") != null) {
-					
-						out.println("<div name='logout'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
-						out.println("</div>");
-						out.println("&nbsp;&nbsp;");
-						out.println("<div name='myPage'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
-						out.println("</div>");
-					};
-				%>
+      <div class="nav" style="position:relative; left:180px; justify-content: end">
+        <div class="end" name="login">
+          <a href="<%=request.getContextPath() %>/member/memberLogin.do" style="text-decoration: none">로그인</a>
+        </div>
+        &nbsp;&nbsp;
+        <div class="end" name="enroll">
+          <a href="<%=request.getContextPath() %>/member/memberJoin.do" style="text-decoration: none">회원가입</a>
+        </div>
       </div>
-      
+
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
@@ -148,9 +125,62 @@
             <div class="container">
               <div class="row" style="text-align: right;">
                 <div class="col-sm-11">
-	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath() %>/board/boardWrite.do';">
-	                  새 글 쓰기
-	                </button>
+                  <!-- 글쓰기 입력 -->
+                  <div class="container" style="text-align: center;">
+                  	<h3>새 글 쓰기</h3>
+                  	<div class="row">
+                      <div class="col-sm-2">
+                          작성자 
+                      </div>
+                        <div class="col-sm-3">
+                          <!-- C. 사용자 정보를 불러와서 자동으로 입력가능하도록 함. 수정 불가 -->
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="OOO">
+                          </div>
+                        </div>
+                      	 <div class="row">
+                        	 <div class="col-sm-2">
+                            카테고리 
+                        	 </div>
+                         <div class="col-sm-3">
+                           <select name="" id="" class="form-select">
+                             <option value="All">전체</option>
+                             <option value="All">공지</option>
+                             <option value="All">자유/소통</option>
+                             <option value="All">운동법</option>
+                             <option value="All">식단</option>
+                             <option value="All">졸업 인증</option>
+                           </select>
+                         </div>
+                      	 </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          제목
+                        </div>
+                        <div class="col-8">
+                          <div class="input-group">
+                            <input type="text" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2">
+                          내용
+                        </div>
+                        <div class="col-sm-8">
+                            <textarea name="" id="" cols="75" rows="10" style="resize: none;"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" style="text-align: right;">
+                        <div class="col-sm-11">
+                          <button href="#" class="btn btn-danger">취소</button> 
+                          <button href="#" class="btn btn-secondary">수정</button> 
+                          <button href="#" class="btn btn-primary">등록</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="row" style="margin:auto;">
