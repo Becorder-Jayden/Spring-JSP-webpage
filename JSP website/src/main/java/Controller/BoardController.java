@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 데이터 인코딩 설정
 		request.setCharacterEncoding("UTF-8");
@@ -26,9 +29,9 @@ public class BoardController extends HttpServlet {
 		
 		System.out.println("command :" + command);
 	
-		String uploadPath = "E:\\Open API A반\\JspWebPage";
-		
-		
+		String uploadPath = "../../src/main/webapp/";
+		String saveFolder = "imgs";
+		String saveFullPath = uploadPath + saveFolder;
 		
 		
 		
@@ -44,6 +47,20 @@ public class BoardController extends HttpServlet {
 			rd.forward(request, response);	
 		}
 		
+//		// 게시판 글쓰기 action
+//		else if (command.equals("/board/boardWriteAction.do")) {
+//			
+//			int sizeLimit = 1024*1024*15; 			// 단위 : MB
+//			
+//			MultipartRequest multi = new MultipartRequest(request, saveFullPath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());	// Q: 에러가 나는 이유?
+//			// DefaultFileRenamePolicy(): 파일 이름이 같을 때 rename 정책을 사용
+//			
+//			Enumeration files = multi.getFileNames();	// 열거자에 저장될 파일을 담는 객체 생성
+//			
+//			String file = (String)files.nextElement();					// 담긴 파일 객체의 파일 이름을 얻는다
+//			String fileName = multi.getFilesystemName(file);			// 저장되는 파일 이름 					// multi 적용 x로 인해 getFilesystemName이 적용되지 않음
+//			String originFileName = multi.getOriginalFileName(file); 	// 원래 파일 이름
+//		}
 		
 	};
 	
