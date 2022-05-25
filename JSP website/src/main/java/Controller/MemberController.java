@@ -66,7 +66,7 @@ public class MemberController {
 			rd.forward(request, response);
 		}
 		
-		// 로그인 수행 페이지 이동
+		// 로그인 수행
 		else if (command.equals("/member/memberLoginAction.do")) {
 			String memberId = request.getParameter("ID");					// memberJoin.jsp에서 전달한 ID, PASSWORD를 받아옴
 			String memberPassword = request.getParameter("PASSWORD");
@@ -81,6 +81,10 @@ public class MemberController {
 				session.setAttribute("midx", mv.getMidx());
 				session.setAttribute("memberId", mv.getMemberid());
 				session.setAttribute("memberName", mv.getMembername());
+				
+				
+				int a = (int) session.getAttribute("mIdx");
+				System.out.println(a);
 				
 				if (session.getAttribute("saveUrl") != null) {									// saveUrl의 정체는? A.로그인 페이지로 들어가기 전 창 
 					response.sendRedirect((String)session.getAttribute("saveUrl"));				// 로그인 전 url 위치가 저장되어 있다면 로그인 후 해당 url로 이동

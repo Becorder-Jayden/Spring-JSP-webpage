@@ -1,7 +1,10 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import Domain.BoardVo;
+import Service.BoardDAO;
 
 @WebServlet("/BoardController")
 public class BoardController extends HttpServlet {
@@ -37,32 +44,58 @@ public class BoardController extends HttpServlet {
 		
 		// 게시판 이동
 		if (command.equals("/board/board.do")) {
+			
+			
+			
+			BoardDAO bd = new BoardDAO();
+			
+			
+			ArrayList<BoardVo> alist = bd.boardSelectAll();
+			System.out.println(alist);
+			
+			request.setAttribute("alist", alist);
+			
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/board/board.jsp");
 			rd.forward(request, response);
 		}
 		
-		// 게시판 글쓰기 이동
+		// 게시판 글쓰기 동작
 		else if (command.equals("/board/boardWrite.do")){
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardWrite.jsp");
 			rd.forward(request, response);	
 		}
 		
-//		// 게시판 글쓰기 action
-//		else if (command.equals("/board/boardWriteAction.do")) {
-//			
-//			int sizeLimit = 1024*1024*15; 			// 단위 : MB
-//			
-//			MultipartRequest multi = new MultipartRequest(request, saveFullPath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());	// Q: 에러가 나는 이유?
-//			// DefaultFileRenamePolicy(): 파일 이름이 같을 때 rename 정책을 사용
-//			
-//			Enumeration files = multi.getFileNames();	// 열거자에 저장될 파일을 담는 객체 생성
-//			
-//			String file = (String)files.nextElement();					// 담긴 파일 객체의 파일 이름을 얻는다
-//			String fileName = multi.getFilesystemName(file);			// 저장되는 파일 이름 					// multi 적용 x로 인해 getFilesystemName이 적용되지 않음
-//			String originFileName = multi.getOriginalFileName(file); 	// 원래 파일 이름
-//		}
 		
-	};
+		
+		// 게시판 글쓰기 action
+		else if (command.equals("/board/boardWriteAction.do")) {
+			
+			System.out.println("boardWriteAction.do 실행");
+			
+			String fbWriter = request.getParameter("FBWRITER");
+			String fbCategory = request.getParameter("FBCATEGORY");
+			String fbTitle = request.getParameter("FBTITLE");
+			String fbContent = request.getParameter("FBCONTENT");
+			
+			
+			HttpSession session = request.getSession();
+			int midx = (int) session.getAttribute("midx");
+			
+			BoardDAO bd = new BoardDAO();
+			int value = bd.insertBoard(midx, fbCategory, fbTitle, fbContent, fbWriter);
+			
+			if (value==1) {
+				response.sendRedirect(request.getContextPath()+"/board/board.do");
+			}
+			else {
+				response.sendRedirect(request.getContextPath()+"/board/boardWrite.do");
+			}
+		}
+	}
+			
+
+
 	
 	public void doPost(HttpServletRequest request, HttpServletRequest response) {
 		

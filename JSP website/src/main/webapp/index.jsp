@@ -58,6 +58,7 @@
           <!-- C. HTML교재 12-1 참고할 것  -->
           <p>
 <%
+
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}

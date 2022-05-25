@@ -20,7 +20,7 @@
   	function enroll() {
   		
 	   	// id, password, passwordcheck, email, name, gender 입력값 확인. null일 경우 alert 
-		var fm = document.frm;
+			var fm = document.frm;
 	   	
 	   	if (fm.MEMBERID.value == "") {
 	   		alert("ID를 입력하세요.");
@@ -245,16 +245,16 @@
                       </div>
                     </div>
                   	<!-- Q. SNS을 이용한 로그인 기능 -->
-        			<div class="row">
-                 	   SNS을 이용한 로그인 기능 만들기
-                	</div>
-                	<br>
+	        					<div class="row">
+	                 	   SNS을 이용한 로그인 기능 만들기
+	                	</div>
+	                	<br>
                     <div class="row">
                     <div class="col-sm-6" style="text-align: center;">
-                      <button class="btn btn-primary" onclick="enroll()">등록</input>
+                      <button class="btn btn-primary" onclick="enroll()">등록</button>
                     </div>
                     <div class="col-sm-6" style="text-align: center;">
-                      <button class="btn btn-secondary" onclick="reset()">리셋</input>
+                      <button class="btn btn-secondary" onclick="reset()">리셋</button>
                     </div>
                   </div>
                	</form>

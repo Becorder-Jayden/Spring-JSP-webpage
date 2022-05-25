@@ -14,6 +14,32 @@
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+ 	<script>
+ 		function enroll() {
+ 			
+ 			var fm = document.frm
+ 			
+
+			if (fm.FBTITLE.value==""){															
+ 				alert("제목을 입력하세요");
+ 				fm.FBTITLE.focus();																// Q. focus가 갔다가 바로 사라지는데 해결하는 방법은? 5/25
+ 				return;
+ 			}
+ 			else if (fm.FBCONTENT.value==""){
+ 				alert("내용을 입력하세요");
+ 				fm.FBCONTENT.focus();
+ 				return;
+ 			}
+  			
+ 		fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
+ 		fm.method = "post";
+ 		fm.submit();
+ 			
+ 		}
+ 	</script>
+  
+  
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -127,143 +153,145 @@
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
+                 		<form name="frm">
                   	<h3>새 글 쓰기</h3>
-                  	<div class="row">
-                      <div class="col-sm-2">
-                          작성자 
-                      </div>
-                        <div class="col-sm-3">
-                          <!-- C. 사용자 정보를 불러와서 자동으로 입력가능하도록 함. 수정 불가 -->
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="OOO">
-                          </div>
-                        </div>
-                      	 <div class="row">
-                        	 <div class="col-sm-2">
-                            카테고리 
-                        	 </div>
-                         <div class="col-sm-3">
-                           <select name="" id="" class="form-select">
-                             <option value="All">전체</option>
-                             <option value="All">공지</option>
-                             <option value="All">자유/소통</option>
-                             <option value="All">운동법</option>
-                             <option value="All">식단</option>
-                             <option value="All">졸업 인증</option>
-                           </select>
-                         </div>
-                      	 </div>
-                      <div class="row">
-                        <div class="col-sm-2">
-                          제목
-                        </div>
-                        <div class="col-8">
-                          <div class="input-group">
-                            <input type="text" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-2">
-                          내용
-                        </div>
-                        <div class="col-sm-8">
-                            <textarea name="" id="" cols="75" rows="10" style="resize: none;"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row" style="text-align: right;">
-                        <div class="col-sm-11">
-                          <button href="#" class="btn btn-danger">취소</button> 
-                          <button href="#" class="btn btn-secondary">수정</button> 
-                          <button href="#" class="btn btn-primary">등록</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+	                  	<div class="row">
+	                      <div class="col-sm-2">
+	                        작성자 
+	                      </div>
+	                        <div class="col-sm-3">
+	                          <!-- C. 사용자 정보를 불러와서 자동으로 입력가능하도록 함. 수정 불가 -->
+	                          <div class="input-group">
+	                            <input name="FBWRITER" type="text" class="form-control" placeholder="OOO">
+	                          </div>
+	                        </div>
+	                      	<div class="row">
+	                          <div class="col-sm-2">
+	                            카테고리 
+	                        	</div>
+	                        	<div class="col-sm-3">
+		                          <select name="FBCATEGORY" id="" class="form-select">
+			                          <option value="All">전체</option>
+			                          <option value="All">공지</option>
+			                          <option value="All">자유/소통</option>
+			                          <option value="All">운동법</option>
+			                          <option value="All">식단</option>
+			                          <option value="All">졸업 인증</option>
+		                           </select>
+		                        </div>
+	                     	  </div>
+	                   		<div class="row">
+	                       	<div class="col-sm-2">
+	                          제목
+	                        </div>
+	                        <div class="col-8">
+	                          <div class="input-group">
+	                            <input name="FBTITLE" type="text" class="form-control">
+	                          </div>
+	                        </div>
+	                      </div>
+	                      <div class="row">
+	                        <div class="col-sm-2">
+	                          내용
+	                        </div>
+	                        <div class="col-sm-8">
+	                        	<textarea name="FBCONTENT" id="" cols="75" rows="10" style="resize: none;"></textarea>
+	                        </div>
+	                      </div>
+	                    </div>
+	                    <div class="row" style="text-align: right;">
+	                      <div class="col-sm-11">
+		                      <button href="#" class="btn btn-danger">취소</button> 
+		                      <button href="#" class="btn btn-secondary">수정</button> 
+		                      <button onclick="enroll();" class="btn btn-primary">등록</button>
+	                      </div>
+	                    </div>
+	                  </form>  
+                 	</div>
+  	            </div>
+		          </div>
+            </div>
+         	</div>
+          <div class="row" style="margin:auto;">
+              <div class="col">
+                <button herf="#" class="btn btn-light">전체</button>
+                <button herf="#" class="btn btn-light">공지</button>
+                <button herf="#" class="btn btn-light">자유/소통</button>
+                <button herf="#" class="btn btn-light">운동법</button>
+                <button herf="#" class="btn btn-light">식단</button>
+                <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <input class="form-control" type="text">
                 </div>
+                <div class="col-sm-2">
+                  <button herf="#" class="btn btn-secondary">검색</button>
               </div>
               <div class="row" style="margin:auto;">
-                <div class="col">
-                  <button herf="#" class="btn btn-light">전체</button>
-                  <button herf="#" class="btn btn-light">공지</button>
-                  <button herf="#" class="btn btn-light">자유/소통</button>
-                  <button herf="#" class="btn btn-light">운동법</button>
-                  <button herf="#" class="btn btn-light">식단</button>
-                  <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
-                </div>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <input class="form-control" type="text">
-                  </div>
-                  <div class="col-sm-2">
-                    <button herf="#" class="btn btn-secondary">검색</button>
-                </div>
-                <div class="row" style="margin:auto;">
-                  <table class="table" style="text-align:center;">
-                    <tr>
-                      <th>번호</th>
-                      <th>카테고리</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>공지</td>
-                        <!-- page 이동 예시  -->
-                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
-                        <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                        <td>2022/05/03</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>공지</td>
-                      <td><a href="#" style="text-decoration: none; color: black;">일본에서 건너온 저탄고지 다이어트</a></td>
-                      <td><a href="#" style="text-decoration: none; color: black;">김풍</a></td>
-                      <td>2022/05/05</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>공지</td>
-                      <td><a href="#" style="text-decoration: none; color: black;">다이어트 중 친오빠 특</a></td>
-                      <td><a href="#" style="text-decoration: none; color: black;">기안84</a></td>
-                      <td>2022/05/04</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>공지</td>
-                      <td><a href="#" style="text-decoration: none; color: black;">어젯밤 꿈에서 먹은 음식</a></td>
-                      <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                      <td>2022/05/04</td>
-                    </tr>
-                    <tr>
+                <table class="table" style="text-align:center;">
+                  <tr>
+                    <th>번호</th>
+                    <th>카테고리</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                  </tr>
+                  <tr>
                       <td>2</td>
                       <td>공지</td>
-                      <td><a href="#" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요</a></td>
+                      <!-- page 이동 예시  -->
+                      <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
                       <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
                       <td>2022/05/03</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>자유/소통</td>
-                      <td><a href="#" style="text-decoration: none; color: black;">현기증 나니깐 어서 라면 끓여주세요</a></td>
-                      <td><a href="#" style="text-decoration: none; color: black;">주펄</a></td>
-                      <td>2022/05/01</td>
-                    </tr>
-                  </table>
-                  <div class="row text-center" style="font-size: 20px; margin:auto;">
-                    <p>
-                      <a href="" style="text-decoration: none"><</a>
-                      <a href="" style="text-decoration: none">1</a>
-                      <a href="" style="text-decoration: none">2</a>
-                      <a href="" style="text-decoration: none">3</a>
-                      <a href="" style="text-decoration: none">4</a>
-                      <a href="" style="text-decoration: none">5</a>
-                      <a href="" style="text-decoration: none">></a>
-                    </p>
-                  </div>
+                    </a>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">일본에서 건너온 저탄고지 다이어트</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">김풍</a></td>
+                    <td>2022/05/05</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">다이어트 중 친오빠 특</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">기안84</a></td>
+                    <td>2022/05/04</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">어젯밤 꿈에서 먹은 음식</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
+                    <td>2022/05/04</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
+                    <td>2022/05/03</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>자유/소통</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">현기증 나니깐 어서 라면 끓여주세요</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">주펄</a></td>
+                    <td>2022/05/01</td>
+                  </tr>
+                </table>
+                <div class="row text-center" style="font-size: 20px; margin:auto;">
+                  <p>
+                    <a href="" style="text-decoration: none"><</a>
+                    <a href="" style="text-decoration: none">1</a>
+                    <a href="" style="text-decoration: none">2</a>
+                    <a href="" style="text-decoration: none">3</a>
+                    <a href="" style="text-decoration: none">4</a>
+                    <a href="" style="text-decoration: none">5</a>
+                    <a href="" style="text-decoration: none">></a>
+                  </p>
                 </div>
               </div>
             </div>

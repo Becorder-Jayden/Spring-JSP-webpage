@@ -2,7 +2,7 @@ package Domain;
 
 import java.sql.Date;
 
-public class BulletinVo {
+public class BoardVo {
 
 	private Number fbidx;
 	private Number midx;
@@ -25,34 +25,34 @@ public class BulletinVo {
 	public void setMidx(Number midx) {
 		this.midx = midx;
 	}
-	public String getFbcategory() {
+	public String getFbCategory() {
 		return fbcategory;
 	}
-	public void setFbcategory(String fbcategory) {
+	public void setFbCategory(String fbcategory) {
 		this.fbcategory = fbcategory;
 	}
-	public String getFbtitle() {
+	public String getFbTitle() {
 		return fbtitle;
 	}
-	public void setFbtitle(String fbtitle) {
+	public void setFbTitle(String fbtitle) {
 		this.fbtitle = fbtitle;
 	}
-	public String getFbcontent() {
+	public String getFbContent() {
 		return fbcontent;
 	}
-	public void setFbcontent(String fbcontent) {
+	public void setFbContent(String fbcontent) {
 		this.fbcontent = fbcontent;
 	}
-	public String getFbwriter() {
+	public String getFbWriter() {
 		return fbwriter;
 	}
-	public void setFbwriter(String fbwriter) {
+	public void setFbWriter(String fbwriter) {
 		this.fbwriter = fbwriter;
 	}
-	public Date getFbwritedate() {
+	public Date getFbWriteDate() {
 		return fbwritedate;
 	}
-	public void setFbwritedate(Date fbwritedate) {
+	public void setFbWriteDate(Date fbwritedate) {
 		this.fbwritedate = fbwritedate;
 	}
 	

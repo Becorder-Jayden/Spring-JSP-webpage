@@ -20,14 +20,25 @@ ALTER TABLE 테이블명 MODIFY 컬럼명 데이터타입(길이);
 ALTER TABLE 테이블명 RENAME COLUMN 이전컬럼명 TO 새로운 컬럼명;
 
 
+-- 시퀀스 생성
+CREATE SEQUENCE 시퀀스명;
+INCREMENT BY 1
+START WITH 1;
+--> 1부터 1씩 증가하는 fbidx_seq가 생성
 
+-- 시퀀스 삭제
+DROP SEQUENCE 시퀀스명;
 
+-- 시퀀스 삽입
+INSERT INTO a_board(BIDX,SUBJECT,CONTENT,WRITER,IP,MIDX) VALUES(bidx_seq.nextval, '열두번째 게시물', '열두번째 내용', '송혜교', '223.92.45.131',10);
+
+INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 ----
 
 
 
-
--- member 테이블 생성
+--- member
+-- 테이블 생성
 CREATE TABLE member (
 	mIdx NUMBER NOT NULL PRIMARY KEY,
 	memberId VARCHAR2(20) NOT NULL,
@@ -37,7 +48,9 @@ CREATE TABLE member (
 	memberGender CHAR(1) DEFAULT 'N'
 );
 
--- personalData 테이블 생성
+
+--- personalData
+-- 테이블 생성
 CREATE TABLE personalData (
 	mIdx NUMBER NOT null,
 	pIdx NUMBER NOT NULL PRIMARY KEY,
@@ -52,7 +65,8 @@ CREATE TABLE personalData (
 ALTER TABLE personalData
 ADD CONSTRAINT fk_mIdx FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
--- crewMaker 테이블 생성
+--- crewMaker
+-- 테이블 생성
 CREATE TABLE crewMaker (
 	mIdx NUMBER NOT NULL,
 	cIdx NUMBER NOT NULL PRIMARY KEY,
@@ -67,7 +81,9 @@ CREATE TABLE crewMaker (
 ALTER TABLE crewMaker
 ADD CONSTRAINT fk_mIdx2 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
--- groupBoard 테이블 생성
+
+--- groupBoard
+-- 테이블 생성
 CREATE TABLE groupBoard (
 	gbIdx NUMBER NOT NULL PRIMARY key,
 	cIdx NUMBER NOT NULL,
@@ -89,7 +105,8 @@ ADD CONSTRAINT fk_cIdx FOREIGN KEY(cIdx) REFERENCES crewMaker(cIdx);
 ALTER TABLE groupBoard
 ADD CONSTRAINT fk_pIdx FOREIGN KEY(pIdx) REFERENCES personalData(pIdx);
 
--- bulletinBoard 테이블 생성
+--- bulletinBoard
+-- 테이블 생성
 CREATE TABLE bulletinBoard (
 	fbIdx NUMBER NOT NULL PRIMARY KEY,
 	mIdx NUMBER NOT NULL,
@@ -100,10 +117,17 @@ CREATE TABLE bulletinBoard (
 	fbWriteDate DATE NOT NULL
 );
 
-sALTER TABLE bulletinBoard
+ALTER TABLE bulletinBoard
 ADD CONSTRAINT fk_mIdx3 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
--- faq 테이블 생성
+-- 시퀀스 추가
+INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
+
+-- 테이블 확인
+SELECT * FROM BULLETINBOARD;
+
+--- faq
+-- 테이블 생성
 CREATE TABLE faq (
 	qbIdx NUMBER NOT NULL PRIMARY KEY,
 	qQeustion CLOB NOT NULL,
@@ -115,6 +139,9 @@ CREATE TABLE faq (
 -- 테이블 삭제
 DROP TABLE crewMaker;
 
+-- 데이터 수정
+ALTER TABLE member MODIFY memberGender VARCHAR2(2);
+ALTER TABLE member MODIFY membergender DEFAULT 'N';
 
-
-
+-- 데이터 확인
+SELECT * FROM member;

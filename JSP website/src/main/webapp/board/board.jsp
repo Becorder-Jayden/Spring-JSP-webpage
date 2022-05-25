@@ -1,4 +1,12 @@
+<%@page import="Domain.BoardVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
+%>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -55,7 +63,7 @@
         <div class="motto">
           <p>
 <%
-	if (session.getAttribute("midx") != null) {
+if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
@@ -78,19 +86,19 @@
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath()%>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath()%>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath()%>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/board/board.jsp" style="text-decoration: none"><li>자유게시판</li></a>
+            <a href="<%=request.getContextPath()%>/board/board.jsp" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath()%>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>
@@ -102,31 +110,30 @@
         style="position: relative; left: 180px; justify-content: end"
       > 
 
-				<% 
-				
-				  // 로그인 전 : 로그인 / 회원가입
-					if (session.getAttribute("midx") == null) {
-						out.println("<div name='login'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
-						out.println("</div>");
-						out.println("&nbsp;&nbsp;");
-						out.println("<div name='memberJoin'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
-						out.println("</div>");
-								
-					}
-					// 로그인 후 : 로그아웃/마이페이지
-					else if (session.getAttribute("midx") != null) {
-					
-						out.println("<div name='logout'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
-						out.println("</div>");
-						out.println("&nbsp;&nbsp;");
-						out.println("<div name='myPage'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
-						out.println("</div>");
-					};
-				%>
+				<%
+ 				// 로그인 전 : 로그인 / 회원가입
+ 							if (session.getAttribute("midx") == null) {
+ 								out.println("<div name='login'>");
+ 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+ 								out.println("</div>");
+ 								out.println("&nbsp;&nbsp;");
+ 								out.println("<div name='memberJoin'>");
+ 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+ 								out.println("</div>");
+ 										
+ 							}
+ 							// 로그인 후 : 로그아웃/마이페이지
+ 							else if (session.getAttribute("midx") != null) {
+ 							
+ 								out.println("<div name='logout'>");
+ 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+ 								out.println("</div>");
+ 								out.println("&nbsp;&nbsp;");
+ 								out.println("<div name='myPage'>");
+ 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
+ 								out.println("</div>");
+ 							};
+ 				%>
       </div>
       
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
@@ -148,7 +155,7 @@
             <div class="container">
               <div class="row" style="text-align: right;">
                 <div class="col-sm-11">
-	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath() %>/board/boardWrite.do';">
+	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do';">
 	                  새 글 쓰기
 	                </button>
                 </div>
@@ -178,15 +185,19 @@
                       <th>작성자</th>
                       <th>작성일</th>
                     </tr>
+
+<%
+for (BoardVo bv : alist) {
+%>               
+                    
                     <tr>
-                        <td>2</td>
-                        <td>공지</td>
-                        <!-- page 이동 예시  -->
-                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
-                        <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                        <td>2022/05/03</td>
-                      </a>
+                        <td><%=bv.getFbidx() %></td>
+                        <td><%=bv.getFbCategory() %></td>
+                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
+                        <td><%=bv.getFbWriter() %></td>
+                        <td><%=bv.getFbWriteDate() %></td>
                     </tr>
+<%} %>
                     <tr>
                       <td>5</td>
                       <td>공지</td>
