@@ -30,7 +30,6 @@
 		}
 		
 		fm.action = "<%=request.getContextPath()%>/member/memberLoginAction.do";
-		fm.method = "post";
 		fm.submit();
 		
 	}
@@ -58,14 +57,14 @@
         <!-- 페이지 로고 -->
         <div class="logo">
           <a href="<%=request.getContextPath()%>">
-            <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
+            <img src="../imgs/logo.jpg" alt="logo" style="width: 100%" />
           </a>
         </div>
 
         <!-- 프로필 -->
         <div class="profile_img">
           <img
-            src="imgs/profile_none.jpg"
+            src="../imgs/profile_none.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -125,23 +124,23 @@
 				  // 로그인 전 : 로그인 / 회원가입
 					if (session.getAttribute("midx") == null) {
 						out.println("<div name='login'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberLogin.do' style='text-decoration:none'>로그인</a>");
 						out.println("</div>");
 						out.println("&nbsp;&nbsp;");
 						out.println("<div name='memberJoin'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberJoin.do' style='text-decoration:none'>회원가입</a>");
 						out.println("</div>");
 								
 					}
-					// 로그인 후 : 로그아웃 / 마이페이지
+					// 로그인 후 : 로그아웃/마이페이지
 					else if (session.getAttribute("midx") != null) {
 					
 						out.println("<div name='logout'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberLogout.do' style='text-decoration:none'>로그아웃</a>");
 						out.println("</div>");
 						out.println("&nbsp;&nbsp;");
 						out.println("<div name='myPage'>");
-						out.println("<a href='myPage.jsp' style='text-decoration:none'>마이페이지</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberMyPage.do' style='text-decoration:none'>마이페이지</a>");
 						out.println("</div>");
 					};
 				%>
@@ -186,7 +185,7 @@
 		              </div>
 	                </div>
 	          	  <div class="row" style="margin:auto;">
-        		    <button class="btn btn-primary" onclick="login()">LOGIN</button>
+        		    <button type="button" class="btn btn-primary" onclick="login()">LOGIN</button>
 	          	  </div>
 	          	</form>
 	       	  </div>

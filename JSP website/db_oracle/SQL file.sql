@@ -65,6 +65,7 @@ CREATE TABLE personalData (
 ALTER TABLE personalData
 ADD CONSTRAINT fk_mIdx FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
+
 --- crewMaker
 -- 테이블 생성
 CREATE TABLE crewMaker (
@@ -105,6 +106,7 @@ ADD CONSTRAINT fk_cIdx FOREIGN KEY(cIdx) REFERENCES crewMaker(cIdx);
 ALTER TABLE groupBoard
 ADD CONSTRAINT fk_pIdx FOREIGN KEY(pIdx) REFERENCES personalData(pIdx);
 
+
 --- bulletinBoard
 -- 테이블 생성
 CREATE TABLE bulletinBoard (
@@ -120,11 +122,14 @@ CREATE TABLE bulletinBoard (
 ALTER TABLE bulletinBoard
 ADD CONSTRAINT fk_mIdx3 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
+ALTER TABLE bulletinboard modify (fbWriteDate DEFAULT sysdate);
+
 -- 시퀀스 추가
 INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 
 -- 테이블 확인
 SELECT * FROM BULLETINBOARD;
+
 
 --- faq
 -- 테이블 생성

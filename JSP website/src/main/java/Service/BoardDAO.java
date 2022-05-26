@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import Dbconn.Dbconn;
 import Domain.BoardVo;
+import Domain.SearchCriteria;
 
 // DB 접근을 위한 메소드들로만 구성
 public class BoardDAO {
@@ -48,14 +49,32 @@ public class BoardDAO {
 
 	}
 	
-	public ArrayList<BoardVo> boardSelectAll() {
+	public ArrayList<BoardVo> boardSelectAll(SearchCriteria scri) {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM BULLETINBOARD ORDER BY FBIDX DESC";
+		// 페이징 - 검색어, 작성자
+		String str = "";
+		if (scri.getSearchType().equals("fbtitle")) {
+			str = "and fbtitle like ?";
+		} else {
+			str = "and fbwriter like ?";
+		}
+		
+		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
+		String sql = "SELECT * FROM"
+				+ "(SELECT ROWNUM AS rnum, A.* FROM"
+				+ "(SELECT * FROM bulletinboard ORDER BY fbidx DESC)"
+				+ "A) "
+				+ "B WHERE rnum BETWEEN ? AND ?"; 
+			
+		// 5/26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요?
+		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (scri.getPage()-1)*20+1);
+			pstmt.setInt(2, (scri.getPage()*20));
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -84,5 +103,35 @@ public class BoardDAO {
 		
 	}
 	
+	// 페이징 → boardTotal 		Q.why??
+	public int boardTotal(SearchCriteria scri) {
+		int cnt = 0;
+		ResultSet rs = null;
+		
+		String sql = "SELECT COUNT(*) AS cnt from bulletinboard";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return cnt;
+		
+	}
 	
 }

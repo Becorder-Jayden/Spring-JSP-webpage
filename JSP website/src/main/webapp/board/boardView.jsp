@@ -201,12 +201,12 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
                        	</div>
                        	<div class="col-sm-3">
                           <select name="FBCATEGORY" id="" class="form-select">
-	                          <option value="전체">전체</option>
-	                          <option value="공지">공지</option>
-	                          <option value="자유/소통">자유/소통</option>
-	                          <option value="운동법">운동법</option>
-	                          <option value="식단">식단</option>
-	                          <option value="인증">졸업 인증</option>
+	                          <option value="All">전체</option>
+	                          <option value="All">공지</option>
+	                          <option value="All">자유/소통</option>
+	                          <option value="All">운동법</option>
+	                          <option value="All">식단</option>
+	                          <option value="All">졸업 인증</option>
                            </select>
                         </div>
                     	  </div>
@@ -232,7 +232,7 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
 		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">취소</button> 
-		                      <button type="button" class="btn btn-secondary">수정</button>	
+		                      <button type="button" href="#" class="btn btn-secondary">수정</button> 
 		                      <button type="button" onclick="enroll();" class="btn btn-primary">등록</button>	
 	                      </div>
 	                    </div>
@@ -270,18 +270,70 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 <%
 for (BoardVo bv : alist) {
 %>               
+
+                    
+                    <tr>
+                        <td><%=bv.getFbidx() %></td>
+                        <td><%=bv.getFbCategory() %></td>
+                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
+                        <td><%=bv.getFbWriter() %></td>
+                        <td><%=bv.getFbWriteDate() %></td>
+                    </tr>
+<%} %>            
                   <tr>
-                      <td><%=bv.getFbidx() %></td>
-                      <td><%=bv.getFbCategory() %></td>
-                      <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
-                      <td><%=bv.getFbWriter() %></td>
-                      <td><%=bv.getFbWriteDate() %></td>
+                      <td>2</td>
+                      <td>공지</td>
+                      <!-- page 이동 예시  -->
+                      <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
+                      <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
+                      <td>2022/05/03</td>
+                    </a>
                   </tr>
-<%} %>
+                  <tr>
+                    <td>5</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">일본에서 건너온 저탄고지 다이어트</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">김풍</a></td>
+                    <td>2022/05/05</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">다이어트 중 친오빠 특</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">기안84</a></td>
+                    <td>2022/05/04</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">어젯밤 꿈에서 먹은 음식</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
+                    <td>2022/05/04</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>공지</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
+                    <td>2022/05/03</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>자유/소통</td>
+                    <td><a href="#" style="text-decoration: none; color: black;">현기증 나니깐 어서 라면 끓여주세요</a></td>
+                    <td><a href="#" style="text-decoration: none; color: black;">주펄</a></td>
+                    <td>2022/05/01</td>
+                  </tr>
                 </table>
                 <div class="row text-center" style="font-size: 20px; margin:auto;">
                   <p>
-                  
+                    <a href="" style="text-decoration: none"><</a>
+                    <a href="" style="text-decoration: none">1</a>
+                    <a href="" style="text-decoration: none">2</a>
+                    <a href="" style="text-decoration: none">3</a>
+                    <a href="" style="text-decoration: none">4</a>
+                    <a href="" style="text-decoration: none">5</a>
+                    <a href="" style="text-decoration: none">></a>
                   </p>
                 </div>
               </div>

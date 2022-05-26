@@ -94,7 +94,6 @@
       </div>
 
 
-      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
       <div
         class="nav"
         style="position: relative; left: 180px; justify-content: end"
@@ -105,11 +104,11 @@
 				  // 로그인 전 : 로그인 / 회원가입
 					if (session.getAttribute("midx") == null) {
 						out.println("<div name='login'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberLogin.do' style='text-decoration:none'>로그인</a>");
 						out.println("</div>");
 						out.println("&nbsp;&nbsp;");
 						out.println("<div name='memberJoin'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberJoin.do' style='text-decoration:none'>회원가입</a>");
 						out.println("</div>");
 								
 					}
@@ -117,15 +116,16 @@
 					else if (session.getAttribute("midx") != null) {
 					
 						out.println("<div name='logout'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberLogout.do' style='text-decoration:none'>로그아웃</a>");
 						out.println("</div>");
 						out.println("&nbsp;&nbsp;");
 						out.println("<div name='myPage'>");
-						out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
+						out.println("<a href='"+request.getContextPath()+"/member/memberMyPage.do' style='text-decoration:none'>마이페이지</a>");
 						out.println("</div>");
 					};
 				%>
       </div>
+
       
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->

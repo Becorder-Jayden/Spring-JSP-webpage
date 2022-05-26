@@ -82,10 +82,6 @@ public class MemberController {
 				session.setAttribute("memberId", mv.getMemberid());
 				session.setAttribute("memberName", mv.getMembername());
 				
-				
-				int a = (int) session.getAttribute("mIdx");
-				System.out.println(a);
-				
 				if (session.getAttribute("saveUrl") != null) {									// saveUrl의 정체는? A.로그인 페이지로 들어가기 전 창 
 					response.sendRedirect((String)session.getAttribute("saveUrl"));				// 로그인 전 url 위치가 저장되어 있다면 로그인 후 해당 url로 이동
 				} else {																		// saveUrl 값 없이 로그인을 완료했을 때 
@@ -106,6 +102,7 @@ public class MemberController {
 		
 		// 로그아웃 기능
 		else if (command.equals("/member/memberLogout.do")) {
+			System.out.println("실행");
 			
 			HttpSession session = request.getSession();			// 연결된 세션을 가져옴
 			session.invalidate(); 								// 세션 초기화
