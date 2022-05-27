@@ -169,4 +169,29 @@ public class BoardDAO {
 		
 	}
 	
+	// 카테고리
+	public ArrayList<BoardVo> boardSelectCategory(String cate) {
+		ArrayList<BoardVo> clist = new ArrayList<BoardVo>();
+		ResultSet rs = null;
+		
+		// DB 접근
+		String sql = "SELECT * FROM bulletinboard WHERE fbCategory = '?'";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cate);
+			rs = pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return clist;
+	}
+	
 }

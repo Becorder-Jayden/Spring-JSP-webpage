@@ -190,6 +190,7 @@ public class BoardController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
 			rd.forward(request, response);
 		}
+		
 	}
 			
 
