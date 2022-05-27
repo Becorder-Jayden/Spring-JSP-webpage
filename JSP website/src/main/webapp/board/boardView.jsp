@@ -1,10 +1,16 @@
+<%@page import="Service.BoardDAO"%>
+<%@page import="Domain.SearchCriteria"%>
+<%@page import="Domain.PageMaker"%>
 <%@page import="java.io.Console"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Domain.BoardVo" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="javax.servlet.http.HttpSession" %>
 <%
-ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
+	ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
+	PageMaker pm = (PageMaker)request.getAttribute("pm");
+	SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
+	BoardVo bv = (BoardVo)request.getAttribute("bv");
 %>
 
 <!DOCTYPE html>
@@ -22,7 +28,7 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  
+  	
  	<script>
  		function enroll() {
  			
@@ -43,9 +49,9 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 			fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
 			fm.method = "post";
 			fm.submit();
-			
- 			
+ 		
  		}
+ 		
  	</script>
   
   
@@ -96,7 +102,7 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 	         <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p>어제보다 나은 오늘 ☆★</p>
+          <p id="33">어제보다 나은 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -112,19 +118,19 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>
@@ -183,56 +189,38 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
                  		<form name="frm">
-                  	<h3>새 글 쓰기</h3>
-	                  	<div class="row">
-	                      <div class="col-sm-2">
-	                        작성자 
-	                      </div>
-     	                  <div class="col-sm-3">
-                          <!-- C. 사용자 정보를 불러와서 자동으로 입력가능하도록 함. 수정 불가 -->
-                          <div class="input-group">
-                            <input name="FBWRITER" type="text" class="form-control" value="<%=session.getAttribute("memberId") %>" readonly>	<!-- 빨간 밑줄이 뜨더라도 번호에 마우스를 올렸을때 오류가 뜨지 않으면 큰 문제 x -->
-                          </div>
-                       	</div>
-                      </div>
-                     	<div class="row">
-                         <div class="col-sm-2">
-                           카테고리 
-                       	</div>
-                       	<div class="col-sm-3">
-                          <select name="FBCATEGORY" id="" class="form-select">
-	                          <option value="All">전체</option>
-	                          <option value="All">공지</option>
-	                          <option value="All">자유/소통</option>
-	                          <option value="All">운동법</option>
-	                          <option value="All">식단</option>
-	                          <option value="All">졸업 인증</option>
-                           </select>
-                        </div>
-                    	  </div>
-                  		<div class="row">
-                      	<div class="col-sm-2">
-                         제목
-                       </div>
-                       <div class="col-sm-10">
-                         <div class="input-group">
-                           <input name="FBTITLE" type="text" class="form-control">
-                         </div>
-                       </div>
-                     </div>
-                     <div class="row">
-                       <div class="col-sm-2">
-                         내용
-                       </div>
-                       <div class="col-sm-10">
-                       	 <textarea name="FBCONTENT" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
-                       </div>
-                     </div>
-                    
+                  	<h3>게시글 보기</h3>
+           	         	<table class="table" >
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">작성자</th>
+					         				<td style="text-align:left;" colspan="2""><%=bv.getFbWriter() %></td>
+					         			</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">카테고리</th>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbCategory() %></td>
+					       				</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">제목</th>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbTitle() %></td>
+					       				</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">내용</th>
+					         				<td style="text-align:left;" colspan="2">
+						         				<div style="min-height: 200px;">
+					         						<%=bv.getFbContent() %>
+						         				</div>
+			         						</td>
+					       				</tr>
+					       				<tr>
+					       					<th class="col-sm-2" scope="col">댓글</th>
+					       					<td class="col-sm-2" style="text-align:left;">작성자</td>
+					       					<td style="text-align:left;">댓글</td>
+					       				</tr>
+					         		</table>
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
 		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">취소</button> 
-		                      <button type="button" href="#" class="btn btn-secondary">수정</button> 
+		                      <button type="button" class="btn btn-secondary">수정</button>	
 		                      <button type="button" onclick="enroll();" class="btn btn-primary">등록</button>	
 	                      </div>
 	                    </div>
@@ -242,6 +230,12 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 		          </div>
             </div>
          	</div>
+         	
+         	
+         	
+         	
+         	
+         	
           <div class="row" style="margin:auto;">
               <div class="col">
                 <button herf="#" class="btn btn-light">전체</button>
@@ -268,72 +262,58 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
                     <th>작성일</th>
                   </tr>
 <%
-for (BoardVo bv : alist) {
+for (BoardVo bvv : alist) {
 %>               
-
-                    
-                    <tr>
-                        <td><%=bv.getFbidx() %></td>
-                        <td><%=bv.getFbCategory() %></td>
-                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
-                        <td><%=bv.getFbWriter() %></td>
-                        <td><%=bv.getFbWriteDate() %></td>
-                    </tr>
-<%} %>            
                   <tr>
-                      <td>2</td>
-                      <td>공지</td>
-                      <!-- page 이동 예시  -->
-                      <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요.</a></td>
-                      <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                      <td>2022/05/03</td>
-                    </a>
+                      <td><%=bvv.getFbidx() %></td>
+                      <td><%=bvv.getFbCategory() %></td>
+                      <td>
+                      	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>&fbcategory=<%=bvv.getFbCategory() %>&fbtitle=<%=bvv.getFbTitle() %>&fbcontent=<%=bvv.getFbContent() %>&fbwriter=<%=bvv.getFbWriter() %>" style="text-decoration: none; color: black;">
+                       		<%=bvv.getFbTitle() %>
+                     		</a>
+                   		</td>
+                      <td><%=bvv.getFbWriter() %></td>
+                      <td><%=bvv.getFbWriteDate() %></td>
                   </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>공지</td>
-                    <td><a href="#" style="text-decoration: none; color: black;">일본에서 건너온 저탄고지 다이어트</a></td>
-                    <td><a href="#" style="text-decoration: none; color: black;">김풍</a></td>
-                    <td>2022/05/05</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>공지</td>
-                    <td><a href="#" style="text-decoration: none; color: black;">다이어트 중 친오빠 특</a></td>
-                    <td><a href="#" style="text-decoration: none; color: black;">기안84</a></td>
-                    <td>2022/05/04</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>공지</td>
-                    <td><a href="#" style="text-decoration: none; color: black;">어젯밤 꿈에서 먹은 음식</a></td>
-                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                    <td>2022/05/04</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>공지</td>
-                    <td><a href="#" style="text-decoration: none; color: black;">온라인 예절을 지켜주세요</a></td>
-                    <td><a href="#" style="text-decoration: none; color: black;">침착맨</a></td>
-                    <td>2022/05/03</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>자유/소통</td>
-                    <td><a href="#" style="text-decoration: none; color: black;">현기증 나니깐 어서 라면 끓여주세요</a></td>
-                    <td><a href="#" style="text-decoration: none; color: black;">주펄</a></td>
-                    <td>2022/05/01</td>
-                  </tr>
+<%} %>
                 </table>
                 <div class="row text-center" style="font-size: 20px; margin:auto;">
                   <p>
-                    <a href="" style="text-decoration: none"><</a>
-                    <a href="" style="text-decoration: none">1</a>
-                    <a href="" style="text-decoration: none">2</a>
-                    <a href="" style="text-decoration: none">3</a>
-                    <a href="" style="text-decoration: none">4</a>
-                    <a href="" style="text-decoration: none">5</a>
-                    <a href="" style="text-decoration: none">></a>
+<%
+// Q. boardWrite 페이지에서 게시글 이동했을 때 스크롤이 안올라갔으면 좋겠다(renewal 말고?)??
+
+
+/* 페이징 이동 */
+// 맨앞 : first page 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page=1' style='text-decoration:none;'>◀</a>");
+}
+	
+// < : prev page array 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getStartPage()-1)+"' style='text-decoration:none;'>◁</a>");
+}
+
+// 페이지 번호
+for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
+	out.println("<a href='"+request.getContextPath() 
+							+"/board/boardWrite.do?page="+i+"' style='text-decoration:none;'>"+i+"</a>");			
+}
+
+// > : next page array 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getEndPage()+1)+"' style='text-decoration:none;'>▷</a>");
+}
+
+// 맨뒤: last page 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"' style='text-decoration:none;'>▶</a>");
+}
+%>                  
                   </p>
                 </div>
               </div>

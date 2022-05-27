@@ -1,3 +1,5 @@
+<%@page import="Domain.SearchCriteria"%>
+<%@page import="Domain.PageMaker"%>
 <%@page import="java.io.Console"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Domain.BoardVo" %>
@@ -5,6 +7,8 @@
 <%@page import="javax.servlet.http.HttpSession" %>
 <%
 ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
+PageMaker pm = (PageMaker)request.getAttribute("pm");
+SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
 %>
 
 <!DOCTYPE html>
@@ -27,7 +31,6 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
  		function enroll() {
  			
  			var fm = document.frm
- 			
  			
 			if (fm.FBTITLE.value==""){															
  				alert("제목을 입력하세요");
@@ -182,53 +185,51 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
+                 		
                  		<form name="frm">
-                  	<h3>새 글 쓰기</h3>
-	                  	<div class="row">
-	                      <div class="col-sm-2">
-	                        작성자 
-	                      </div>
-     	                  <div class="col-sm-3">
-                          <!-- C. 사용자 정보를 불러와서 자동으로 입력가능하도록 함. 수정 불가 -->
-                          <div class="input-group">
-                            <input name="FBWRITER" type="text" class="form-control" value="<%=session.getAttribute("memberId") %>" readonly>	<!-- 빨간 밑줄이 뜨더라도 번호에 마우스를 올렸을때 오류가 뜨지 않으면 큰 문제 x -->
-                          </div>
-                       	</div>
-                      </div>
-                     	<div class="row">
-                         <div class="col-sm-2">
-                           카테고리 
-                       	</div>
-                       	<div class="col-sm-3">
-                          <select name="FBCATEGORY" id="" class="form-select">
-	                          <option value="전체">전체</option>
-	                          <option value="공지">공지</option>
-	                          <option value="자유/소통">자유/소통</option>
-	                          <option value="운동법">운동법</option>
-	                          <option value="식단">식단</option>
-	                          <option value="인증">졸업 인증</option>
-                           </select>
-                        </div>
-                    	  </div>
-                  		<div class="row">
-                      	<div class="col-sm-2">
-                         제목
-                       </div>
-                       <div class="col-sm-10">
-                         <div class="input-group">
-                           <input name="FBTITLE" type="text" class="form-control">
-                         </div>
-                       </div>
-                     </div>
-                     <div class="row">
-                       <div class="col-sm-2">
-                         내용
-                       </div>
-                       <div class="col-sm-10">
-                       	 <textarea name="FBCONTENT" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
-                       </div>
-                     </div>
-                    
+                  	<h3>게시글 쓰기</h3>
+           	         	<table class="table" >
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">작성자</th>
+					         				<td style="text-align:left;">
+					         					<div class="col-sm-3">
+						         					<input name="FBWRITER" type="text" class="form-control col-sm-3" value="<%=session.getAttribute("memberId") %>" readonly>
+					         					</div>
+				         					</td>
+					         			</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">카테고리</th>
+					         				<td style="text-align:left;">
+					         					<div class="col-sm-3">
+		                          <select name="FBCATEGORY" id="" class="form-select">
+			                          <option value="전체">전체</option>
+			                          <option value="공지">공지</option>
+			                          <option value="자유/소통">자유/소통</option>
+			                          <option value="운동법">운동법</option>
+			                          <option value="식단">식단</option>
+			                          <option value="인증">졸업 인증</option>
+		                           </select>
+                        		</div>
+                        	</td>
+					       				</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">제목</th>
+					         				<td style="text-align:left;">
+														<input name="FBTITLE" type="text" class="form-control">
+													</td>
+					       				</tr>
+					         			<tr>
+					         				<th class="col-sm-2" scope="col">내용</th>
+					         				<td style="text-align:left;">
+					         					<textarea name="FBCONTENT" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
+			         						</td>
+					       				</tr>
+					       				<tr>
+					       					<th class="col-sm-2" scope="col">댓글</th>
+					       					<td>작성자</td>
+					       					<td>댓글</td>
+					       				</tr>
+					         		</table>
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
 		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">취소</button> 
@@ -236,7 +237,9 @@ ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 		                      <button type="button" onclick="enroll();" class="btn btn-primary">등록</button>	
 	                      </div>
 	                    </div>
-	                  </form>  
+	                  </form>
+                 		
+                 		
                  	</div>
   	            </div>
 		          </div>
@@ -281,7 +284,41 @@ for (BoardVo bv : alist) {
                 </table>
                 <div class="row text-center" style="font-size: 20px; margin:auto;">
                   <p>
-                  
+<%
+// Q. boardWrite 페이지에서 게시글 이동했을 때 스크롤이 안올라갔으면 좋겠다(renewal 말고?)??
+
+
+/* 페이징 이동 */
+// 맨앞 : first page 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page=1' style='text-decoration:none;'>◀</a>");
+}
+	
+// < : prev page array 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getStartPage()-1)+"' style='text-decoration:none;'>◁</a>");
+}
+
+// 페이지 번호
+for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
+	out.println("<a href='"+request.getContextPath() 
+							+"/board/boardWrite.do?page="+i+"' style='text-decoration:none;'>"+i+"</a>");			
+}
+
+// > : next page array 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getEndPage()+1)+"' style='text-decoration:none;'>▷</a>");
+}
+
+// 맨뒤: last page 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/boardWrite.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"' style='text-decoration:none;'>▶</a>");
+}
+%>                  
                   </p>
                 </div>
               </div>

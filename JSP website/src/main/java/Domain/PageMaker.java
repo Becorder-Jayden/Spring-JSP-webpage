@@ -4,10 +4,10 @@ import java.net.URLEncoder;
 
 public class PageMaker {
 	
-	private int totalCount;
-	private int startPage;
-	private int endPage;
-	private boolean prev;
+	private int totalCount;		// 게시글의 개수
+	private int startPage;		// 한 페이지에 보여지는 첫번째 페이지 번호
+	private int endPage;		// 한 페이지에 보여지는 마지막 페이지 번호
+	private boolean prev;		
 	private boolean next;
 	private int displayPageNum = 5;		// 페이징 숫자 갯수
 	private SearchCriteria scri;
@@ -57,17 +57,14 @@ public class PageMaker {
 		this.scri = scri;
 	}
 	
-
+	
 	// Q. 무엇을 위한 매서드? A. 페이징 
 	public void calcData() {				// Q. 자바에서 나누기는 정수부분만 가져오는가? A. 그렇다 1/3 = 0, 1/(double)3 = 0.33
 		endPage = (int) (Math.ceil(scri.getPage()/(double)displayPageNum) * displayPageNum);
 		
 		startPage = (endPage - displayPageNum) + 1;
 		
-		int tempEndPage = (int) Math.ceil(totalCount/(double)scri.getPerPageNum());
-		
-		// startPage, endPage : < 3 4 5 6 7 > 일 때의 3, 7. 화면에 보여지는 마지막 페이지 번호
-		// tempEndPage = 최종적인 마지막 페이지 
+		int tempEndPage = (int) Math.ceil(totalCount/(double)scri.getPerPageNum());	// tempEndPage = 최종적인 마지막 페이지 
 		
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;

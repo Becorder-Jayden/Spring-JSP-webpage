@@ -38,6 +38,14 @@ public class FrontController extends HttpServlet{
 			BoardController bc = new BoardController();
 			bc.doGet(request, response);
 		}
+		else if (location.equals("faq")) {
+			FaqController fc = new FaqController();
+			fc.doGet(request, response);
+		}
+		else if (location.equals("crew")) {
+			CrewController cc = new CrewController();
+			cc.doGet(request, response);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

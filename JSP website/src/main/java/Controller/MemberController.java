@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import Domain.MemberVo;
 import Service.MemberDAO;
 
+@WebServlet("/MemberController")
 public class MemberController {
 	private static final long serialVersionUID = 1L;
 	
@@ -82,12 +84,14 @@ public class MemberController {
 				session.setAttribute("memberId", mv.getMemberid());
 				session.setAttribute("memberName", mv.getMembername());
 				
-				if (session.getAttribute("saveUrl") != null) {									// saveUrl의 정체는? A.로그인 페이지로 들어가기 전 창 
-					response.sendRedirect((String)session.getAttribute("saveUrl"));				// 로그인 전 url 위치가 저장되어 있다면 로그인 후 해당 url로 이동
-				} else {																		// saveUrl 값 없이 로그인을 완료했을 때 
-					response.sendRedirect(request.getContextPath()+"/personal/personal.do");	// personal 페이지로 이동
-				}																				// Q. saveUrl 활용해서 이전페이지로 이동하는 방법 알아보기?
+				if (session.getAttribute("saveUrl") != null) {									
+					response.sendRedirect((String)session.getAttribute("saveUrl"));				
+				} else {																		 
+					response.sendRedirect(request.getContextPath()+"/personal/personal.do");	 
+				}																				
+				// Q. saveUrl? A.이전 창의 url을 저장 ex) 로그인 전 자유게시판을 클릭했을 때 로그인을 요청받음. 로그인을 했을 때 접근 중이었던 자유게시판으로 바로 이동
 			}
+			
 			// 아이디, 비밀번호가 입력되지 않았을 때 로그인 페이지로 이동
 			else {
 				response.sendRedirect(request.getContextPath() + "/member/memberLogin.do");

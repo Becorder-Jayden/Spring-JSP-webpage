@@ -1,4 +1,17 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+if (session.getAttribute("midx") == null){
+	
+	session.setAttribute("saveUrl", request.getRequestURI());
+	
+	out.println("<script>");
+	out.println("alert('로그인 해주세요.')");
+	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
+	out.println("</script>");
+}
+
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -14,6 +27,16 @@
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script>
+  	function groupGoalWriteFn() {
+  		console.log("작동");
+  		var fm = document.frm;
+  		
+  		fm.action = "<%=request.getContextPath()%>/group/groupGoalWriteAction.do";
+  		fm.method = "post";
+  		fm.submit();
+  	}
+  </script>
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -176,18 +199,18 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title">크루 목표</h5>
-                          <button class="btn btn-close"></button>
                         </div>
-                        <div class="modal-body">
-                            크루 목표 
-                          <div class="input-group">
-                            <input type="text" class="form-control">
-                          </div> 
-                        </div>
-                        <div class="modal-footer">
-                          <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                          <button class="btn btn-primary">등록</button>
-                        </div>
+                        <form name="frm">
+	                        <div class="modal-body">
+	                          <div class="input-group">
+	                            <input name="groupGoal" type="text" class="form-control">
+	                          </div> 
+	                        </div>
+	                        <div class="modal-footer">
+	                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	                          <button type="button" class="btn btn-primary" onclick="groupGoalWriteFn()">등록</button>
+	                        </div>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -270,7 +293,7 @@
                           </div>     
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">등록</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="groupGoalWriteFn()">등록</button>
                           </div>
                         </div>     
                       </div>

@@ -24,7 +24,6 @@ public class BoardDAO {
 	
 	// 자유게시판 글쓰기 
 	public int insertBoard(int mIdx, String fbCategory, String fbTitle, String fbContent, String fbWriter) {
-		System.out.println("insertBoard 실행");
 		int value = 0;
 		
 		
@@ -47,6 +46,42 @@ public class BoardDAO {
 		}
 		return value;
 
+	}
+	
+	public BoardVo boardSelectOne(int fbidx) {
+		BoardVo bv = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM bulletinboard WHERE FBIDX = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fbidx);
+			rs = pstmt.executeQuery();
+			
+			
+			// Q.무슨 의미인지?
+						
+			if (rs.next()) {
+				bv = new BoardVo();
+				bv.setFbidx(rs.getInt("fbidx"));
+				bv.setFbCategory(rs.getString("fbcategory"));
+				bv.setFbTitle(rs.getString("fbtitle"));
+				bv.setFbContent(rs.getString("fbcontent"));
+				bv.setFbWriter(rs.getString("fbwriter"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return bv;
+		
 	}
 	
 	public ArrayList<BoardVo> boardSelectAll(SearchCriteria scri) {

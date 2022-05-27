@@ -1,3 +1,5 @@
+<%@page import="org.apache.catalina.connector.OutputBuffer"%>
+<%@page import="javax.script.ScriptContext"%>
 <%@page import="java.io.Console"%>
 <%@page import="Domain.*"%>
 <%@page import="java.util.ArrayList"%>
@@ -5,6 +7,7 @@
 <%
 	ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 	PageMaker pm = (PageMaker)request.getAttribute("pm");
+	SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
 %>
 
 
@@ -88,19 +91,19 @@ if (session.getAttribute("midx") != null) {
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath()%>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath()%>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath()%>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath()%>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath()%>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath()%>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath()%>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath()%>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath()%>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>
@@ -164,19 +167,19 @@ if (session.getAttribute("midx") != null) {
               </div>
               <div class="row" style="margin:auto;">
                 <div class="col">
-                  <button herf="#" class="btn btn-light">전체</button>
-                  <button herf="#" class="btn btn-light">공지</button>
-                  <button herf="#" class="btn btn-light">자유/소통</button>
-                  <button herf="#" class="btn btn-light">운동법</button>
-                  <button herf="#" class="btn btn-light">식단</button>
-                  <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
+                  <button href="#" class="btn btn-light">전체</button>
+                  <button href="#" class="btn btn-light">공지</button>
+                  <button href="#" class="btn btn-light">자유/소통</button>
+                  <button href="#" class="btn btn-light">운동법</button>
+                  <button href="#" class="btn btn-light">식단</button>
+                  <button href="#" class="btn btn-light">다이어트 성공 인증</button>
                 </div>
                 <div class="row">
                   <div class="col-sm-3">
                     <input class="form-control" type="text">
                   </div>
                   <div class="col-sm-2">
-                    <button herf="#" class="btn btn-secondary">검색</button>
+                    <button href="#" class="btn btn-secondary">검색</button>
                 </div>
                 <div class="row" style="margin:auto;">
                   <table class="table" style="text-align:center;">
@@ -195,7 +198,11 @@ for (BoardVo bv : alist) {
                     <tr>
                         <td><%=bv.getFbidx() %></td>
                         <td><%=bv.getFbCategory() %></td>
-                        <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
+                        <td>
+                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bv.getFbidx() %>&fbcategory=<%=bv.getFbCategory() %>&fbtitle=<%=bv.getFbTitle() %>&fbcontent=<%=bv.getFbContent() %>&fbwriter=<%=bv.getFbWriter() %>" style="text-decoration: none; color: black;">
+                        		<%=bv.getFbTitle() %>
+                       		</a>
+                     		</td>
                         <td><%=bv.getFbWriter() %></td>
                         <td><%=bv.getFbWriteDate() %></td>
                     </tr>
@@ -204,14 +211,42 @@ for (BoardVo bv : alist) {
                   </table>
                   <div class="row text-center" style="font-size: 20px; margin:auto;">
                    	<p>
+										
 <%
-
-for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
-	out.println("<a href='"+request.getContextPath() + "/board/board.do?page="+i+"'>"+i+"</a>");			
+/* 페이징 이동 */
+// 맨앞 : first page 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/board.do?page=1' style='text-decoration:none;'>◀</a>");
+}
+	
+// < : prev page array 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/board.do?page="+(pm.getStartPage()-1)+"' style='text-decoration:none;'>◁</a>");
 }
 
+// 페이지 번호
+for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
+	out.println("<a href='"+request.getContextPath() 
+							+"/board/board.do?page="+i+"' style='text-decoration:none;'>"+i+"</a>");			
+}
 
+// > : next page array 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/board.do?page="+(pm.getEndPage()+1)+"' style='text-decoration:none;'>▷</a>");
+}
+
+// 맨뒤: last page 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"' style='text-decoration:none;'>▶</a>");
+}
 %>
+
+
+
                     </p>
                   </div>
                 </div>

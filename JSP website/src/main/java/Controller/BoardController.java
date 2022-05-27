@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import Domain.BoardVo;
 import Domain.PageMaker;
@@ -45,10 +46,13 @@ public class BoardController extends HttpServlet {
 		String saveFolder = "imgs";
 		String saveFullPath = uploadPath + saveFolder;
 		
-		BoardDAO bd = new BoardDAO();	// 자주 사용되므로 전역변수로 설정
+		BoardDAO bd = new BoardDAO();	// DB 접근시 필요, 데이터 전역변수로 설정
 		
+
 		// 게시판 이동
 		if (command.equals("/board/board.do")) {
+			
+			
 			/*페이징*/
 			String page = request.getParameter("page");
 			if (page==null) page = "1";
@@ -56,7 +60,9 @@ public class BoardController extends HttpServlet {
 			
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(pagex);
-			
+
+			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+
 			
 			// BoardDAO → 전역변수로 이동
 			
@@ -65,15 +71,13 @@ public class BoardController extends HttpServlet {
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
-			
+
 			
 			/*게시판에 DB 출력*/
 			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
-			
-			
 			
 			// 이동
 			RequestDispatcher rd = request.getRequestDispatcher("/board/board.jsp");
@@ -92,6 +96,8 @@ public class BoardController extends HttpServlet {
 			
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(pagex);
+
+			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
 			
 			
 			// BoardDAO → 전역변수로 이동
@@ -118,8 +124,6 @@ public class BoardController extends HttpServlet {
 		// 게시판 글쓰기 동작
 		else if (command.equals("/board/boardWriteAction.do")) {
 			
-			System.out.println("boardWriteAction.do 실행");
-			
 			String fbWriter = request.getParameter("FBWRITER");
 			String fbCategory = request.getParameter("FBCATEGORY");
 			String fbTitle = request.getParameter("FBTITLE");
@@ -127,6 +131,7 @@ public class BoardController extends HttpServlet {
 			
 			
 			HttpSession session = request.getSession();
+			
 			int midx = (int) session.getAttribute("midx");
 			
 			bd = new BoardDAO();
@@ -138,6 +143,52 @@ public class BoardController extends HttpServlet {
 			else {
 				response.sendRedirect(request.getContextPath()+"/board/boardWrite.do");
 			}
+		}
+		
+		
+		// 게시 글 보기
+		else if (command.equals("/board/boardView.do")) {
+			
+			
+			/*페이징*/
+			String page = request.getParameter("page");
+			if (page==null) page = "1";
+			int pagex = Integer.parseInt(page);
+			
+			SearchCriteria scri = new SearchCriteria();
+			scri.setPage(pagex);
+
+			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+			
+			
+			// BoardDAO → 전역변수로 이동
+			
+			int cnt = bd.boardTotal(scri);
+			
+			
+			PageMaker pm = new PageMaker();
+			pm.setScri(scri);
+			pm.setTotalCount(cnt);
+			
+			
+			/*게시판에 DB 출력*/
+			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
+			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
+			request.setAttribute("alist", alist);
+			request.setAttribute("pm", pm);
+			
+			//임의 작성
+			String fbidx = request.getParameter("fbidx");
+			int fbidx_ = Integer.parseInt(fbidx);
+			
+			bd = new BoardDAO(); // 전역변수에 BoardDAO 존재
+			BoardVo bv = bd.boardSelectOne(fbidx_);
+			request.setAttribute("bv", bv);
+			//
+			
+			// 이동
+			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
+			rd.forward(request, response);
 		}
 	}
 			

@@ -1,4 +1,19 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+if (session.getAttribute("midx") == null){
+	
+	session.setAttribute("saveUrl", request.getRequestURI());
+	
+	out.println("<script>");
+	out.println("alert('로그인 해주세요.')");
+	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
+	out.println("</script>");
+}
+%>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -82,12 +97,12 @@
             >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"
               ><li>그룹 데이터</li></a
             >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"
               ><li>크루 모집</li></a
             >
           </div>
@@ -97,7 +112,7 @@
             >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"
               ><li>이용 문의</li></a
             >
           </div>
