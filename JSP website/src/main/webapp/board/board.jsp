@@ -157,60 +157,69 @@ if (session.getAttribute("midx") != null) {
         <div class="container" style="left: 200px; width: 90%">
           <div class="row">
             <h1>자유게시판</h1>
-            <div class="container">
+            <div class="container" style="margin:auto;">
               <div class="row" style="text-align: right;">
-                <div class="col-sm-11">
+                <div class="col-sm-12">
 	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do';">
 	                  새 글 쓰기
 	                </button>
                 </div>
               </div>
-              <div class="row" style="margin:auto;">
-                <div class="col">
-                  <button href="#" class="btn btn-light">전체</button>
-                  <button href="#" class="btn btn-light">공지</button>
-                  <button href="#" class="btn btn-light">자유/소통</button>
-                  <button href="#" class="btn btn-light">운동법</button>
-                  <button href="#" class="btn btn-light">식단</button>
-                  <button href="#" class="btn btn-light">다이어트 성공 인증</button>
-                </div>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <input class="form-control" type="text">
-                  </div>
-                  <div class="col-sm-2">
-                    <button href="#" class="btn btn-secondary">검색</button>
-                </div>
-                <div class="row" style="margin:auto;">
-                  <table class="table" style="text-align:center;">
-                    <tr>
-                      <th>번호</th>
-                      <th>카테고리</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
+	                &nbsp;
+	                &nbsp;
+              <div class="row">
+	              <div class="input-group">
+	              	<div class="col">
+		                <div class="input-group-append">
+		                 <button href="#" class="btn btn-light">전체</button>
+		                 <button href="#" class="btn btn-light">공지</button>
+		                 <button href="#" class="btn btn-light">자유/소통</button>
+		                 <button href="#" class="btn btn-light">운동법</button>
+		                 <button href="#" class="btn btn-light">식단</button>
+		                 <button href="#" class="btn btn-light">다이어트 성공 인증</button>
+		              	</div>
+	                </div>
+	                <div class="col-sm-3">
+				           	<input type="text" class="form-control"> 
+	                </div>
+	              	<div class="input-group-append">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
+	              		<button class="btn btn-secondary justify-content-end"> 검색</button>
+	              	</div>
+	             	</div>
+             	</div>
+             	&nbsp;
+             	&nbsp;
+	              <div class="row">  
+	                <div class="row" style="margin:auto;">
+	                  <table class="table" style="text-align:center;">
+	                    <tr>
+	                      <th>번호</th>
+	                      <th>카테고리</th>
+	                      <th>제목</th>
+	                      <th>작성자</th>
+	                      <th>작성일</th>
+	                    </tr>
 
 <%
 for (BoardVo bv : alist) {
 %>               
                     
-                    <tr>
-                        <td><%=bv.getFbidx() %></td>
-                        <td><%=bv.getFbCategory() %></td>
-                        <td>
-                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bv.getFbidx() %>&fbcategory=<%=bv.getFbCategory() %>&fbtitle=<%=bv.getFbTitle() %>&fbcontent=<%=bv.getFbContent() %>&fbwriter=<%=bv.getFbWriter() %>" style="text-decoration: none; color: black;">
-                        		<%=bv.getFbTitle() %>
-                       		</a>
-                     		</td>
-                        <td><%=bv.getFbWriter() %></td>
-                        <td><%=bv.getFbWriteDate() %></td>
-                    </tr>
-<%} %>
-
-                  </table>
-                  <div class="row text-center" style="font-size: 20px; margin:auto;">
-                   	<p>
+	                    <tr>
+	                        <td><%=bv.getFbidx() %></td>
+	                        <td><%=bv.getFbCategory() %></td>
+	                        <td>
+	                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bv.getFbidx() %>&fbcategory=<%=bv.getFbCategory() %>&fbtitle=<%=bv.getFbTitle() %>&fbcontent=<%=bv.getFbContent() %>&fbwriter=<%=bv.getFbWriter() %>" style="text-decoration: none; color: black;">
+	                        		<%=bv.getFbTitle() %>
+	                       		</a>
+	                     		</td>
+	                        <td><%=bv.getFbWriter() %></td>
+	                        <td><%=bv.getFbWriteDate() %></td>
+                  	  </tr>
+	<%} %>
+	
+	                  </table>
+	                  <div class="row text-center" style="font-size: 20px; margin:auto;">
+	                   	<p>
 										
 <%
 /* 페이징 이동 */

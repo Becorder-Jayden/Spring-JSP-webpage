@@ -237,21 +237,26 @@
          	
          	
           <div class="row" style="margin:auto;">
-              <div class="col">
-                <button herf="#" class="btn btn-light">전체</button>
-                <button herf="#" class="btn btn-light">공지</button>
-                <button herf="#" class="btn btn-light">자유/소통</button>
-                <button herf="#" class="btn btn-light">운동법</button>
-                <button herf="#" class="btn btn-light">식단</button>
-                <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
-              </div>
-              <div class="row">
-                <div class="col-sm-3">
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-sm-2">
-                  <button herf="#" class="btn btn-secondary">검색</button>
-              </div>
+             <div class="row">
+	              <div class="input-group">
+	              	<div class="col">
+		                <div class="input-group-append">
+		                 <button href="#" class="btn btn-light">전체</button>
+		                 <button href="#" class="btn btn-light">공지</button>
+		                 <button href="#" class="btn btn-light">자유/소통</button>
+		                 <button href="#" class="btn btn-light">운동법</button>
+		                 <button href="#" class="btn btn-light">식단</button>
+		                 <button href="#" class="btn btn-light">다이어트 성공 인증</button>
+		              	</div>
+	                </div>
+	                <div class="col-sm-3">
+				           	<input type="text" class="form-control"> 
+	                </div>
+	              	<div class="input-group-append">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
+	              		<button class="btn btn-secondary justify-content-end"> 검색</button>
+	              	</div>
+	             	</div>
+             	</div>
               <div class="row" style="margin:auto;">
                 <table class="table" style="text-align:center;">
                   <tr>
