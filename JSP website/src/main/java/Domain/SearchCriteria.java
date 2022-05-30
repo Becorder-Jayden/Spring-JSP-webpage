@@ -4,7 +4,8 @@ public class SearchCriteria extends Criteria {
 	private String searchType;
 	private String keyword;
 	private String category;
-	
+	private String fbidx;
+
 
 	public SearchCriteria() {
 		this.searchType="";
@@ -36,5 +37,14 @@ public class SearchCriteria extends Criteria {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 	
+	// 5/30 추가 
+	public String getBidx() {
+		return fbidx;
+	}
+	
+	public void setBidx(String bidx) {
+		this.fbidx = bidx;
+	}
 }

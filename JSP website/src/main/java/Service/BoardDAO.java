@@ -91,25 +91,28 @@ public class BoardDAO {
 		// 페이징 - 검색어, 작성자
 		String str = "";
 		if (scri.getSearchType().equals("fbtitle")) {
-			str = "and fbtitle like ?";
-		} else {
-			str = "and fbwriter like ?";
-		}
+			str = "where fbtitle like ?";
+		} else if (scri.getSearchType().equals("fbwriter")) {
+			str= "where fbwriter like ?";
+		} else if (scri.getSearchType().equals("fbidx")) {
+			str = "where fbidx like ?";
+		};
 		
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
 		String sql = "SELECT * FROM"
 				+ "(SELECT ROWNUM AS rnum, A.* FROM"
-				+ "(SELECT * FROM bulletinboard ORDER BY fbidx DESC)"
+				+ "(SELECT * FROM bulletinboard " + str + " ORDER BY fbidx DESC)"
 				+ "A) "
 				+ "B WHERE rnum BETWEEN ? AND ?"; 
-			
-		// 5/26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요?
+		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함	
+		// 5/26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
 		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (scri.getPage()-1)*20+1);
-			pstmt.setInt(2, (scri.getPage()*20));
+			pstmt.setString(1, "%"+scri.getKeyword()+"%");
+			pstmt.setInt(2, (scri.getPage()-1)*20+1);
+			pstmt.setInt(3, (scri.getPage()*20));
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -142,11 +145,20 @@ public class BoardDAO {
 	public int boardTotal(SearchCriteria scri) {
 		int cnt = 0;
 		ResultSet rs = null;
+		String str = "";
+		if (scri.getSearchType().equals("fbtitle")) {
+			str = "where fbtitle like ?";
+		} else if (scri.getSearchType().equals("fbwriter")) {
+			str = "where fbwriter like ?";
+		} else if (scri.getSearchType().equals("fbidx")) {
+			str = "where fbidx like ?";
+		};
 		
-		String sql = "SELECT COUNT(*) AS cnt from bulletinboard";
+		String sql = "SELECT COUNT(*) AS cnt from bulletinboard " + str + "";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+scri.getKeyword()+"%");
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -160,13 +172,11 @@ public class BoardDAO {
 			try {
 				rs.close();
 				pstmt.close();
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return cnt;
-		
 	}
 	
 	// 카테고리

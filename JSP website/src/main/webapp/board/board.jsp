@@ -1,3 +1,4 @@
+<%@page import="org.apache.coyote.RequestGroupInfo"%>
 <%@page import="org.apache.catalina.connector.OutputBuffer"%>
 <%@page import="javax.script.ScriptContext"%>
 <%@page import="java.io.Console"%>
@@ -179,7 +180,7 @@ if (session.getAttribute("midx") != null) {
 		              	</div>
 	                </div>
 	                <div class="col">
-	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do?searchType=<%=pm.encoding(pm.getScri().getSearchType())%>" method="get">
+	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
 			               	<div class="form-row">
 				               	<div class="col">
 					                <select name="searchType">
@@ -201,7 +202,6 @@ if (session.getAttribute("midx") != null) {
              	</div>
              	&nbsp;
              	&nbsp;
-             	
 	              <div class="row">  
 	                <div class="row" style="margin:auto;">
 	                  <table class="table" style="text-align:center;">

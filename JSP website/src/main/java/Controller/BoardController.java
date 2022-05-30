@@ -62,6 +62,8 @@ public class BoardController extends HttpServlet {
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
 			if (searchType == null) searchType = "fbtitle";
+// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			
 			
 			
 			/*분류 기준*/

@@ -245,45 +245,58 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
             </div>
          	</div>
              	&nbsp;
-             	&nbsp;
-             <div class="row">
+	                &nbsp;
+              <div class="row">
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
 		                 <button href="#" class="btn btn-light">전체</button>
-		                 <button href="#" class="btn btn-light">공지</button>
 		                 <button href="#" class="btn btn-light">자유/소통</button>
 		                 <button href="#" class="btn btn-light">운동법</button>
 		                 <button href="#" class="btn btn-light">식단</button>
-		                 <button href="#" class="btn btn-light">다이어트 성공 인증</button>
+		                 <button href="#" class="btn btn-light">인증</button>
 		              	</div>
 	                </div>
-	                <div class="col-sm-3">
-				           	<input type="text" class="form-control"> 
+	                <div class="col">
+	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
+			               	<div class="form-row">
+				               	<div class="col">
+					                <select name="searchType">
+					                	<option value="fbtitle">제목</option>
+					                	<option value="fbidx">번호</option>
+					                	<option value="fbwriter">작성자</option>
+					                </select>
+				                </div>
+				                <div class="col">
+						           		<input type="text" name="keyword" class="form-control"> 
+				                </div>
+				              	<div class="col">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
+			              			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
+			              		</div>
+		                	</div>
+		               	</form>
 	                </div>
-	              	<div class="input-group-append">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
-	              		<button class="btn btn-secondary justify-content-end"> 검색</button>
-	              	</div>
 	             	</div>
              	</div>
              	&nbsp;
              	&nbsp;
-              <div class="row" style="margin:auto;">
-                <table class="table" style="text-align:center;">
-                  <tr>
-                    <th>번호</th>
-                    <th>카테고리</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                  </tr>
+	              <div class="row">  
+	                <div class="row" style="margin:auto;">
+	                  <table class="table" style="text-align:center;">
+	                    <tr>
+	                      <th>번호</th>
+	                      <th>카테고리</th>
+	                      <th>제목</th>
+	                      <th>작성자</th>
+	                      <th>작성일</th>
+	                    </tr>
 <%
 for (BoardVo bvv : alist) {
 %>               
                   <tr>
                       <td><%=bvv.getFbidx() %></td>
                       <td><%=bvv.getFbCategory() %></td>
-                      <td><a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
+                      <td><a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>" style="text-decoration: none; color: black;"><%=bvv.getFbTitle() %></a></td>
                       <td><%=bvv.getFbWriter() %></td>
                       <td><%=bvv.getFbWriteDate() %></td>
                   </tr>
@@ -299,32 +312,51 @@ for (BoardVo bvv : alist) {
 // 맨앞 : first page 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page=1' style='text-decoration:none;'>◀</a>");
+							+"/board/board.do?page=1"
+							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"' style='text-decoration:none;'>◀</a>");
 }
 	
 // < : prev page array 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getStartPage()-1)+"' style='text-decoration:none;'>◁</a>");
+							+"/board/board.do?page="+(pm.getStartPage()-1)
+							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"' style='text-decoration:none;'>◁</a>");
 }
 
 // 페이지 번호
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
-							+"/board/boardWrite.do?page="+i+"' style='text-decoration:none;'>"+i+"</a>");			
+							+"/board/board.do?page="+i
+							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"' style='text-decoration:none;'>"+i+"</a>");			
 }
 
 // > : next page array 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getEndPage()+1)+"' style='text-decoration:none;'>▷</a>");
+							+"/board/board.do?page="+(pm.getEndPage()+1)
+							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"' style='text-decoration:none;'>▷</a>");
 }
 
 // 맨뒤: last page 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"' style='text-decoration:none;'>▶</a>");
-}
+							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)
+							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"' style='text-decoration:none;'>▶</a>");
 %>                  
                   </p>
                 </div>
