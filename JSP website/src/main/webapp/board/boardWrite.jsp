@@ -9,6 +9,7 @@
 ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 PageMaker pm = (PageMaker)request.getAttribute("pm");
 SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
+BoardVo bv = (BoardVo)request.getAttribute("bv");
 %>
 
 <!DOCTYPE html>
@@ -142,11 +143,11 @@ SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
  				// 로그인 전 : 로그인 / 회원가입
  							if (session.getAttribute("midx") == null) {
  								out.println("<div name='login'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberLogin.do' style='text-decoration:none'>로그인</a>");
  								out.println("</div>");
  								out.println("&nbsp;&nbsp;");
  								out.println("<div name='memberJoin'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberJoin.do' style='text-decoration:none'>회원가입</a>");
  								out.println("</div>");
  										
  							}
@@ -154,11 +155,11 @@ SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
  							else if (session.getAttribute("midx") != null) {
  							
  								out.println("<div name='logout'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberLogout.do' style='text-decoration:none'>로그아웃</a>");
  								out.println("</div>");
  								out.println("&nbsp;&nbsp;");
  								out.println("<div name='myPage'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberMyPage.do' style='text-decoration:none'>마이페이지</a>");
  								out.println("</div>");
  							};
  				%>
@@ -185,49 +186,49 @@ SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
-                 		
                  		<form name="frm">
                   	<h3>게시글 쓰기</h3>
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">작성자</th>
-					         				<td style="text-align:left;">
-					         					<div class="col-sm-3">
-						         					<input name="FBWRITER" type="text" class="form-control col-sm-3" value="<%=session.getAttribute("memberId") %>" readonly>
-					         					</div>
-				         					</td>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbWriter() %></td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">카테고리</th>
-					         				<td style="text-align:left;">
-					         					<div class="col-sm-3">
-		                          <select name="FBCATEGORY" id="" class="form-select">
-			                          <option value="전체">전체</option>
-			                          <option value="공지">공지</option>
-			                          <option value="자유/소통">자유/소통</option>
-			                          <option value="운동법">운동법</option>
-			                          <option value="식단">식단</option>
-			                          <option value="인증">졸업 인증</option>
-		                           </select>
-                        		</div>
-                        	</td>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbCategory() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">제목</th>
-					         				<td style="text-align:left;">
-														<input name="FBTITLE" type="text" class="form-control">
-													</td>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbTitle() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">내용</th>
-					         				<td style="text-align:left;">
-					         					<textarea name="FBCONTENT" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
+					         				<td style="text-align:left;" colspan="2">
+						         				<div style="min-height: 200px;">
+					         						<%=bv.getFbContent() %>
+						         				</div>
 			         						</td>
 					       				</tr>
 					       				<tr>
 					       					<th class="col-sm-2" scope="col">댓글</th>
-					       					<td>작성자</td>
-					       					<td>댓글</td>
+					       					<td class="col-sm-2" style="text-align:left;">작성자</td>
+					       					<td style="text-align:left;">댓글</td>
+					       				</tr>
+					       				<tr>
+					       					<th class="col-sm-2" scope="col">댓글 작성</th>
+					       					<td class="col-sm-2" style="text-align:left;">
+					       						<input class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
+				       						</td>
+					       					<td style="text-align:left;">
+					       						<div class="input-group">
+						       						<div class="col-sm-10">
+							       						<input type="text" class="form-control">
+						       						</div>
+						       						<div class="input-group-append">
+							       						<button class="btn btn-outline-secondary">등록</button>
+						       						</div>
+						       					</div>
+				       						</td>
 					       				</tr>
 					         		</table>
 	                    <div class="row" style="text-align: right;">
@@ -238,29 +239,35 @@ SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
 	                      </div>
 	                    </div>
 	                  </form>
-                 		
-                 		
                  	</div>
   	            </div>
 		          </div>
             </div>
          	</div>
-          <div class="row" style="margin:auto;">
-              <div class="col">
-                <button herf="#" class="btn btn-light">전체</button>
-                <button herf="#" class="btn btn-light">공지</button>
-                <button herf="#" class="btn btn-light">자유/소통</button>
-                <button herf="#" class="btn btn-light">운동법</button>
-                <button herf="#" class="btn btn-light">식단</button>
-                <button herf="#" class="btn btn-light">다이어트 성공 인증</button>
-              </div>
-              <div class="row">
-                <div class="col-sm-3">
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-sm-2">
-                  <button herf="#" class="btn btn-secondary">검색</button>
-              </div>
+             	&nbsp;
+             	&nbsp;
+             <div class="row">
+	              <div class="input-group">
+	              	<div class="col">
+		                <div class="input-group-append">
+		                 <button href="#" class="btn btn-light">전체</button>
+		                 <button href="#" class="btn btn-light">공지</button>
+		                 <button href="#" class="btn btn-light">자유/소통</button>
+		                 <button href="#" class="btn btn-light">운동법</button>
+		                 <button href="#" class="btn btn-light">식단</button>
+		                 <button href="#" class="btn btn-light">다이어트 성공 인증</button>
+		              	</div>
+	                </div>
+	                <div class="col-sm-3">
+				           	<input type="text" class="form-control"> 
+	                </div>
+	              	<div class="input-group-append">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
+	              		<button class="btn btn-secondary justify-content-end"> 검색</button>
+	              	</div>
+	             	</div>
+             	</div>
+             	&nbsp;
+             	&nbsp;
               <div class="row" style="margin:auto;">
                 <table class="table" style="text-align:center;">
                   <tr>
@@ -271,14 +278,14 @@ SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
                     <th>작성일</th>
                   </tr>
 <%
-for (BoardVo bv : alist) {
+for (BoardVo bvv : alist) {
 %>               
                   <tr>
-                      <td><%=bv.getFbidx() %></td>
-                      <td><%=bv.getFbCategory() %></td>
-                      <td><a href="bulletin_board_page.html" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
-                      <td><%=bv.getFbWriter() %></td>
-                      <td><%=bv.getFbWriteDate() %></td>
+                      <td><%=bvv.getFbidx() %></td>
+                      <td><%=bvv.getFbCategory() %></td>
+                      <td><a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>" style="text-decoration: none; color: black;"><%=bv.getFbTitle() %></a></td>
+                      <td><%=bvv.getFbWriter() %></td>
+                      <td><%=bvv.getFbWriteDate() %></td>
                   </tr>
 <%} %>
                 </table>

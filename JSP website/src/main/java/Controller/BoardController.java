@@ -52,20 +52,28 @@ public class BoardController extends HttpServlet {
 		// 게시판 이동
 		if (command.equals("/board/board.do")) {
 			
-			
 			/*페이징*/
 			String page = request.getParameter("page");
-			if (page==null) page = "1";
+			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
+			/*검색어*/
+			String keyword = request.getParameter("keyword");
+			if (keyword == null) keyword = "";
+			String searchType = request.getParameter("searchType");
+			if (searchType == null) searchType = "fbtitle";
+			
+			
+			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);
+			scri.setPage(pagex);	// 페이징
+			scri.setKeyword(keyword);	// 키워드
+			scri.setSearchType(searchType);	// 검색 유형
 
-			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+			request.setAttribute("scri", scri);	// 게시판에 보여질 글 분류를 위한 데이터 전송			
 
 			
 			// BoardDAO → 전역변수로 이동
-			
 			int cnt = bd.boardTotal(scri);
 			
 			PageMaker pm = new PageMaker();

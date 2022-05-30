@@ -145,11 +145,11 @@
  				// 로그인 전 : 로그인 / 회원가입
  							if (session.getAttribute("midx") == null) {
  								out.println("<div name='login'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그인</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberLogin.do' style='text-decoration:none'>로그인</a>");
  								out.println("</div>");
  								out.println("&nbsp;&nbsp;");
  								out.println("<div name='memberJoin'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>회원가입</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberJoin.do' style='text-decoration:none'>회원가입</a>");
  								out.println("</div>");
  										
  							}
@@ -157,11 +157,11 @@
  							else if (session.getAttribute("midx") != null) {
  							
  								out.println("<div name='logout'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>로그아웃</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberLogout.do' style='text-decoration:none'>로그아웃</a>");
  								out.println("</div>");
  								out.println("&nbsp;&nbsp;");
  								out.println("<div name='myPage'>");
- 								out.println("<a href='" + request.getContextPath() + "' style='text-decoration:none'>마이페이지</a>");
+ 								out.println("<a href='"+request.getContextPath()+"/member/memberMyPage.do' style='text-decoration:none'>마이페이지</a>");
  								out.println("</div>");
  							};
  				%>
@@ -193,7 +193,7 @@
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">작성자</th>
-					         				<td style="text-align:left;" colspan="2""><%=bv.getFbWriter() %></td>
+					         				<td style="text-align:left;" colspan="2"><%=bv.getFbWriter() %></td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">카테고리</th>
@@ -216,28 +216,47 @@
 					       					<td class="col-sm-2" style="text-align:left;">작성자</td>
 					       					<td style="text-align:left;">댓글</td>
 					       				</tr>
+					       				<tr>
+					       					<th class="col-sm-2" scope="col">댓글 작성</th>
+					       					<td class="col-sm-2" style="text-align:left;">
+					       						<input class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
+				       						</td>
+					       					<td style="text-align:left;">
+					       						<div class="input-group">
+						       						<div class="col-sm-10">
+							       						<input type="text" class="form-control">
+						       						</div>
+						       						<div class="input-group-append">
+							       						<button class="btn btn-outline-secondary">등록</button>
+						       						</div>
+						       					</div>
+				       						</td>
+					       				</tr>
 					         		</table>
+					         		
+<%
+	if (session.getAttribute("mIdx") == bv.getMidx()) {
+%>
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
-		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">취소</button> 
+		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">삭제</button> 
 		                      <button type="button" class="btn btn-secondary">수정</button>	
-		                      <button type="button" onclick="enroll();" class="btn btn-primary">등록</button>	
 	                      </div>
 	                    </div>
+<%} %>
+
+
+
 	                  </form>  
                  	</div>
   	            </div>
 		          </div>
             </div>
          	</div>
-         	
-         	
-         	
-         	
-         	
-         	
-          <div class="row" style="margin:auto;">
-             <div class="row">
+         	&nbsp;
+         	&nbsp;
+          <div class="row">
+             <div class="row" style="margin:auto;">
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
@@ -257,6 +276,8 @@
 	              	</div>
 	             	</div>
              	</div>
+		         	&nbsp;
+		         	&nbsp;
               <div class="row" style="margin:auto;">
                 <table class="table" style="text-align:center;">
                   <tr>

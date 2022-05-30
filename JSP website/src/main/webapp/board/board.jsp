@@ -172,23 +172,36 @@ if (session.getAttribute("midx") != null) {
 	              	<div class="col">
 		                <div class="input-group-append">
 		                 <button href="#" class="btn btn-light">전체</button>
-		                 <button href="#" class="btn btn-light">공지</button>
 		                 <button href="#" class="btn btn-light">자유/소통</button>
 		                 <button href="#" class="btn btn-light">운동법</button>
 		                 <button href="#" class="btn btn-light">식단</button>
-		                 <button href="#" class="btn btn-light">다이어트 성공 인증</button>
+		                 <button href="#" class="btn btn-light">인증</button>
 		              	</div>
 	                </div>
-	                <div class="col-sm-3">
-				           	<input type="text" class="form-control"> 
+	                <div class="col">
+	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do?searchType=<%=pm.encoding(pm.getScri().getSearchType())%>" method="get">
+			               	<div class="form-row">
+				               	<div class="col">
+					                <select name="searchType">
+					                	<option value="fbtitle">제목</option>
+					                	<option value="fbidx">번호</option>
+					                	<option value="fbwriter">작성자</option>
+					                </select>
+				                </div>
+				                <div class="col">
+						           		<input type="text" name="keyword" class="form-control"> 
+				                </div>
+				              	<div class="col">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
+			              			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
+			              		</div>
+		                	</div>
+		               	</form>
 	                </div>
-	              	<div class="input-group-append">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
-	              		<button class="btn btn-secondary justify-content-end"> 검색</button>
-	              	</div>
 	             	</div>
              	</div>
              	&nbsp;
              	&nbsp;
+             	
 	              <div class="row">  
 	                <div class="row" style="margin:auto;">
 	                  <table class="table" style="text-align:center;">
@@ -226,8 +239,10 @@ for (BoardVo bv : alist) {
 // 맨앞 : first page 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page=1?"
+							+"/board/board.do?page=1"
 							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◀</a>");
 }
 	
@@ -236,6 +251,8 @@ if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getStartPage()-1)
 							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◁</a>");
 }
 
@@ -244,6 +261,8 @@ for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
 							+"/board/board.do?page="+i
 							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>"+i+"</a>");			
 }
 
@@ -252,6 +271,8 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getEndPage()+1)
 							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▷</a>");
 }
 
@@ -260,6 +281,8 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)
 							+"&category="
+							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
+							+"searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
 }
 %>
