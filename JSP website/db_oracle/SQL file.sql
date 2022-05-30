@@ -31,8 +31,8 @@ DROP SEQUENCE 시퀀스명;
 
 -- 시퀀스 삽입
 INSERT INTO a_board(BIDX,SUBJECT,CONTENT,WRITER,IP,MIDX) VALUES(bidx_seq.nextval, '열두번째 게시물', '열두번째 내용', '송혜교', '223.92.45.131',10);
+SELECT * FROM BULLETINBOARD a ORDER BY fbidx desc;
 
-INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 ----
 
 
@@ -124,13 +124,17 @@ ADD CONSTRAINT fk_mIdx3 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
 ALTER TABLE bulletinboard modify (fbWriteDate DEFAULT sysdate);
 
+INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
+
+SELECT COUNT(*) from BULLETINBOARD;
 -- 시퀀스 추가
 INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 
 -- 테이블 확인
-SELECT * FROM BULLETINBOARD;
-
-
+SELECT * FROM BULLETINBOARD WHERE fbidx = 1;
+SELECT * FROM bulletinboard WHERE FBCATEGORY = '카테고리';
+SELECT COUNT(*) AS cnt FROM BULLETINBOARD WHERE fbtitle LIKE '%제목%' ;
+SELECT * FROM BULLETINBOARD WHERE fbcategory LIKE '전체';
 --- faq
 -- 테이블 생성
 CREATE TABLE faq (
@@ -150,3 +154,24 @@ ALTER TABLE member MODIFY membergender DEFAULT 'N';
 
 -- 데이터 확인
 SELECT * FROM member;
+
+-- 게시판의 m 부터 n번째 글을 가져오기 5/26
+SELECT * FROM
+	(SELECT ROWNUM AS rnum, A.* FROM
+		(SELECT * FROM a_board WHERE delyn='N' ORDER BY originbidx DESC, depth ASC)
+	 A)
+ B WHERE rnum BETWEEN 4 AND 10;
+
+SELECT * FROM
+	(SELECT ROWNUM AS rnum, a.* FROM
+		(SELECT * FROM BULLETINBOARD ORDER BY FBIDX DESC)
+	a)
+b;
+
+--커밋
+COMMIT;
+
+SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory = 'all';
+
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory = '운동법' ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN 1 AND 20;
+

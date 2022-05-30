@@ -62,17 +62,19 @@ public class BoardController extends HttpServlet {
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
 			if (searchType == null) searchType = "fbtitle";
+			
 			String category = request.getParameter("category");
-			if (category == null) category = "";
-																		// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			if (category == null) category = "all";
+
+			// Q. 게시글 번호로 찾기 ? A. 구현 완료
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(pagex);	// 페이징
 			scri.setKeyword(keyword);	// 키워드
 			scri.setSearchType(searchType);	// 검색 유형
-
-			request.setAttribute("scri", scri);	// 게시판에 보여질 글 분류를 위한 데이터 전송			
+			scri.setCategory(category);
+			//request.setAttribute("scri", scri);	// 게시판에 보여질 글 분류를 위한 데이터 전송			
 
 			
 			// BoardDAO → 전역변수로 이동
@@ -86,6 +88,9 @@ public class BoardController extends HttpServlet {
 			/*게시판에 DB 출력*/
 			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
+			
+			System.out.println("boarselectall 실행");
+			
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
@@ -108,8 +113,10 @@ public class BoardController extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
-			if (searchType == null) searchType = "fbtitle";
-// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			if (searchType == null) searchType = "fbtitle";						// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			
+			String category = request.getParameter("category");
+			if (category == null) category = "all";
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();

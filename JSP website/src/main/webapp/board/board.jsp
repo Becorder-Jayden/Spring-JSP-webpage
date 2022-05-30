@@ -172,18 +172,18 @@ if (session.getAttribute("midx") != null) {
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
-		                 <button name="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do';">전체</button>
-		                 <button class="btn btn-light">자유/소통</button>
-		                 <button class="btn btn-light">운동법</button>
-		                 <button class="btn btn-light">식단</button>
-		                 <button class="btn btn-light">인증</button>
+		                 <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=all'">전체</button>
+		                 <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=free'">자유/소통</button>
+		                 <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=workout'">운동법</button>
+		                 <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=diet'">식단</button>
+		                 <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=certified'">인증</button>
 		              	</div>
 	                </div>
 	                <div class="col">
 	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
 			               	<div class="form-row">
 				               	<div class="col">
-					                <select name="searchType">
+					                <select class="custom-select" name="searchType">
 					                	<option value="fbtitle">제목</option>
 					                	<option value="fbidx">번호</option>
 					                	<option value="fbwriter">작성자</option>

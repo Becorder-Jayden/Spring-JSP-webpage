@@ -263,8 +263,8 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 		          </div>
             </div>
          	</div>
-             	&nbsp;
-	                &nbsp;
+            	&nbsp;
+              &nbsp;
               <div class="row">
 	              <div class="input-group">
 	              	<div class="col">
@@ -280,7 +280,7 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 	                	<form name="frm" action="<%=request.getContextPath() %>/board/boardWrite.do" method="get">
 			               	<div class="form-row">
 				               	<div class="col">
-					                <select name="searchType">
+					                <select class="custom-select" name="searchType">
 					                	<option value="fbtitle">제목</option>
 					                	<option value="fbidx">번호</option>
 					                	<option value="fbwriter">작성자</option>
@@ -332,7 +332,7 @@ for (BoardVo bvv : alist) {
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page=1"
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◀</a>");
@@ -342,7 +342,7 @@ if (pm.isPrev()) {
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getStartPage()-1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◁</a>");
@@ -352,7 +352,7 @@ if (pm.isPrev()) {
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
 							+"/board/board.do?page="+i
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>"+i+"</a>");			
@@ -362,7 +362,7 @@ for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getEndPage()+1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▷</a>");
@@ -372,7 +372,7 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
