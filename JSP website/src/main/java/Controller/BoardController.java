@@ -48,7 +48,7 @@ public class BoardController extends HttpServlet {
 		
 		BoardDAO bd = new BoardDAO();	// DB 접근시 필요, 데이터 전역변수로 설정
 		
-
+		
 		// 게시판 이동
 		if (command.equals("/board/board.do")) {
 			
@@ -62,9 +62,9 @@ public class BoardController extends HttpServlet {
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
 			if (searchType == null) searchType = "fbtitle";
-// Q. 게시글 번호로 찾기 ? A. 구현 완료
-			
-			
+			String category = request.getParameter("category");
+			if (category == null) category = "";
+																		// Q. 게시글 번호로 찾기 ? A. 구현 완료
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
@@ -101,11 +101,21 @@ public class BoardController extends HttpServlet {
 			
 			/*페이징*/
 			String page = request.getParameter("page");
-			if (page==null) page = "1";
+			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
+			/*검색어*/
+			String keyword = request.getParameter("keyword");
+			if (keyword == null) keyword = "";
+			String searchType = request.getParameter("searchType");
+			if (searchType == null) searchType = "fbtitle";
+// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			
+			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);
+			scri.setPage(pagex);	// 페이징
+			scri.setKeyword(keyword);	// 키워드
+			scri.setSearchType(searchType);	// 검색 유형
 
 			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
 			
@@ -118,10 +128,8 @@ public class BoardController extends HttpServlet {
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 			
-			
 			/*게시판에 DB 출력*/
-			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
-			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
+			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
@@ -159,14 +167,22 @@ public class BoardController extends HttpServlet {
 		// 게시 글 보기
 		else if (command.equals("/board/boardView.do")) {
 			
-			
 			/*페이징*/
 			String page = request.getParameter("page");
-			if (page==null) page = "1";
+			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
+			/*검색어*/
+			String keyword = request.getParameter("keyword");
+			if (keyword == null) keyword = "";
+			String searchType = request.getParameter("searchType");
+			if (searchType == null) searchType = "fbtitle";
+			
+			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);
+			scri.setPage(pagex);	// 페이징
+			scri.setKeyword(keyword);	// 키워드
+			scri.setSearchType(searchType);	// 검색 유형
 
 			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
 			
@@ -175,15 +191,12 @@ public class BoardController extends HttpServlet {
 			
 			int cnt = bd.boardTotal(scri);
 			
-			
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 			
-			
 			/*게시판에 DB 출력*/
-			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
-			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
+			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
@@ -194,9 +207,8 @@ public class BoardController extends HttpServlet {
 			bd = new BoardDAO(); // 전역변수에 BoardDAO 존재
 			BoardVo bv = bd.boardSelectOne(fbidx_);
 			request.setAttribute("bv", bv);
-			//
 			
-			// 이동
+			/*이동*/
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
 			rd.forward(request, response);
 		}

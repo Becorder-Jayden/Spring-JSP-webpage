@@ -31,7 +31,7 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
  	<script>
  		function enroll() {
  			
- 			var fm = document.frm
+ 			var fm = document.frm1
  			
 			if (fm.FBTITLE.value==""){															
  				alert("제목을 입력하세요");
@@ -43,11 +43,10 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
  				fm.FBCONTENT.focus();
  				return;
  			}
- 			 				
+
 			fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
 			fm.method = "post";
 			fm.submit();
-			
  			
  		}
  	</script>
@@ -186,26 +185,44 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
-                 		<form name="frm">
+                 		<form name="frm1">
                   	<h3>게시글 쓰기</h3>
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">작성자</th>
-					         				<td style="text-align:left;" colspan="2"><%=bv.getFbWriter() %></td>
+					         				<td style="text-align:left;" colspan="2">
+	 					         				<div class="col-sm-3">
+	 						         				<input name="FBWRITER" type="text" class="form-control col-sm-3" value="<%=session.getAttribute("memberId") %>" readonly>
+	 					         				</div>
+ 				         					</td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">카테고리</th>
-					         				<td style="text-align:left;" colspan="2"><%=bv.getFbCategory() %></td>
+					         					<td style="text-align:left;" colspan="2">
+	 					         					<div class="col-sm-3">
+ 			                          <select name="FBCATEGORY" id="" class="form-select">
+	 			                          <option value="전체">전체</option>
+	 			                          <option value="공지">공지</option>
+	 			                          <option value="자유/소통">자유/소통</option>
+	 			                          <option value="운동법">운동법</option>
+	 			                          <option value="식단">식단</option>
+	 			                          <option value="인증">졸업 인증</option>
+	 		                           </select>
+	                         		</div>
+	                         	</td>
+					         				</td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">제목</th>
-					         				<td style="text-align:left;" colspan="2"><%=bv.getFbTitle() %></td>
+					         				<td style="text-align:left;" colspan="2">
+ 														<input name="FBTITLE" type="text" class="form-control">
+ 													</td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">내용</th>
 					         				<td style="text-align:left;" colspan="2">
 						         				<div style="min-height: 200px;">
-					         						<%=bv.getFbContent() %>
+					         						<textarea name="FBCONTENT" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
 						         				</div>
 			         						</td>
 					       				</tr>
@@ -217,6 +234,8 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 					       				<tr>
 					       					<th class="col-sm-2" scope="col">댓글 작성</th>
 					       					<td class="col-sm-2" style="text-align:left;">
+					       					
+					       					
 					       						<input class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
 				       						</td>
 					       					<td style="text-align:left;">
@@ -250,15 +269,15 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
-		                 <button href="#" class="btn btn-light">전체</button>
-		                 <button href="#" class="btn btn-light">자유/소통</button>
-		                 <button href="#" class="btn btn-light">운동법</button>
-		                 <button href="#" class="btn btn-light">식단</button>
-		                 <button href="#" class="btn btn-light">인증</button>
+		                 <button class="btn btn-light">전체</button>
+		                 <button class="btn btn-light">자유/소통</button>
+		                 <button class="btn btn-light">운동법</button>
+		                 <button class="btn btn-light">식단</button>
+		                 <button class="btn btn-light">인증</button>
 		              	</div>
 	                </div>
 	                <div class="col">
-	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
+	                	<form name="frm" action="<%=request.getContextPath() %>/board/boardWrite.do" method="get">
 			               	<div class="form-row">
 				               	<div class="col">
 					                <select name="searchType">
@@ -357,6 +376,7 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
+}
 %>                  
                   </p>
                 </div>

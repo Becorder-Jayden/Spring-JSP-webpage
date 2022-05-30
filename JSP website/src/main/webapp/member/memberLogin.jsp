@@ -171,22 +171,24 @@
                
               	<form name="frm" class="container">
 		     	  <div class="row">
-		            <input class="form-control" type="text" placeholder="ID" name="ID">
+		            <input class="form-control" type="text" placeholder="ID" name="ID" >
 		          </div>
 		            <div class="row">
-		          	  <input class="form-control" type="text" placeholder="Password" name="PASSWORD">
+		          	  <input class="form-control" type="text" placeholder="Password" name="PASSWORD" >	 <!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
 		         	</div>
 	         		<div class="row">
-	       	   		  <div class="col-sm-6">
-	           		 	<input type="checkbox">아이디 저장
-	            	  </div>
-	            	  <div class="col-sm-6">
-		                <input type="checkbox">자동 로그인
-		              </div>
-	                </div>
-	          	  <div class="row" style="margin:auto;">
+       	   		  <div class="form-check">
+	           		 	<input type="checkbox" class="form-check-input" name="rememberId">아이디 저장
+            	  </div>
+           	  </div>
+           	  <div class="row">
+	           	  <div class="form-check">
+            	  	<input type="checkbox" class="form-check-input" name="rememberPassword">비밀번호 저장
+  	         	  </div>
+           	  </div>
+          	  <div class="row" style="margin:auto;">
         		    <button type="button" class="btn btn-primary" onclick="login()">LOGIN</button>
-	          	  </div>
+          	  </div>
 	          	</form>
 	       	  </div>
             </div>

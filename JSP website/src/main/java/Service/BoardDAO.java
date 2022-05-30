@@ -31,7 +31,7 @@ public class BoardDAO {
 				+ "values(fbidx_seq.nextval, ?,?,?,?,?)";
 	
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql); 
 			pstmt.setInt(1, mIdx);
 			pstmt.setString(2, fbCategory);
 			pstmt.setString(3, fbTitle);
@@ -110,9 +110,14 @@ public class BoardDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+scri.getKeyword()+"%");
-			pstmt.setInt(2, (scri.getPage()-1)*20+1);
-			pstmt.setInt(3, (scri.getPage()*20));
+			if (str == "") {
+				pstmt.setInt(1, (scri.getPage()-1)*20+1);
+				pstmt.setInt(2, (scri.getPage()*20));
+			} else {
+				pstmt.setString(1, "%"+scri.getKeyword()+"%");
+				pstmt.setInt(2, (scri.getPage()-1)*20+1);
+				pstmt.setInt(3, (scri.getPage()*20));
+			};
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -156,9 +161,11 @@ public class BoardDAO {
 		
 		String sql = "SELECT COUNT(*) AS cnt from bulletinboard " + str + "";
 		
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+scri.getKeyword()+"%");
+			if (str != "") pstmt.setString(1, "%"+scri.getKeyword()+"%");
+			
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -180,16 +187,16 @@ public class BoardDAO {
 	}
 	
 	// 카테고리
-	public ArrayList<BoardVo> boardSelectCategory(String cate) {
-		ArrayList<BoardVo> clist = new ArrayList<BoardVo>();
+	public ArrayList<BoardVo> boardSelectCategory(String fbcategory) {
+		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		ResultSet rs = null;
 		
 		// DB 접근
-		String sql = "SELECT * FROM bulletinboard WHERE fbCategory = '?'";
+		String sql = "SELECT * FROM bulletinboard WHERE fbCategory = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, cate);
+			pstmt.setString(1, fbcategory);
 			rs = pstmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,7 +208,7 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 		}
-		return clist;
+		return alist;
 	}
 	
 }

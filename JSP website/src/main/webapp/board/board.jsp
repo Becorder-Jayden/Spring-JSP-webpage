@@ -172,11 +172,11 @@ if (session.getAttribute("midx") != null) {
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
-		                 <button href="#" class="btn btn-light">전체</button>
-		                 <button href="#" class="btn btn-light">자유/소통</button>
-		                 <button href="#" class="btn btn-light">운동법</button>
-		                 <button href="#" class="btn btn-light">식단</button>
-		                 <button href="#" class="btn btn-light">인증</button>
+		                 <button name="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do';">전체</button>
+		                 <button class="btn btn-light">자유/소통</button>
+		                 <button class="btn btn-light">운동법</button>
+		                 <button class="btn btn-light">식단</button>
+		                 <button class="btn btn-light">인증</button>
 		              	</div>
 	                </div>
 	                <div class="col">
@@ -240,7 +240,7 @@ for (BoardVo bv : alist) {
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page=1"
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◀</a>");
@@ -250,7 +250,7 @@ if (pm.isPrev()) {
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getStartPage()-1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>◁</a>");
@@ -260,7 +260,7 @@ if (pm.isPrev()) {
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
 							+"/board/board.do?page="+i
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>"+i+"</a>");			
@@ -270,7 +270,7 @@ for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getEndPage()+1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▷</a>");
@@ -280,7 +280,7 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
 							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)
-							+"&category="
+							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
