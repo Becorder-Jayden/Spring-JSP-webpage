@@ -260,11 +260,11 @@
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
-		                 <button class="btn btn-light">전체</button>
-		                 <button class="btn btn-light">자유/소통</button>
-		                 <button class="btn btn-light">운동법</button>
-		                 <button class="btn btn-light">식단</button>
-		                 <button class="btn btn-light">인증</button>
+		                 <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardView.do'">전체</button>
+		                 <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardView.do?category=자유/소통'">자유/소통</button>
+		                 <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardView.do?category=운동'">운동</button>
+		                 <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardView.do?category=식단'">식단</button>
+		                 <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardView.do?category=인증'">인증</button>
 		              	</div>
 	                </div>
 	                <div class="col">

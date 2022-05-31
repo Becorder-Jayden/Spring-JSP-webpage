@@ -95,43 +95,23 @@ public class BoardDAO {
 			str = "where fbidx like ?";
 		}
 
-		
-		if (scri.getCategory().equals("free")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("workout")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("diet")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("certified")) {
-			str2 = " and fbcategory = ?";
-		}
-
-//		System.out.println("keyword :" + scri.getKeyword());
-//		System.out.println("searchType : " + scri.getSearchType());
-//		System.out.println(str + str2);
-
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
-		String sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard " + str + str2
+		String sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard " + str + " and fbcategory like ?"
 				+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
 		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함
-		// 5/26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
+		// 5.26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
 
-		System.out.println(sql);
+		System.out.println("scri.getcategory : " + scri.getCategory());
+		System.out.println("sql: " + sql);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + scri.getKeyword() + "%");
-			if (scri.getCategory().equals("all")) {
-				pstmt.setInt(2, (scri.getPage() - 1) * 20 + 1);
-				pstmt.setInt(3, (scri.getPage() * 20));
-				System.out.println("all 일때 ");
-			} else {
-				pstmt.setString(2, scri.getCategory());
-				pstmt.setInt(3, (scri.getPage() - 1) * 20 + 1);
-				pstmt.setInt(4, (scri.getPage() * 20));
-				System.out.println("all 아닐때");
-			}
+			pstmt.setString(2, "%" + scri.getCategory() + "%");
+			pstmt.setInt(3, (scri.getPage() - 1) * 20 + 1);
+			pstmt.setInt(4, (scri.getPage() * 20));
 			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				BoardVo bv = new BoardVo();
 				bv.setFbidx(rs.getInt("fbidx"));
@@ -162,7 +142,6 @@ public class BoardDAO {
 		int cnt = 0;
 		ResultSet rs = null;
 		String str = "";
-		String str2 = "";
 
 		if (scri.getSearchType().equals("fbtitle")) {
 			str = "where fbtitle like ?";
@@ -172,38 +151,16 @@ public class BoardDAO {
 			str = "where fbidx like ?";
 		}
 
-		System.out.println("searchtype : " + scri.getSearchType());
-		System.out.println("getcategory : " + scri.getCategory());
-		// 여기서부터 시작
-		if (scri.getCategory().equals("all")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("free")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("workout")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("diet")) {
-			str2 = " and fbcategory = ?";
-		} else if (scri.getCategory().equals("certified")) {
-			str2 = " and fbcategory = ?";
-		}
-
-		String sql = "SELECT COUNT(*) AS cnt from bulletinboard " + str + str2 + "";
-
-		System.out.println("boardtotal : " + sql);
-
+		String sql = "SELECT COUNT(*) AS cnt from bulletinboard " + str + " and fbcategory like ?";
+		System.out.println("fbcategory: " + scri.getCategory());
+		System.out.println("sql: " + sql);
+		
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			if (scri.getSearchType().equals("fbtitle") || scri.getSearchType().equals("fbwriter")
-					|| scri.getSearchType().equals("fbidx")) {
 				pstmt.setString(1, "%" + scri.getKeyword() + "%");
-			}
-
-			if (scri.getCategory().equals("all") || scri.getCategory().equals("free")
-					|| scri.getCategory().equals("workout") || scri.getCategory().equals("diet")
-					|| scri.getCategory().equals("certified")) {
-				pstmt.setString(2, scri.getCategory());
-				System.out.println("getcategory: " + scri.getCategory());
-			}
+				pstmt.setString(2, "%" + scri.getCategory() + "%");
+				System.out.println("getcategory: " + "%"+scri.getCategory()+"%");
 
 			rs = pstmt.executeQuery();
 

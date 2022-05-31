@@ -124,9 +124,10 @@ ADD CONSTRAINT fk_mIdx3 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 
 ALTER TABLE bulletinboard modify (fbWriteDate DEFAULT sysdate);
 
-INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
+INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '운동', '득근방법', '내용', '게시자',SYSDATE);
 
-SELECT COUNT(*) from BULLETINBOARD;
+SELECT * from BULLETINBOARD ORDER BY FBIDX DESC;
+
 -- 시퀀스 추가
 INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 
@@ -174,4 +175,17 @@ COMMIT;
 SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory = 'all';
 
 SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory = '운동법' ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN 1 AND 20;
+SELECT * FROM BULLETINBOARD a;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?
+SELECT COUNT(*) AS cnt from bulletinboard where fbtitle LIKE '%%' and fbcategory like '%all%';
+(pm.getTotalCount()/scri.getPerPageNum()+1);
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory LIKE 'all' ORDER BY fbidx DESC)A) B ;
+SELECT COUNT(*) FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%all%' ORDER BY fbidx DESC)A) B;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC)A) B;
+SELECT * FROM BULLETINBOARD a WHERE;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like ? and fbcategory = ? ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory LIKE '%%' ORDER BY fbidx;
+SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory like '%%';
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC)A) B ;
 
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like ? and fbcategory like ? ORDER BY fbidx DESC) A) B ;

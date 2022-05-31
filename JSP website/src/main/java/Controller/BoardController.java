@@ -57,6 +57,7 @@ public class BoardController extends HttpServlet {
 			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
+			
 			/*검색어*/
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
@@ -64,9 +65,8 @@ public class BoardController extends HttpServlet {
 			if (searchType == null) searchType = "fbtitle";
 			
 			String category = request.getParameter("category");
-			if (category == null) category = "all";
-
-			// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			if (category == null) category = "";
+			
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
@@ -79,7 +79,7 @@ public class BoardController extends HttpServlet {
 			
 			// BoardDAO → 전역변수로 이동
 			int cnt = bd.boardTotal(scri);
-			
+			System.out.println(cnt);
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
@@ -88,8 +88,6 @@ public class BoardController extends HttpServlet {
 			/*게시판에 DB 출력*/
 			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
-			
-			System.out.println("boarselectall 실행");
 			
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
@@ -116,7 +114,8 @@ public class BoardController extends HttpServlet {
 			if (searchType == null) searchType = "fbtitle";						// Q. 게시글 번호로 찾기 ? A. 구현 완료
 			
 			String category = request.getParameter("category");
-			if (category == null) category = "all";
+			if (category == null) category = "";
+			System.out.println("category : " + category);
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
@@ -183,7 +182,7 @@ public class BoardController extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
-			if (searchType == null) searchType = "fbtitle";
+			if (searchType == null) searchType = "";
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();

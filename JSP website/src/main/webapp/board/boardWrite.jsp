@@ -198,19 +198,18 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">카테고리</th>
-					         					<td style="text-align:left;" colspan="2">
-	 					         					<div class="col-sm-3">
- 			                          <select name="FBCATEGORY" id="" class="form-select">
-	 			                          <option value="전체">전체</option>
-	 			                          <option value="공지">공지</option>
-	 			                          <option value="자유/소통">자유/소통</option>
-	 			                          <option value="운동법">운동법</option>
-	 			                          <option value="식단">식단</option>
-	 			                          <option value="인증">졸업 인증</option>
-	 		                           </select>
-	                         		</div>
-	                         	</td>
-					         				</td>
+				         					<td style="text-align:left;" colspan="2">
+ 					         					<div class="col-sm-3">
+			                          <select name="FBCATEGORY" id="" class="form-select">
+ 			                          <option value="전체">전체</option>
+ 			                          <option value="공지">공지</option>
+ 			                          <option value="자유/소통">자유/소통</option>
+ 			                          <option value="운동법">운동법</option>
+ 			                          <option value="식단">식단</option>
+ 			                          <option value="인증">졸업 인증</option>
+ 		                           </select>
+                         		</div>
+                         	</td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">제목</th>
@@ -269,16 +268,16 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 	              <div class="input-group">
 	              	<div class="col">
 		                <div class="input-group-append">
-		                 <button class="btn btn-light">전체</button>
-		                 <button class="btn btn-light">자유/소통</button>
-		                 <button class="btn btn-light">운동법</button>
-		                 <button class="btn btn-light">식단</button>
-		                 <button class="btn btn-light">인증</button>
+		                 <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do'">전체</button>
+		                 <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=자유/소통'">자유/소통</button>
+		                 <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=운동'">운동</button>
+		                 <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=식단'">식단</button>
+		                 <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=인증'">인증</button>
 		              	</div>
 	                </div>
 	                <div class="col">
 	                	<form name="frm" action="<%=request.getContextPath() %>/board/boardWrite.do" method="get">
-			               	<div class="form-row">
+			               	<div class="form-row">	
 				               	<div class="col">
 					                <select class="custom-select" name="searchType">
 					                	<option value="fbtitle">제목</option>
@@ -378,13 +377,12 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 							+"' style='text-decoration:none;'>▶</a>");
 }
 %>                  
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                 </p>
+               </div>s
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
   </body>
 </html>
