@@ -29,6 +29,14 @@
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
+  <script>
+		
+		
+  	acttilocation.href='<%=request.getContextPath()%>/board/boardWrite.do
+	</script>
+  
+  
+  
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -161,7 +169,7 @@ if (session.getAttribute("midx") != null) {
             <div class="container" style="margin:auto;">
               <div class="row" style="text-align: right;">
                 <div class="col-sm-12">
-	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do';">
+	                <button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do'">
 	                  새 글 쓰기
 	                </button>
                 </div>
@@ -277,14 +285,14 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 }
 
 // 맨뒤: last page 이동
-/* if (pm.isNext() && pm.getEndPage() > 0) {
+if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page="+ (pm.getTotalCount()/scri.getPerPageNum()+1)
+							+"/board/board.do?page="+(pm.getTotalCount()/20+1)				// Q.페이지 계산 분모를 20이 아니라 변수로 불러오는 방법?
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
-							+"searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
-} */
+}
 %>
 
 

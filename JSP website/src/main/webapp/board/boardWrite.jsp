@@ -5,6 +5,19 @@
 <%@page import="Domain.BoardVo" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="javax.servlet.http.HttpSession" %>
+
+<%
+if (session.getAttribute("midx") == null){
+	
+	session.setAttribute("saveUrl", request.getRequestURI());
+	
+	out.println("<script>");
+	out.println("alert('로그인 해주세요.')");
+	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
+	out.println("</script>");
+}
+%>
+
 <%
 ArrayList<BoardVo> alist = (ArrayList<BoardVo>)request.getAttribute("alist");
 PageMaker pm = (PageMaker)request.getAttribute("pm");
@@ -99,7 +112,7 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 	         <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p>어제보다 나은 오늘 ☆★</p>
+          <p>어제보다 가벼운 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -330,7 +343,7 @@ for (BoardVo bvv : alist) {
 // 맨앞 : first page 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page=1"
+							+"/board/boardWrite.do?page=1"
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
@@ -340,7 +353,7 @@ if (pm.isPrev()) {
 // < : prev page array 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page="+(pm.getStartPage()-1)
+							+"/board/boardWrite.do?page="+(pm.getStartPage()-1)
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
@@ -350,7 +363,7 @@ if (pm.isPrev()) {
 // 페이지 번호
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
-							+"/board/board.do?page="+i
+							+"/board/boardWrite.do?page="+i
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
@@ -360,7 +373,7 @@ for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 // > : next page array 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page="+(pm.getEndPage()+1)
+							+"/board/boardWrite.do?page="+(pm.getEndPage()+1)
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
 							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
@@ -370,15 +383,15 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 // 맨뒤: last page 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/board.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)
+							+"/board/boardWrite.do?page="+(pm.getTotalCount()/20+1)
 							+"&category="+pm.encoding(pm.getScri().getCategory())
 							+"&keyword="+pm.encoding(pm.getScri().getKeyword())
-							+"searchType="+pm.encoding(pm.getScri().getSearchType())
+							+"&searchType="+pm.encoding(pm.getScri().getSearchType())
 							+"' style='text-decoration:none;'>▶</a>");
 }
 %>                  
                  </p>
-               </div>s
+               </div>
              </div>
            </div>
          </div>

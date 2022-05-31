@@ -1,3 +1,4 @@
+<%@page import="Domain.CommentVo"%>
 <%@page import="Service.BoardDAO"%>
 <%@page import="Domain.SearchCriteria"%>
 <%@page import="Domain.PageMaker"%>
@@ -11,6 +12,7 @@
 	PageMaker pm = (PageMaker)request.getAttribute("pm");
 	SearchCriteria scri = (SearchCriteria)request.getAttribute("scri");
 	BoardVo bv = (BoardVo)request.getAttribute("bv");
+	ArrayList<CommentVo> clist = (ArrayList<CommentVo>)request.getAttribute("clist");
 %>
 
 <!DOCTYPE html>
@@ -30,29 +32,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   	
  	<script>
- 		function enroll() {
+ 		
+ 		function commentFn() {
  			
- 			var fm = document.frm
+ 			var fm = document.frm2;
+ 			console.log(fm);
  			
- 			
-			if (fm.FBTITLE.value==""){															
- 				alert("제목을 입력하세요");
- 				fm.FBTITLE.focus();																// Q. focus가 갔다가 바로 사라지는데 해결하는 방법은? 5/25
- 				return;																						// A. form 태그 안에 있는 buttom의 'type=button'이 지정되어 있지 않으면 바로 submit이 작동된다. 버튼 태그에 type을 추가해서 해결
- 			}
- 			else if (fm.FBCONTENT.value==""){
- 				alert("내용을 입력하세요");
- 				fm.FBCONTENT.focus();
- 				return;
- 			}
- 			 				
-			fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
-			fm.method = "post";
+ 			fm.action = "<%=request.getContextPath()%>/board/boardView.do?fbidx=<%=bv.getFbidx()%>";
+ 			fm.method = "post";
 			fm.submit();
- 		
  		}
- 		
- 	</script>
+
+ 		</script>
   
   
   </head>
@@ -188,7 +179,7 @@
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
-                 		<form name="frm">
+                 		<form name="frm2">
                   	<h3>게시글 보기</h3>
            	         	<table class="table" >
 					         			<tr>
@@ -211,28 +202,31 @@
 						         				</div>
 			         						</td>
 					       				</tr>
+<% for (CommentVo cv : clist){  %>					       				
 					       				<tr>
 					       					<th class="col-sm-2" scope="col">댓글</th>
-					       					<td class="col-sm-2" style="text-align:left;">작성자</td>
-					       					<td style="text-align:left;">댓글</td>
+					       					<td class="col-sm-2" style="text-align:left;"><%=cv.getCmwriter() %></td>
+					       					<td style="text-align:left;"><%=cv.getCmcomment() %></td>
 					       				</tr>
+<%} %>					       			
 					       				<tr>
 					       					<th class="col-sm-2" scope="col">댓글 작성</th>
 					       					<td class="col-sm-2" style="text-align:left;">
 					       						<input class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
 				       						</td>
-					       					<td style="text-align:left;">
-					       						<div class="input-group">
-						       						<div class="col-sm-10">
-							       						<input type="text" class="form-control">
+					       						<td style="text-align:left;">
+					       							<div class="input-group">
+							       						<div class="col-sm-10">
+								       						<input type="text" class="form-control">
+							       						</div>
+						       							<div class="input-group-append">
+							       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary">등록</button>
+							       						</div>
 						       						</div>
-						       						<div class="input-group-append">
-							       						<button class="btn btn-outline-secondary">등록</button>
-						       						</div>
-						       					</div>
-				       						</td>
+				       							</td>
 					       				</tr>
 					         		</table>
+	                  </form>  
 					         		
 <%
 	if (session.getAttribute("mIdx") == bv.getMidx()) {
@@ -247,7 +241,6 @@
 
 
 
-	                  </form>  
                  	</div>
   	            </div>
 		          </div>

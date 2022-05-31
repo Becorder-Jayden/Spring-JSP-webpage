@@ -1,7 +1,6 @@
 package Service;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,8 +56,6 @@ public class BoardDAO {
 			pstmt.setInt(1, fbidx);
 			rs = pstmt.executeQuery();
 
-			// Q.무슨 의미인지?
-
 			if (rs.next()) {
 				bv = new BoardVo();
 				bv.setFbidx(rs.getInt("fbidx"));
@@ -83,26 +80,14 @@ public class BoardDAO {
 
 	public ArrayList<BoardVo> boardSelectAll(SearchCriteria scri) {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
+		BoardVo bv = new BoardVo();
 		ResultSet rs = null;
 
-		String str = "";
-		String str2 = "";
-		if (scri.getSearchType().equals("fbtitle")) {
-			str = "where fbtitle like ?";
-		} else if (scri.getSearchType().equals("fbwriter")) {
-			str = "where fbwriter like ?";
-		} else if (scri.getSearchType().equals("fbidx")) {
-			str = "where fbidx like ?";
-		}
-
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
-		String sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard " + str + " and fbcategory like ?"
+		String sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard  where fbtitle like ? and fbcategory like ?"
 				+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
 		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함
 		// 5.26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
-
-		System.out.println("scri.getcategory : " + scri.getCategory());
-		System.out.println("sql: " + sql);
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -113,7 +98,6 @@ public class BoardDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				BoardVo bv = new BoardVo();
 				bv.setFbidx(rs.getInt("fbidx"));
 				bv.setFbTitle(rs.getString("fbtitle"));
 				bv.setFbWriter(rs.getString("fbwriter"));
@@ -143,24 +127,13 @@ public class BoardDAO {
 		ResultSet rs = null;
 		String str = "";
 
-		if (scri.getSearchType().equals("fbtitle")) {
-			str = "where fbtitle like ?";
-		} else if (scri.getSearchType().equals("fbwriter")) {
-			str = "where fbwriter like ?";
-		} else if (scri.getSearchType().equals("fbidx")) {
-			str = "where fbidx like ?";
-		}
-
-		String sql = "SELECT COUNT(*) AS cnt from bulletinboard " + str + " and fbcategory like ?";
-		System.out.println("fbcategory: " + scri.getCategory());
-		System.out.println("sql: " + sql);
+		String sql = "SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like ? and fbcategory like ?";
 		
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, "%" + scri.getKeyword() + "%");
 				pstmt.setString(2, "%" + scri.getCategory() + "%");
-				System.out.println("getcategory: " + "%"+scri.getCategory()+"%");
 
 			rs = pstmt.executeQuery();
 

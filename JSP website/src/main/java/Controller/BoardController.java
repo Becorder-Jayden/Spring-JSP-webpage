@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Locale.Category;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,9 +18,11 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import Domain.BoardVo;
+import Domain.CommentVo;
 import Domain.PageMaker;
 import Domain.SearchCriteria;
 import Service.BoardDAO;
+import Service.CommentDAO;
 
 
 // controller : 페이지 이동과 필요한 데이터 전송을 담당
@@ -46,8 +49,8 @@ public class BoardController extends HttpServlet {
 		String saveFolder = "imgs";
 		String saveFullPath = uploadPath + saveFolder;
 		
-		BoardDAO bd = new BoardDAO();	// DB 접근시 필요, 데이터 전역변수로 설정
-		
+		BoardDAO bd = new BoardDAO();	// board DB 접근
+		CommentDAO cd = new CommentDAO();	// comment DB 접근
 		
 		// 게시판 이동
 		if (command.equals("/board/board.do")) {
@@ -79,7 +82,7 @@ public class BoardController extends HttpServlet {
 			
 			// BoardDAO → 전역변수로 이동
 			int cnt = bd.boardTotal(scri);
-			System.out.println(cnt);
+
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
@@ -111,17 +114,17 @@ public class BoardController extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
-			if (searchType == null) searchType = "fbtitle";						// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			if (searchType == null) searchType = "";						// Q. 게시글 번호로 찾기 ? A. 구현 완료
 			
 			String category = request.getParameter("category");
 			if (category == null) category = "";
-			System.out.println("category : " + category);
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(pagex);	// 페이징
 			scri.setKeyword(keyword);	// 키워드
 			scri.setSearchType(searchType);	// 검색 유형
+			scri.setCategory(category);
 
 			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
 			
@@ -183,13 +186,16 @@ public class BoardController extends HttpServlet {
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
 			if (searchType == null) searchType = "";
+			String category = request.getParameter("category");
+			if (category == null) category = "";
 			
 			/*분류 기준*/
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(pagex);	// 페이징
 			scri.setKeyword(keyword);	// 키워드
 			scri.setSearchType(searchType);	// 검색 유형
-
+			scri.setCategory(category);
+			
 			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
 			
 			
@@ -206,17 +212,28 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
-			//임의 작성
+			
+			// 게시글 인덱스 추출
 			String fbidx = request.getParameter("fbidx");
 			int fbidx_ = Integer.parseInt(fbidx);
-			
+
+			// 게시글 보기
 			bd = new BoardDAO(); // 전역변수에 BoardDAO 존재
 			BoardVo bv = bd.boardSelectOne(fbidx_);
 			request.setAttribute("bv", bv);
+
 			
+			// 댓글
+			ArrayList<CommentVo> clist = cd.commentSelect(fbidx_);
+			request.setAttribute("clist", clist);
+								
 			/*이동*/
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
 			rd.forward(request, response);
+		}
+		
+		else if (command.equals("/board/boardComment.do")) {
+			
 		}
 		
 	}

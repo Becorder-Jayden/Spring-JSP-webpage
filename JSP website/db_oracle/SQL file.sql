@@ -29,9 +29,8 @@ START WITH 1;
 -- 시퀀스 삭제
 DROP SEQUENCE 시퀀스명;
 
--- 시퀀스 삽입
+-- 시퀀스 삽입, 데이터 추가
 INSERT INTO a_board(BIDX,SUBJECT,CONTENT,WRITER,IP,MIDX) VALUES(bidx_seq.nextval, '열두번째 게시물', '열두번째 내용', '송혜교', '223.92.45.131',10);
-SELECT * FROM BULLETINBOARD a ORDER BY fbidx desc;
 
 ----
 
@@ -136,6 +135,7 @@ SELECT * FROM BULLETINBOARD WHERE fbidx = 1;
 SELECT * FROM bulletinboard WHERE FBCATEGORY = '카테고리';
 SELECT COUNT(*) AS cnt FROM BULLETINBOARD WHERE fbtitle LIKE '%제목%' ;
 SELECT * FROM BULLETINBOARD WHERE fbcategory LIKE '전체';
+
 --- faq
 -- 테이블 생성
 CREATE TABLE faq (
@@ -144,7 +144,28 @@ CREATE TABLE faq (
 	qAnswer CLOB NOT NULL
 	);
 
----- 데이터 테이블 생성 5/19
+
+--- Comment
+CREATE TABLE bulletincomment(
+	fbidx NUMBER NOT NULL,
+	cmidx NUMBER NOT NULL PRIMARY KEY,
+	cmwriter VARCHAR2(10) NOT null,
+	cmcomment VARCHAR2(200) NOT NULL
+	);
+
+-- 외래키 추가
+ALTER TABLE bulletincomment
+ADD CONSTRAINT fk_bidx FOREIGN KEY(fbidx) REFERENCES BULLETINBOARD(fbidx);
+
+-- 시퀀스 추가
+CREATE SEQUENCE cmidx_seq INCREMENT BY 1 START WITH 1;
+
+-- 데이터 추가
+INSERT INTO bulletincomment(FBIDX,CMIDX,CMWRITER,CMCOMMENT) VALUES('', cmidx_seq,
+
+
+
+
 
 -- 테이블 삭제
 DROP TABLE crewMaker;
@@ -188,4 +209,5 @@ SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where 
 SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory like '%%';
 SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC)A) B ;
 
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like ? and fbcategory like ? ORDER BY fbidx DESC) A) B ;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC) A) B ;
+SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory like '%%';
