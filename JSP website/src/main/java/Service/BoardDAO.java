@@ -80,7 +80,6 @@ public class BoardDAO {
 
 	public ArrayList<BoardVo> boardSelectAll(SearchCriteria scri) {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
-		BoardVo bv = new BoardVo();
 		ResultSet rs = null;
 
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
@@ -98,6 +97,7 @@ public class BoardDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
+				BoardVo bv = new BoardVo();		// rs 요소가 있을 때마다 새로운 boardVo가 만들어져야 함
 				bv.setFbidx(rs.getInt("fbidx"));
 				bv.setFbTitle(rs.getString("fbtitle"));
 				bv.setFbWriter(rs.getString("fbwriter"));
@@ -115,7 +115,6 @@ public class BoardDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
 		return alist;
 

@@ -222,19 +222,19 @@ if (session.getAttribute("midx") != null) {
 	                    </tr>
 
 <%
-for (BoardVo bv : alist) {
+for (BoardVo bvv : alist) {
 %>               
                     
 	                    <tr>
-	                        <td><%=bv.getFbidx() %></td>
-	                        <td><%=bv.getFbCategory() %></td>
+	                        <td><%=bvv.getFbidx() %></td>
+	                        <td><%=bvv.getFbCategory() %></td>
 	                        <td>
-	                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bv.getFbidx() %>&fbcategory=<%=bv.getFbCategory() %>&fbtitle=<%=bv.getFbTitle() %>&fbcontent=<%=bv.getFbContent() %>&fbwriter=<%=bv.getFbWriter() %>" style="text-decoration: none; color: black;">
-	                        		<%=bv.getFbTitle() %>
+	                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>&fbcategory=<%=bvv.getFbCategory() %>&fbtitle=<%=bvv.getFbTitle() %>&fbcontent=<%=bvv.getFbContent() %>&fbwriter=<%=bvv.getFbWriter() %>" style="text-decoration: none; color: black;">
+	                        		<%=bvv.getFbTitle() %>
 	                       		</a>
 	                     		</td>
-	                        <td><%=bv.getFbWriter() %></td>
-	                        <td><%=bv.getFbWriteDate() %></td>
+	                        <td><%=bvv.getFbWriter() %></td>
+	                        <td><%=bvv.getFbWriteDate() %></td>
                   	  </tr>
 	<%} %>
 	

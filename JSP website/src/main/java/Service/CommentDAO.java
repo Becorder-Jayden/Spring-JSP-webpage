@@ -19,15 +19,15 @@ public class CommentDAO {
 	}
 	
 	// 댓글 입력 
-	public int commentInsert(int fbIdx, int cmIdx, String cmWriter, String cmComment) {
+	public int insertComment(int fbIdx, int cmIdx, String cmWriter, String cmComment) {
 		int value = 0;
 		
 		String sql = "INSERT INTO BULLETINCOMMENT(FBIDX, CMIDX, CMWRITER, CMCOMMENT)"
-				+ "values(fbidx_seq.nextval, ?,?,?)";
+				+ "values(?, cmidx_seq.nextval,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cmIdx);
+			pstmt.setInt(1, fbIdx);
 			pstmt.setString(2, cmWriter);
 			pstmt.setString(3, cmComment);
 			
@@ -39,19 +39,19 @@ public class CommentDAO {
 		return value;
 	}
 	
-	public ArrayList<CommentVo> commentSelect(int fbidx) {
+	public ArrayList<CommentVo> selectComment(int fbidx) {
 		ArrayList<CommentVo> clist = new ArrayList<CommentVo>();
-		CommentVo cv = new CommentVo();
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM BULLETINCOMMENT WHERE FBIDX = ?";
+		String sql = "SELECT * FROM BULLETINCOMMENT WHERE FBIDX = ? ORDER BY CMIDX DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, fbidx);
 			rs = pstmt.executeQuery();
 			
-			if (rs.next()) {
+			while (rs.next()) {
+				CommentVo cv = new CommentVo();
 				cv.setFbidx(rs.getInt("fbidx"));
 				cv.setCmidx(rs.getInt("cmidx"));
 				cv.setCmwriter(rs.getString("cmwriter"));
