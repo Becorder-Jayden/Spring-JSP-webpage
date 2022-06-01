@@ -192,8 +192,8 @@ public class BoardController extends HttpServlet {
 			scri.setKeyword(keyword);	// 키워드
 			scri.setSearchType(searchType);	// 검색 유형
 			scri.setCategory(category);
-			
 			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+			
 			
 			// BoardDAO → 전역변수로 이동
 			
@@ -221,6 +221,10 @@ public class BoardController extends HttpServlet {
 			ArrayList<CommentVo> clist = cd.selectComment(fbidx_);
 			request.setAttribute("clist", clist);
 			
+			cd = new CommentDAO();
+//			ArrayList<CommentVo> cv = cd.selectComment(fbidx_);
+//			request.setAttribute("cv", cv);
+			
 			/*이동*/
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
 			rd.forward(request, response);
@@ -230,21 +234,21 @@ public class BoardController extends HttpServlet {
 			
 			// 세션으로 부터 정보를 연결
 			HttpSession session = request.getSession();
+			int midx = (int) session.getAttribute("midx");
 			int fbidx = Integer.parseInt(request.getParameter("fbidx"));
-			int cmidx = (int) session.getAttribute("midx");
 			String cmWriter = request.getParameter("cmWriter");
 			String cmComment = request.getParameter("cmComment");
 			
 			// 데이터 담기
 			cd = new CommentDAO();
-			int value = cd.insertComment(fbidx, cmidx, cmWriter, cmComment);
+			int value = cd.insertComment(fbidx, cmWriter, cmComment, midx);
 			
 			// 결과 처리
-			if (value == 1) {
-				response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
-			} else {
-				response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
-			}
+				if (value == 1) {
+					response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
+				} else {
+					response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
+				}
 		}
 		
 	}

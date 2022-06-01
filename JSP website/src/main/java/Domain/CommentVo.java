@@ -2,12 +2,19 @@ package Domain;
 
 public class CommentVo {
 
+	private Number midx;
 	private Number fbidx;
 	private Number cmidx;
 	private String cmwriter;
 	private String cmcomment;
 	
 	
+	public Number getMidx() {
+		return midx;
+	}
+	public void setMidx(Number midx) {
+		this.midx = midx;
+	}
 	public Number getFbidx() {
 		return fbidx;
 	}

@@ -19,17 +19,18 @@ public class CommentDAO {
 	}
 	
 	// 댓글 입력 
-	public int insertComment(int fbIdx, int cmIdx, String cmWriter, String cmComment) {
+	public int insertComment(int fbIdx, String cmWriter, String cmComment, int midx) {
 		int value = 0;
 		
-		String sql = "INSERT INTO BULLETINCOMMENT(FBIDX, CMIDX, CMWRITER, CMCOMMENT)"
-				+ "values(?, cmidx_seq.nextval,?,?)";
+		String sql = "INSERT INTO BULLETINCOMMENT(FBIDX, CMIDX, CMWRITER, CMCOMMENT, MIDX)"
+				+ "values(?, cmidx_seq.nextval,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, fbIdx);
 			pstmt.setString(2, cmWriter);
 			pstmt.setString(3, cmComment);
+			pstmt.setInt(4, midx);
 			
 			value = pstmt.executeUpdate();
 
@@ -54,8 +55,10 @@ public class CommentDAO {
 				CommentVo cv = new CommentVo();
 				cv.setFbidx(rs.getInt("fbidx"));
 				cv.setCmidx(rs.getInt("cmidx"));
+				System.out.println(rs.getInt("cmidx"));
 				cv.setCmwriter(rs.getString("cmwriter"));
 				cv.setCmcomment(rs.getString("cmcomment"));
+				cv.setMidx(rs.getInt("midx"));
 				clist.add(cv);
 			}
 		} catch (SQLException e) {

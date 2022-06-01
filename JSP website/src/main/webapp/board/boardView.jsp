@@ -184,19 +184,19 @@
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">작성자</th>
-					         				<td style="text-align:left;" colspan="3"><%=bv.getFbWriter() %></td>
+					         				<td style="text-align:left;" colspan="4"><%=bv.getFbWriter() %></td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">카테고리</th>
-					         				<td style="text-align:left;" colspan="3"><%=bv.getFbCategory() %></td>
+					         				<td style="text-align:left;" colspan="4"><%=bv.getFbCategory() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">제목</th>
-					         				<td style="text-align:left;" colspan="3"><%=bv.getFbTitle() %></td>
+					         				<td style="text-align:left;" colspan="4"><%=bv.getFbTitle() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">내용</th>
-					         				<td style="text-align:left;" colspan="3">
+					         				<td style="text-align:left;" colspan="4	">
 						         				<div style="min-height: 200px;">
 					         						<%=bv.getFbContent() %>
 						         				</div>
@@ -204,29 +204,34 @@
 					       				</tr>
 <% for (CommentVo cv : clist) {%>
 					       				<tr>
-					       					<th class="col-sm-2" scope="col">댓글</th> 
-					       					<td class="col-sm-2" style="text-align:left;"><%=cv.getCmwriter() %></td>
+						       				<td style="display:none;">
+						       					<%=cv.getMidx() %>
+						       				</td>
+					       					<td class="col-sm-1" >
+					       							<%=cv.getCmwriter() %>
+			       							</td>
 					       					<td style="text-align:left;" colspan="3"><%=cv.getCmcomment() %></td>
-					      	 				<td>
+					      	 				<td class="col-sm-2">
+<% if (session.getAttribute("midx") == cv.getMidx() ) {  %>
 					      	 					<a href="#" style="text-decoration:none;">수정</a>
 					      	 					<a href="#" style="text-decoration:none;">삭제</a>
-			      	 						</td>
-					       				</tr>
 <%} %>
+			      	 						</td>
+<%}	 %>
+					       				</tr>
 					       				<tr>
-					       					<th class="col-sm-2" scope="col">댓글 작성</th>
-					       					<td class="col-sm-2" style="text-align:left;">
-					       						<input name="cmWriter" class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
+					       					<td class="col-sm-1" >
+					       						<input name="cmWriter" class="form-control text-center" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
 				       						</td>
-				       						<td style="text-align:left;">
+				       						<td style="text-align:left;	" colspan="3">
 				       							<div class="input-group">
-						       						<div class="col-sm-10">
-							       						<input name="cmComment" type="text" class="form-control">
-						       						</div>
-					       							<div class="input-group-append">
-						       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary">등록</button>
-						       						</div>
+						       						<input name="cmComment" type="text" class="form-control">
 	       										</div>
+			       							</td>
+			       							<td>
+				       							<div class="input-group-append">
+					       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary">등록</button>
+					       						</div>
 			       							</td>
 					       				</tr>
 					         		</table>

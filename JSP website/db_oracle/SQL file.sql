@@ -161,11 +161,19 @@ ADD CONSTRAINT fk_bidx FOREIGN KEY(fbidx) REFERENCES BULLETINBOARD(fbidx);
 CREATE SEQUENCE cmidx_seq INCREMENT BY 1 START WITH 1;
 
 -- 데이터 추가
-INSERT INTO bulletincomment(FBIDX,CMIDX,CMWRITER,CMCOMMENT) VALUES('', cmidx_seq,
+INSERT INTO bulletincomment(FBIDX,CMIDX,CMWRITER,CMCOMMENT,MIDX) VALUES('417', cmidx_seq.NEXTVAL, '댓글작성자', '댓글 내용','3');
 
+-- 테이블 데이터 유형변경
+alter TABLE bulletincomment MODIFY cmwriter VARCHAR2(100);
 
+-- 테이블 데이터 컬럼 추가
+alter TABLE bulletincomment ADD(midx number);
 
+-- 테이블 확인
+SELECT * FROM BULLETINCOMMENT ;
 
+-- 데이터 삭제
+DELETE FROM bulletincomment WHERE midx IS NULL;
 
 -- 테이블 삭제
 DROP TABLE crewMaker;
@@ -195,19 +203,6 @@ COMMIT;
 
 SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory = 'all';
 
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory = '운동법' ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN 1 AND 20;
-SELECT * FROM BULLETINBOARD a;
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?
-SELECT COUNT(*) AS cnt from bulletinboard where fbtitle LIKE '%%' and fbcategory like '%all%';
-(pm.getTotalCount()/scri.getPerPageNum()+1);
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory LIKE 'all' ORDER BY fbidx DESC)A) B ;
-SELECT COUNT(*) FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%all%' ORDER BY fbidx DESC)A) B;
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC)A) B;
-SELECT * FROM BULLETINBOARD a WHERE;
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like ? and fbcategory = ? ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?;
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory LIKE '%%' ORDER BY fbidx;
-SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory like '%%';
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC)A) B ;
-
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbtitle like '%%' and fbcategory like '%%' ORDER BY fbidx DESC) A) B ;
-SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory like '%%';
+SELECT * FROM bulletinboard ORDER BY FBIDX DESC;
+SELECT * FROM bulletincomment WHERE fbIdx=418 ORDER BY FBIDX DESC;
+SELECT * FROM BULLETINCOMMENT WHERE FBIDX = 418 ORDER BY CMIDX DESC;

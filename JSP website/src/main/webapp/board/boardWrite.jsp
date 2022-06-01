@@ -322,7 +322,7 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 	                      <th>작성일</th>
 	                    </tr>
 <%
-for (BoardVo bvv : alist) {
+for (BoardVo bvv : alist) {	
 %>               
                   <tr>
                       <td><%=bvv.getFbidx() %></td>
