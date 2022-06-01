@@ -31,6 +31,7 @@ public class CommentDAO {
 			pstmt.setString(2, cmWriter);
 			pstmt.setString(3, cmComment);
 			pstmt.setInt(4, midx);
+			// cmidx는 자동으로 설정되므로 이곳에서 지정하지 않는다
 			
 			value = pstmt.executeUpdate();
 
@@ -55,7 +56,6 @@ public class CommentDAO {
 				CommentVo cv = new CommentVo();
 				cv.setFbidx(rs.getInt("fbidx"));
 				cv.setCmidx(rs.getInt("cmidx"));
-				System.out.println(rs.getInt("cmidx"));
 				cv.setCmwriter(rs.getString("cmwriter"));
 				cv.setCmcomment(rs.getString("cmcomment"));
 				cv.setMidx(rs.getInt("midx"));
@@ -73,15 +73,24 @@ public class CommentDAO {
 			}
 		}
 		return clist;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
+	
+	
+	public int deleteComment(int cmidx) {
+		int value = 0;
+		
+		String sql = "delete bulletincomment where cmidx = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cmidx);
+			value = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+				
+		return value;
+	}
+	
 }

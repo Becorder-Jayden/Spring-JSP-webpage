@@ -234,23 +234,34 @@ public class BoardController extends HttpServlet {
 			
 			// 세션으로 부터 정보를 연결
 			HttpSession session = request.getSession();
+			
 			int midx = (int) session.getAttribute("midx");
 			int fbidx = Integer.parseInt(request.getParameter("fbidx"));
 			String cmWriter = request.getParameter("cmWriter");
 			String cmComment = request.getParameter("cmComment");
+			// cmidx는 자동으로 설정되므로 변수로 사용하지 않는다.
 			
 			// 데이터 담기
 			cd = new CommentDAO();
 			int value = cd.insertComment(fbidx, cmWriter, cmComment, midx);
 			
 			// 결과 처리
-				if (value == 1) {
-					response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
-				} else {
-					response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
-				}
+			response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
 		}
 		
+		else if (command.equals("/board/boardCommentDeleteAction.do")) {
+			
+			// 변수 가져오기
+			HttpSession session = request.getSession();
+			
+			int fbidx = Integer.parseInt(request.getParameter("fbidx"));
+			
+			String cmidx = request.getParameter("cmidx");
+			int cmidx_ = Integer.parseInt(cmidx);
+			int value = cd.deleteComment(cmidx_);
+			
+			response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
+		}
 	}
 			
 

@@ -204,7 +204,7 @@
 					       				</tr>
 <% for (CommentVo cv : clist) {%>
 					       				<tr>
-						       				<td style="display:none;">
+						       				<td class="col-sm-1" style=";">
 						       					<%=cv.getMidx() %>
 						       				</td>
 					       					<td class="col-sm-1" >
@@ -214,7 +214,7 @@
 					      	 				<td class="col-sm-2">
 <% if (session.getAttribute("midx") == cv.getMidx() ) {  %>
 					      	 					<a href="#" style="text-decoration:none;">수정</a>
-					      	 					<a href="#" style="text-decoration:none;">삭제</a>
+					      	 					<a href="<%=request.getContextPath() %>/board/boardCommentDeleteAction.do?fbidx=<%=bv.getFbidx()	 %>&cmidx=<%=cv.getCmidx()%>" style="text-decoration:none;">삭제</a>
 <%} %>
 			      	 						</td>
 <%}	 %>
