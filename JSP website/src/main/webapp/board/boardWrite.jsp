@@ -261,37 +261,40 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
          	</div>
             	&nbsp;
               &nbsp;
+              <div class="row" style="text-align: right">
+			         	<div class="col-sm-12">
+				         	<button class="btn btn-primary" id="writeBtn" type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do'">
+				          	새 글 쓰기
+				          </button>
+				        </div>
+		        	</div>
               <div class="row">
-	              <div class="input-group">
-	              	<div class="col">
-		                <div class="input-group-append">
-		                 <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do'">전체</button>
-		                 <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=자유/소통'">자유/소통</button>
-		                 <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=운동'">운동</button>
-		                 <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=식단'">식단</button>
-		                 <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/boardWrite.do?category=인증'">인증</button>
-		              	</div>
-	                </div>
-	                <div class="col">
-	                	<form name="frm" action="<%=request.getContextPath() %>/board/boardWrite.do" method="get">
-			               	<div class="form-row">	
-				               	<div class="col">
-					                <select class="custom-select" name="searchType">
-					                	<option value="fbtitle">제목</option>
-					                	<option value="fbidx">번호</option>
-					                	<option value="fbwriter">작성자</option>
-					                </select>
-				                </div>
-				                <div class="col">
-						           		<input type="text" name="keyword" class="form-control"> 
-				                </div>
-				              	<div class="col">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
-			              			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
-			              		</div>
-		                	</div>
-		               	</form>
-	                </div>
-	             	</div>
+	              <div class="col justify-content-around">
+		              <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do'">전체</button>
+		              <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=자유/소통'">자유/소통</button>
+		              <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=운동'">운동</button>
+		              <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=식단'">식단</button>
+		              <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=인증'">인증</button>
+		            </div>
+		          </div>
+              <div class="row">
+              	<div class="col">
+	               	<form class="input-group justify-content-end" name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
+		                <div class="col-sm-1.5">
+			                <select class="form-select" name="searchType">
+			                	<option value="fbtitle">제목</option>
+			                	<option value="fbidx">번호</option>
+			                	<option value="fbwriter">작성자</option>
+			                </select>
+		                </div>
+		                <div class="col-sm-3">
+				           		<input type="text" name="keyword" class="form-control"> 
+		                </div>
+		                <div class="input-group-btn">
+		             			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
+		                </div>
+	               	</form>
+ 	            	</div>
              	</div>
              	&nbsp;
              	&nbsp;

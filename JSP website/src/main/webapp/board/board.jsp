@@ -173,52 +173,48 @@ if (session.getAttribute("midx") != null) {
 	                </button>
                 </div>
               </div>
-	                &nbsp;
-	                &nbsp;
+               &nbsp;
+               &nbsp;
               <div class="row">
-	              <div class="input-group">
-	              	<div class="col">
-		                <div class="input-group-append">
-		                 <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do'">전체</button>
-		                 <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=자유/소통'">자유/소통</button>
-		                 <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=운동'">운동</button>
-		                 <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=식단'">식단</button>
-		                 <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=인증'">인증</button>
-		              	</div>
-	                </div>
-	                <div class="col">
-	                	<form name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
-			               	<div class="form-row">
-				               	<div class="col">
-					                <select class="custom-select" name="searchType">
-					                	<option value="fbtitle">제목</option>
-					                	<option value="fbidx">번호</option>
-					                	<option value="fbwriter">작성자</option>
-					                </select>
-				                </div>
-				                <div class="col">
-						           		<input type="text" name="keyword" class="form-control"> 
-				                </div>
-				              	<div class="col">	<!-- 부트스트랩 사용시 form-control 옆에 두기 위해 input-group-append를 사용해야 함 -->
-			              			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
-			              		</div>
-		                	</div>
-		               	</form>
-	                </div>
-	             	</div>
+	              <div class="col justify-content-around">
+		              <button name="category" value="all" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do'">전체</button>
+		              <button name="category" value="free" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=자유/소통'">자유/소통</button>
+		              <button name="category" value="workout" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=운동'">운동</button>
+		              <button name="category" value="diet" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=식단'">식단</button>
+		              <button name="category" value="certified" class="btn btn-light" onclick="location.href='<%=request.getContextPath()%>/board/board.do?category=인증'">인증</button>
+		            </div>
+		          </div>
+              <div class="row">
+              	<div class="col">
+	               	<form class="input-group justify-content-end" name="frm" action="<%=request.getContextPath() %>/board/board.do" method="get">
+		                <div class="col-sm-1.5">
+			                <select class="form-select" name="searchType">
+			                	<option value="fbtitle">제목</option>
+			                	<option value="fbidx">번호</option>
+			                	<option value="fbwriter">작성자</option>
+			                </select>
+		                </div>
+		                <div class="col-sm-3">
+				           		<input type="text" name="keyword" class="form-control"> 
+		                </div>
+		                <div class="input-group-btn">
+		             			<button type="submit" class="btn btn-secondary justify-content-end">검색</button>
+		                </div>
+	               	</form>
+ 	            	</div>
              	</div>
              	&nbsp;
              	&nbsp;
-	              <div class="row">  
-	                <div class="row" style="margin:auto;">
-	                  <table class="table" style="text-align:center;">
-	                    <tr>
-	                      <th>번호</th>
-	                      <th>카테고리</th>
-	                      <th>제목</th>
-	                      <th>작성자</th>
-	                      <th>작성일</th>
-	                    </tr>
+              <div class="row">  
+                <div class="row" style="margin:auto;">
+                  <table class="table" style="text-align:center;">
+                    <tr>
+                      <th>번호</th>
+                      <th>카테고리</th>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>작성일</th>
+                    </tr>
 
 <%
 for (BoardVo bvv : alist) {
@@ -228,6 +224,7 @@ for (BoardVo bvv : alist) {
 	                        <td><%=bvv.getFbidx() %></td>
 	                        <td><%=bvv.getFbCategory() %></td>
 	                        <td>
+
 	                        	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>&fbcategory=<%=bvv.getFbCategory() %>&fbtitle=<%=bvv.getFbTitle() %>&fbcontent=<%=bvv.getFbContent() %>&fbwriter=<%=bvv.getFbWriter() %>" style="text-decoration: none; color: black;">
 	                        		<%=bvv.getFbTitle() %>
 	                       		</a>
