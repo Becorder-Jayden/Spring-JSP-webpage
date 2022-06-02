@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -17,6 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.oreilly.servlet.multipart.FileRenamePolicy;
+
 import Domain.BoardVo;
 import Domain.CommentVo;
 import Domain.PageMaker;
@@ -30,11 +35,16 @@ import Service.CommentDAO;
 @WebServlet("/BoardController")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	public BoardController() {
+		super();
+	}
 
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 데이터 인코딩 설정
 		request.setCharacterEncoding("UTF-8");
+		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		// 경로 추출
@@ -46,7 +56,7 @@ public class BoardController extends HttpServlet {
 		System.out.println("command :" + command);
 	
 		// 데이터 저장 경로 설정
-		String uploadPath = "../../src/main/webapp/";
+		String uploadPath = "E:\\Open API A반\\Back-end\\JSP website\\src\\main\\webapp\\";
 		String saveFolder = "imgs";
 		String saveFullPath = uploadPath + saveFolder;
 		
@@ -148,11 +158,28 @@ public class BoardController extends HttpServlet {
 		// 게시판 글쓰기 동작
 		else if (command.equals("/board/boardWriteAction.do")) {
 			
-			// 입력값을 받아옴
-			String fbWriter = request.getParameter("FBWRITER");
-			String fbCategory = request.getParameter("FBCATEGORY");
-			String fbTitle = request.getParameter("FBTITLE");
-			String fbContent = request.getParameter("FBCONTENT");
+			// 이미지 파일 입력
+			// cf. lib 파일에 cos.jar, imgscalr-lib.jar 파일 추가 필요
+			int sizeLimit = 1024*1024*15;		// 파일 크기를 15MB로 제한
+			
+			MultipartRequest multi = new MultipartRequest(request, saveFullPath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());
+			// DefaultFileRenamePolicy(): 파일 이름이 동일할 때 Rename 정책을 사용   
+			
+			
+			// 저장될 파일을 담는 객체 생성
+			Enumeration files = multi.getFileNames();			// jsp에서 name값을 통해 가져오기 때문에 input에 name 속성이 필요
+			
+
+			// 담긴 파일 객체의 변수 가져오기
+			String file = (String) files.nextElement();
+			String fileName = multi.getFilesystemName(file);
+			String originFileName = multi.getOriginalFileName(file);
+			
+			// 입력값을 받아옴	cf. 'multipart/form-data'로 데이터를 전송했으므로 multipartrequest를 통해 값을 받아오로독 한다 
+			String fbWriter = multi.getParameter("FBWRITER");			
+			String fbCategory = multi.getParameter("FBCATEGORY");
+			String fbTitle = multi.getParameter("FBTITLE");
+			String fbContent = multi.getParameter("FBCONTENT");
 			
 			// 세션으로부터 현재 로그인한 회원의 정보(midx)를 가져옴
 			HttpSession session = request.getSession();
@@ -160,7 +187,7 @@ public class BoardController extends HttpServlet {
 			
 			// DB에 데이터 입력
 			bd = new BoardDAO();
-			int value = bd.insertBoard(midx, fbCategory, fbTitle, fbContent, fbWriter);
+			int value = bd.insertBoard(midx, fbCategory, fbTitle, fbContent, fbWriter, fileName);
 			if (value==1) {
 				response.sendRedirect(request.getContextPath()+"/board/board.do");
 			}
@@ -220,10 +247,6 @@ public class BoardController extends HttpServlet {
 			// 댓글
 			ArrayList<CommentVo> clist = cd.selectComment(fbidx_);
 			request.setAttribute("clist", clist);
-			
-			cd = new CommentDAO();
-//			ArrayList<CommentVo> cv = cd.selectComment(fbidx_);
-//			request.setAttribute("cv", cv);
 			
 			/*이동*/
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");

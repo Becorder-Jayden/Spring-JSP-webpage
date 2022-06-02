@@ -130,8 +130,15 @@ SELECT * from BULLETINBOARD ORDER BY FBIDX DESC;
 -- 시퀀스 추가
 INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 
+-- 데이터 열 추가 (이미지)
+ALTER TABLE bulletinBoard ADD(filename VARCHAR2(100));
+
+-- 데이터 타입 수정: null 허용
+ALTER TABLE bulletinboard MODIFY fbWriter NULL;
+
+
 -- 테이블 확인
-SELECT * FROM BULLETINBOARD WHERE fbidx = 1;
+SELECT * FROM BULLETINBOARD;
 SELECT * FROM bulletinboard WHERE FBCATEGORY = '카테고리';
 SELECT COUNT(*) AS cnt FROM BULLETINBOARD WHERE fbtitle LIKE '%제목%' ;
 SELECT * FROM BULLETINBOARD WHERE fbcategory LIKE '전체';
@@ -204,5 +211,6 @@ COMMIT;
 SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory = 'all';
 
 SELECT * FROM bulletinboard ORDER BY FBIDX DESC;
-SELECT * FROM bulletincomment WHERE fbIdx=418 ORDER BY FBIDX DESC;
+SELECT * FROM bulletincomment WHERE fbIdx=417 ORDER BY cmidx DESC;
 SELECT * FROM BULLETINCOMMENT WHERE FBIDX = 418 ORDER BY CMIDX DESC;
+DELETE bulletincomment WHERE cmidx = 64;

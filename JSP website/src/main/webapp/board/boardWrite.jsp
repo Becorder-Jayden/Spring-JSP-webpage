@@ -59,6 +59,7 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 
 			fm.action = "<%=request.getContextPath()%>/board/boardWriteAction.do";
 			fm.method = "post";
+			fm.enctype = "multipart/form-data";		// 이미지와 텍스트를 위한 데이터 전송 타입 
 			fm.submit();
  			
  		}
@@ -239,27 +240,10 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
 			         						</td>
 					       				</tr>
 					       				<tr>
-					       					<th class="col-sm-2" scope="col">댓글</th>
-					       					<td class="col-sm-2" style="text-align:left;">작성자</td>
-					       					<td style="text-align:left;">댓글</td>
-					       				</tr>
-					       				<tr>
-					       					<th class="col-sm-2" scope="col">댓글 작성</th>
-					       					<td class="col-sm-2" style="text-align:left;">
-					       					
-					       					
-					       						<input class="form-control" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
-				       						</td>
-					       					<td style="text-align:left;">
-					       						<div class="input-group">
-						       						<div class="col-sm-10">
-							       						<input type="text" class="form-control">
-						       						</div>
-						       						<div class="input-group-append">
-							       						<button class="btn btn-outline-secondary">등록</button>
-						       						</div>
-						       					</div>
-				       						</td>
+					         				<th class="col-sm-2" scope="col">첨부파일</th>
+					         				<td style="text-align:left;" colspan="2">
+				         						<input class="form-control" type="file" name="filename"> <!-- getFileNames 메서드로 읽어들이기 위해 name 옵션 필요(명칭은 중요하지 않아보인다) --> 
+			         						</td>
 					       				</tr>
 					         		</table>
 	                    <div class="row" style="text-align: right;">

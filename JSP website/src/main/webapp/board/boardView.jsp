@@ -1,3 +1,4 @@
+<%@page import="oracle.jdbc.internal.XSSessionNamespace"%>
 <%@page import="Domain.CommentVo"%>
 <%@page import="Service.BoardDAO"%>
 <%@page import="Domain.SearchCriteria"%>
@@ -96,7 +97,7 @@
 	         <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p id="33">어제보다 나은 오늘 ☆★</p>
+          <p id="33">어제보다 가벼운 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -201,26 +202,27 @@
 					         				<th class="col-sm-2" scope="col">내용</th>
 					         				<td style="text-align:left;" colspan="5">
 						         				<div style="min-height: 200px;">
+						         					<%=bv.getFilename() %>
 					         						<%=bv.getFbContent() %>
 						         				</div>
 			         						</td>
 					       				</tr>
 <% for (CommentVo cv : clist) {%>
-<% if (session.getAttribute("midx") == cv.getMidx() ) {  %>
 					       				<tr>
-						       				<td class="col-sm-1" style=";" colspan="">
+						       				<td class="col-sm-1" style="display:none;">
 						       					<%=cv.getMidx() %>
 						       				</td>
-					       					<td class="col-sm-1" >
+					       					<td class="col-sm-1">
 					       							<%=cv.getCmwriter() %>
 			       							</td>
-					       					<td style="text-align:left;" colspan="2"><%=cv.getCmcomment() %></td>
+					       					<td style="text-align:left;" colspan="4"><%=cv.getCmcomment() %></td>
 					      	 				<td class="col-sm-2">
+	<%if (cv.getMidx().equals(session.getAttribute("midx"))) { %>
 					      	 					<a href="javascript:testFn()" style="text-decoration:none;">수정</a>
 					      	 					<a href="<%=request.getContextPath() %>/board/boardCommentDeleteAction.do?fbidx=<%=bv.getFbidx() %>&cmidx=<%=cv.getCmidx()%>" style="text-decoration:none;">삭제</a>
-<%} %>
+  <%} %>  	 						
 			      	 						</td>
-<%}	 %>
+<%} %>
 					       				</tr>
 <% if (session.getAttribute("midx") != null) { %>					
 					       				<tr>
@@ -243,7 +245,7 @@
 	                  </form>  
 					         		
 <%
-	if (session.getAttribute("mIdx") == bv.getMidx()) {
+	if (session.getAttribute("midx") == bv.getMidx()) {
 %>
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
@@ -311,7 +313,7 @@ for (BoardVo bvv : alist) {
                       <td><%=bvv.getFbidx() %></td>
                       <td><%=bvv.getFbCategory() %></td>
                       <td>
-                      	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>&fbcategory=<%=bvv.getFbCategory() %>&fbtitle=<%=bvv.getFbTitle() %>&fbcontent=<%=bvv.getFbContent() %>&fbwriter=<%=bvv.getFbWriter() %>" style="text-decoration: none; color: black;">
+                      	<a href="<%=request.getContextPath() %>/board/boardView.do?fbidx=<%=bvv.getFbidx() %>&fbcategory=<%=bvv.getFbCategory() %>&fbtitle=<%=bvv.getFbTitle() %>&fbcontent=<%=bvv.getFbContent() %>&fbwriter=<%=bvv.getFbWriter() %>&filename=<%=bvv.getFilename() %>" style="text-decoration: none; color: black;">
                        		<%=bvv.getFbTitle() %>
                      		</a>
                    		</td>

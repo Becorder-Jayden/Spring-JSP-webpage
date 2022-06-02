@@ -28,8 +28,11 @@ public class MemberController {
 		
 		System.out.println("command :" + command);					// 실행된 command 확인을 위한 sysout
 
+		
+		// 회원가입 : midx(회원고유번호), memberid(아이디), memberpassword(비밀번호), memberpasswordcheck(비밀번호 확인), memberemail(이메일), membername(회원명), membergender(성별)
 		if (command.equals("/member/memberJoinAction.do")) {
 			
+			// 가입 정보 불러오기
 			String mIdx = request.getParameter("MIDX");								// 값을 받아올 때 getParameter 사용
 			String memberId = request.getParameter("MEMBERID");
 			String memberPassword = request.getParameter("MEMBERPASSWORD");
@@ -38,7 +41,7 @@ public class MemberController {
 			String memberName = request.getParameter("MEMBERNAME");
 			String memberGender = request.getParameter("MEMBERGENDER");				// select 결과로 하나의 값을 갖기 때문에 getParameterValuse 사용 x
 			
-			
+			// insterMember 메서드를 이용해 DB(MemberDAO)에 등록
 			MemberDAO md = new MemberDAO();
 			int value = md.insertMember(memberId, memberPassword, memberEmail, memberName, memberGender);
 			
@@ -58,13 +61,13 @@ public class MemberController {
 		
 		// 회원가입 페이지 이동
 		else if (command.equals("/member/memberJoin.do")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.do");
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.jsp");
 			rd.forward(request, response);
 		}
 		
 		// 로그인 페이지 이동
 		else if (command.equals("/member/memberLogin.do")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.do");
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.jsp");
 			rd.forward(request, response);
 		}
 		
@@ -85,7 +88,7 @@ public class MemberController {
 				session.setAttribute("memberName", mv.getMembername());
 				
 				if (session.getAttribute("saveUrl") != null) {									
-					response.sendRedirect((String)session.getAttribute("saveUrl"));				
+					response.sendRedirect((String)session.getAttribute("saveUrl"));			//6.2 Q.글쓰기버튼 - 로그인해주세요 - 로그인 후 - write.jsp로 이동하는 현상 발생?
 				} else {																		 
 					response.sendRedirect(request.getContextPath()+"/personal/personal.do");	 
 				}																				

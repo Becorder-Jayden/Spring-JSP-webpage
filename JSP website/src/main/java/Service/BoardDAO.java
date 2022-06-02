@@ -22,11 +22,11 @@ public class BoardDAO {
 	}
 
 	// 자유게시판 글쓰기
-	public int insertBoard(int mIdx, String fbCategory, String fbTitle, String fbContent, String fbWriter) {
+	public int insertBoard(int mIdx, String fbCategory, String fbTitle, String fbContent, String fbWriter, String fileName) {
 		int value = 0;
 
-		String sql = "INSERT INTO BULLETINBOARD(FBIDX,MIDX,FBCATEGORY,FBTITLE,FBCONTENT,FBWRITER)"
-				+ "values(fbidx_seq.nextval, ?,?,?,?,?)";
+		String sql = "INSERT INTO BULLETINBOARD(FBIDX,MIDX,FBCATEGORY,FBTITLE,FBCONTENT,FBWRITER,FILENAME)"
+				+ "values(fbidx_seq.nextval, ?,?,?,?,?,?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -35,7 +35,10 @@ public class BoardDAO {
 			pstmt.setString(3, fbTitle);
 			pstmt.setString(4, fbContent);
 			pstmt.setString(5, fbWriter);
-
+			pstmt.setString(6, fileName);
+			
+			System.out.println(fbCategory);
+			
 			value = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -63,6 +66,10 @@ public class BoardDAO {
 				bv.setFbTitle(rs.getString("fbtitle"));
 				bv.setFbContent(rs.getString("fbcontent"));
 				bv.setFbWriter(rs.getString("fbwriter"));
+				bv.setFilename(rs.getString("filename"));
+				
+				System.out.println(bv.getFilename());
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,6 +110,7 @@ public class BoardDAO {
 				bv.setFbWriter(rs.getString("fbwriter"));
 				bv.setFbCategory(rs.getString("fbcategory"));
 				bv.setFbWriteDate(rs.getDate("fbwritedate"));
+				bv.setFilename(rs.getString("filename"));
 				alist.add(bv);
 			}
 		} catch (SQLException e) {
@@ -154,29 +162,6 @@ public class BoardDAO {
 		return cnt;
 	}
 
-	// 카테고리
-	public ArrayList<BoardVo> boardSelectCategory(String fbcategory) {
-		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
-		ResultSet rs = null;
 
-		// DB 접근
-		String sql = "SELECT * FROM bulletinboard WHERE fbCategory = ?";
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, fbcategory);
-			rs = pstmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return alist;
-	}
 
 }

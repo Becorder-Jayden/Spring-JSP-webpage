@@ -11,6 +11,7 @@ public class BoardVo {
 	private String fbcontent;
 	private String fbwriter;
 	private Date fbwritedate;
+	private String Filename;
 	
 	
 	public Number getFbidx() {
@@ -56,6 +57,12 @@ public class BoardVo {
 		this.fbwritedate = fbwritedate;
 	}
 	
-	
+	// 이미지 파일을 위한 메서드
+	public String getFilename() {
+		return Filename;
+	}
+	public void setFilename(String filename) {
+		Filename = filename;
+	}
 	
 }
