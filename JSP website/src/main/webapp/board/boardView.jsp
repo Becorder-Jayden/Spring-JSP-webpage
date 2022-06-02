@@ -202,9 +202,10 @@
 					         				<th class="col-sm-2" scope="col">내용</th>
 					         				<td style="text-align:left;" colspan="5">
 						         				<div style="min-height: 200px;">
-						         					<%=bv.getFilename() %>
+						         					<img src="<%=request.getContextPath()%>/imgs/<%=bv.getFilename() %>" style="width:500px;">
+						         					<br>
 					         						<%=bv.getFbContent() %>
-						         				</div>
+						         				</div>	
 			         						</td>
 					       				</tr>
 <% for (CommentVo cv : clist) {%>
@@ -300,7 +301,7 @@
               <div class="row" style="margin:auto;">
                 <table class="table" style="text-align:center;">
                   <tr>
-                    <th>번호</th>
+                    <th>번호</th> 
                     <th>카테고리</th>
                     <th>제목</th>
                     <th>작성자</th>
