@@ -18,7 +18,9 @@ public class CommentDAO {
 		this.conn = db.getConnection();
 	}
 	
-	// 댓글 입력 
+	// 댓글 작성
+	// fbidx(게시글 번호)에 해당하는 cmWriter(댓글 작성자), cmComment(댓글 내용) 정보를 이용해 댓글 추가
+	// 수정, 삭제 등의 권한 부여를 위해 midx(회원 번호) 사용 
 	public int insertComment(int fbIdx, String cmWriter, String cmComment, int midx) {
 		int value = 0;
 		
@@ -41,6 +43,7 @@ public class CommentDAO {
 		return value;
 	}
 	
+	// 댓글 보이기 : fbidx(게시글 번호)에 해당하는 댓글을 보여줌
 	public ArrayList<CommentVo> selectComment(int fbidx) {
 		ArrayList<CommentVo> clist = new ArrayList<CommentVo>();
 		ResultSet rs = null;
@@ -75,7 +78,7 @@ public class CommentDAO {
 		return clist;
 	}
 	
-	
+	// 댓글 삭제: cmidx(댓글 번호)에 해당하는 댓글 삭제  
 	public int deleteComment(int cmidx) {
 		int value = 0;
 		
@@ -92,5 +95,11 @@ public class CommentDAO {
 				
 		return value;
 	}
+	
+	// 댓글 수정: cmidx(댓글 번호)에 해당하는 댓글 수정
+//	public int modifyComment(int cmidx) {
+//		int value = 0;
+//		
+//	}
 	
 }

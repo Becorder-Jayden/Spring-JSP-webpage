@@ -58,13 +58,13 @@ public class MemberController {
 		
 		// 회원가입 페이지 이동
 		else if (command.equals("/member/memberJoin.do")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.do");
 			rd.forward(request, response);
 		}
 		
 		// 로그인 페이지 이동
 		else if (command.equals("/member/memberLogin.do")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.do");
 			rd.forward(request, response);
 		}
 		

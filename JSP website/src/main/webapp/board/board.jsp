@@ -32,7 +32,6 @@
   <script>
 		
 		
-  	acttilocation.href='<%=request.getContextPath()%>/board/boardWrite.do
 	</script>
   
   

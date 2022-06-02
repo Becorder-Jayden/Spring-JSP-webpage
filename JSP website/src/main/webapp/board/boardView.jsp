@@ -29,6 +29,7 @@
       crossorigin="anonymous"
     />
     <link href="main.css" id="stylesheet" />
+    <script src="../js/jquery-3.6.0.min.js"/></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   	
  	<script>
@@ -36,13 +37,15 @@
  		function commentFn() {
  			
  			var fm = document.frm2;
- 			console.log(fm);
  			
  			fm.action = "<%=request.getContextPath()%>/board/boardCommentAction.do?fbidx=<%=bv.getFbidx()%>";
  			fm.method = "post";
 			fm.submit();
  		}
 
+ 		function testFn() {
+ 			alert('테스트 중입니다');
+ 		}
  		</script>
   
   
@@ -184,56 +187,58 @@
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">작성자</th>
-					         				<td style="text-align:left;" colspan="4"><%=bv.getFbWriter() %></td>
+					         				<td style="text-align:left;" colspan="5"><%=bv.getFbWriter() %></td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">카테고리</th>
-					         				<td style="text-align:left;" colspan="4"><%=bv.getFbCategory() %></td>
+					         				<td style="text-align:left;" colspan="5"><%=bv.getFbCategory() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-3" scope="col">제목</th>
-					         				<td style="text-align:left;" colspan="4"><%=bv.getFbTitle() %></td>
+					         				<td style="text-align:left;" colspan="5"><%=bv.getFbTitle() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">내용</th>
-					         				<td style="text-align:left;" colspan="4	">
+					         				<td style="text-align:left;" colspan="5">
 						         				<div style="min-height: 200px;">
 					         						<%=bv.getFbContent() %>
 						         				</div>
 			         						</td>
 					       				</tr>
 <% for (CommentVo cv : clist) {%>
+<% if (session.getAttribute("midx") == cv.getMidx() ) {  %>
 					       				<tr>
-						       				<td class="col-sm-1" style=";">
+						       				<td class="col-sm-1" style=";" colspan="">
 						       					<%=cv.getMidx() %>
 						       				</td>
 					       					<td class="col-sm-1" >
 					       							<%=cv.getCmwriter() %>
 			       							</td>
-					       					<td style="text-align:left;" colspan="3"><%=cv.getCmcomment() %></td>
+					       					<td style="text-align:left;" colspan="2"><%=cv.getCmcomment() %></td>
 					      	 				<td class="col-sm-2">
-<% if (session.getAttribute("midx") == cv.getMidx() ) {  %>
-					      	 					<a href="#" style="text-decoration:none;">수정</a>
-					      	 					<a href="<%=request.getContextPath() %>/board/boardCommentDeleteAction.do?fbidx=<%=bv.getFbidx()	 %>&cmidx=<%=cv.getCmidx()%>" style="text-decoration:none;">삭제</a>
+					      	 					<a href="javascript:testFn()" style="text-decoration:none;">수정</a>
+					      	 					<a href="<%=request.getContextPath() %>/board/boardCommentDeleteAction.do?fbidx=<%=bv.getFbidx() %>&cmidx=<%=cv.getCmidx()%>" style="text-decoration:none;">삭제</a>
 <%} %>
 			      	 						</td>
 <%}	 %>
 					       				</tr>
+<% if (session.getAttribute("midx") != null) { %>					
 					       				<tr>
 					       					<td class="col-sm-1" >
 					       						<input name="cmWriter" class="form-control text-center" type="text" value="<%=session.getAttribute("memberId") %> " readonly>
 				       						</td>
-				       						<td style="text-align:left;	" colspan="3">
+				       						<td class="col-sm-6	" colspan="4">
 				       							<div class="input-group">
 						       						<input name="cmComment" type="text" class="form-control">
 	       										</div>
 			       							</td>
-			       							<td>
+			       							<td class="col">
 				       							<div class="input-group-append">
 					       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary">등록</button>
 					       						</div>
 			       							</td>
 					       				</tr>
+<%} %>
 					         		</table>
 	                  </form>  
 					         		
