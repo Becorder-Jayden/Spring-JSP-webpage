@@ -1,3 +1,5 @@
+<%@page import="Domain.GroupVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
 if (session.getAttribute("midx") == null){
@@ -11,6 +13,12 @@ if (session.getAttribute("midx") == null){
 }
 
 %>
+<%
+	ArrayList<GroupVo> glist = (ArrayList<GroupVo>)request.getAttribute("glist");
+%>
+
+
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -364,366 +372,111 @@ if (session.getAttribute("midx") == null){
             </div>
           </div>
 
+           
+           
+          <!-- C.공지글 배경색 다르게 설정 -->
+          <div class="row">
             
-            <!-- C.공지글 배경색 다르게 설정 -->
-            <div class="row">
-              <div class="col-10">
-                <h3>그룹 게시판</h3>
-              </div>
-
-              <!-- Q. 모달 창 생성과정 꼼꼼히 조사해서 정리 완료하기 -->
-              <!-- 모달(글쓰기) 실행 버튼 -->
-              <div class="col">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#groupBoard">글 쓰기</button>
-              </div>
-              
-              <!-- 모달 생성 -->
-              <div class="modal fade" id="groupBoard" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <div class="modal-title" id="groupBoard">그룹 게시판 글쓰기</div>
-                      <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="row">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="제목을 입력하세요.">
-                          </div>
-                        <div class="input-group">
-                          <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="내용을 입력하세요." style="resize:none;"></textarea>
+            
+            <!-- 모달 생성 -->
+            <div class="modal fade" id="groupBoard" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="modal-title" id="groupBoard">그룹 게시판 글쓰기</div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="제목을 입력하세요.">
                         </div>
+                      <div class="input-group">
+                        <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="내용을 입력하세요." style="resize:none;"></textarea>
                       </div>
                     </div>
-                    <div class="modal-footer">
-                      <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                      <button class="btn btn-primary">등록</button>
-                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button class="btn btn-primary">등록</button>
                   </div>
                 </div>
               </div>
-
-              <table class="table">
-                <thead>
-                  <th scope="col">번호</th>
-                  <th scope="col">제목</th>
-                  <th scope="col">작성자</th>
-                  <th scope="col">게시일</th>
-                  <th scope="col">조회수</th>
-                </thead>
-                <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
-                <tbody>
-                  <tr>
-                    <td>1</th>
-                      <!-- 모달 트리거 생성 & 모달 창 생성 -->
-                      <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#gbTitle1" style="text-decoration: none; color:black;">[공지] 안녕하세요 첫 공지글 입니다. (3)</a>
-                        <div class="modal fade" id="gbTitle1" tabindex="-1" aria-labelledby="gbTitle" aria-hidden="false">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">그룹 게시판</h5>
-                                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    제목 
-                                  </div>
-                                  <div class="col">
-                                    [공지] 안녕하세요 첫 공지글 입니다. (3)
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    내용
-                                  </div>
-                                  <div class="col">
-                                    안녕하세요
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">주펄</div>
-                                  <div class="col">반갑소이다 주펄이올시다</div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">김풍</div>
-                                  <div class="col">안녕하세요</div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">기안84</div>
-                                  <div class="col">막 빼면 되요?</div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">OOO</div>
-                                  <div class="col"><input type="text" class="form-control"></div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                                <button class="btn btn-primary" data-bs-dismiss="modal">등록</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td><a href="#" style="text-decoration: none; color:black;"s>침착맨</a></td>
-                      <td>1달 전</td>
-                      <td>234</td>
-                    </tr>
-
-                  <tr>
-                    <td>4</th>
-                      <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#gbTitle4" style="text-decoration: none; color:black;">평생 나혼자 산다</a>
-                        <div class="modal fade" id="gbTitle4" tabindex="-1" aria-labelledby="gbTitle" aria-hidden="false">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">그룹 게시판</h5>
-                                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    제목 
-                                  </div>
-                                  <div class="col">
-                                    평생 나혼자 산다
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    내용
-                                  </div>
-                                  <div class="col">
-                                    언제까지 이래야 해?
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">OOO</div>
-                                  <div class="col"><input type="text" class="form-control"></div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                                <button class="btn btn-primary" data-bs-dismiss="modal">등록</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td><a href="#" style="text-decoration: none; color:black;"s>기안84</a></td>
-                      <td>10분 전</td>
-                      <td>123</td>
-                    </tr>
-
-                  <tr>
-                    <td>3</th>
-                      <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#gbTitle3" style="text-decoration: none; color:black;">옾카페 영업종료 안내(2)</a>
-                        <div class="modal fade" id="gbTitle3" tabindex="-1" aria-labelledby="gbTitle" aria-hidden="false">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">그룹 게시판</h5>
-                                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    제목 
-                                  </div>
-                                  <div class="col">
-                                    옾카페 영업종료 안내(2)
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    내용
-                                  </div>
-                                  <div class="col">
-                                    풍카페로 돌아오겠습니다
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align:right;">주펄</div>
-                                  <div class="col">과연 돌아올 수 있을까?</div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align:right;">통닭천사</div>
-                                  <div class="col">제가 해볼까요?</div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align:right;">OOO</div>
-                                  <div class="col"><input type="text" class="form-control"></div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                                <button class="btn btn-primary" data-bs-dismiss="modal">등록</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td><a href="#" style="text-decoration: none; color:black;"s>김풍</a></td>
-                      <td>3시간 전</td>
-                      <td>14</td>
-                    </tr>
-
-                  <tr>
-                    <td>2</th>
-                      <td>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#gbTitle2" style="text-decoration: none; color:black;">나 주펄 전장점수 555점.</a>
-                        <div class="modal fade" id="gbTitle2" tabindex="-1" aria-labelledby="gbTitle" aria-hidden="false">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">그룹 게시판</h5>
-                                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    제목 
-                                  </div>
-                                  <div class="col">
-                                    나 주펄 전장점수 555점.
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-sm-2">
-                                    내용
-                                  </div>
-                                  <div class="col">
-                                    나같이 살지 마시오
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-sm-3" style="text-align: right;">OOO</div>
-                                  <div class="col"><input type="text" class="form-control"></div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                                <button class="btn btn-primary" data-bs-dismiss="modal">등록</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td><a href="#" style="text-decoration: none; color:black;"s>주펄</a></td>
-                      <td>2일 전</td>
-                      <td>11</td>
-                    </tr>
-
-                    <tr>
-                      <td>1</th>
-                        <!-- 모달 트리거 생성 & 모달 창 생성 -->
-                        <td>
-                          <a href="#" data-bs-toggle="modal" data-bs-target="#gbTitle1" style="text-decoration: none; color:black;">[공지] 안녕하세요 첫 공지글 입니다. (3)</a>
-                          <div class="modal fade" id="gbTitle1" tabindex="-1" aria-labelledby="gbTitle" aria-hidden="false">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">그룹 게시판</h5>
-                                  <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="row">
-                                    <div class="col-sm-2">
-                                      제목 
-                                    </div>
-                                    <div class="col">
-                                      [공지] 안녕하세요 첫 공지글 입니다. (3)
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-2">
-                                      내용
-                                    </div>
-                                    <div class="col">
-                                      안녕하세요
-                                    </div>
-                                  </div>
-                                  <hr>
-                                  <div class="row">
-                                    <div class="col-sm-3" style="text-align: right;">주펄</div>
-                                    <div class="col">반갑소이다 주펄이올시다</div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-3" style="text-align: right;">김풍</div>
-                                    <div class="col">안녕하세요</div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-3" style="text-align: right;">기안84</div>
-                                    <div class="col">막 빼면 되요?</div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-3" style="text-align: right;">OOO</div>
-                                    <div class="col"><input type="text" class="form-control"></div>
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                  <button class="btn btn-secondary" data-bs-dismiss="modal">수정</button>
-                                  <button class="btn btn-primary" data-bs-dismiss="modal">등록</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td><a href="#" style="text-decoration: none; color:black;"s>침착맨</a></td>
-                        <td>1달 전</td>
-                        <td>234</td>
-                      </tr>
-                </tbody>
-              </table>
             </div>
-          
-            <div>
-              <h3>그룹 통계 및 그래프</h3>
-              <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
-              <!-- 1차 목표: 데이터 표 그리기, 2차 목표: 통계 그래프 그리기 -->
-              <!-- 데이터 표 그리기 -->
-              <div class="row">
-                <img src="../imgs/delta_graph.png" alt="그룹 통계 그래프">
-              </div>
-              <div class="row col-sm-5">
-                <div class="list-group">
-                  <li class="list-group-item">종료일 까지 D-</li>
-                  <li class="list-group-item">시작일로부터</li>
-                  <li class="list-group-item">합산 감량 몸무게</li>
-                  <li class="list-group-item">크루원 몸무게 평균</li>
-                  <li class="list-group-item">시작일로부터</li>
-                </div>
-              </div>
+            
+          </div>
+           <div>
+            
+            
+            <h3>그룹 통계 및 그래프</h3>
+            <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
+            <!-- 1차 목표: 데이터 표 그리기, 2차 목표: 통계 그래프 그리기 -->
+            <!-- 데이터 표 그리기 -->
+            <div class="row">
+              <img src="../imgs/delta_graph.png" alt="그룹 통계 그래프">
             </div>
-
-            <div class="row col-sm-3">
-              <h3>그룹 내 랭킹</h3>
-              <!-- C.순위와 이름이 떨어지도록 설정 -->
+            <div class="row col-sm-5">
               <div class="list-group">
-                <div class="list-group-item">
-                  1 <span>기안84</span>
-                </div>
-                <div class="list-group-item">
-                  2 <span>전무님</span>
-                </div>
-                <div class="list-group-item">
-                  3 <span>주펄</span>
-                </div>
+                <li class="list-group-item">종료일 까지 D-</li>
+                <li class="list-group-item">시작일로부터</li>
+                <li class="list-group-item">합산 감량 몸무게</li>
+                <li class="list-group-item">크루원 몸무게 평균</li>
+                <li class="list-group-item">시작일로부터</li>
               </div>
             </div>
+          </div>
+          
+          <div class="row col-sm-3">
+            <h3>그룹 내 랭킹</h3>
+            <!-- C.순위와 이름이 떨어지도록 설정 -->
+            <div class="list-group">
+              <div class="list-group-item">
+                1 <span>기안84</span>
+              </div>
+              <div class="list-group-item">
+                2 <span>전무님</span>
+              </div>
+              <div class="list-group-item">
+                3 <span>주펄</span>
+              </div>
+            </div>
+          </div>
+          
+          &nbsp;
+          &nbsp;
+          
+          <div name="groupboard">
+           <div class="col-10">
+           	<h3>그룹 게시판</h3>
+        		</div>
+             <!-- Q. 모달 창 생성과정 꼼꼼히 조사해서 정리 완료하기 -->
+             <!-- 모달(글쓰기) 실행 버튼 -->
+            <div class="col">
+              <button class="btn btn-primary" type="button" onclick="location.href='<%=request.getContextPath()%>/group/groupWrite.do'">글 쓰기</button>
+            </div>
+            <table class="table">
+              <thead>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">게시일</th>
+                <th scope="col">조회수</th>
+              </thead>
+              <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
+              <tbody>
+                <tr>
+                  <th>1</th>
+                  <td>
+                   <a href="#" style="text-decoration: none; color:black;">[공지] 안녕하세요 첫 공지글 입니다. (3)</a>
+                </td>
+                <td>
+                	<a href="#" style="text-decoration: none; color:black;">침착맨</a>
+               	</td>
+                <td>1달 전</td>
+                <td>234</td>
+              </tr>
+             </tbody>
+           </table>
           </div>
         </div>
       </div>

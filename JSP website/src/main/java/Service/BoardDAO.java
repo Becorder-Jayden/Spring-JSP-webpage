@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
+
 import Dbconn.Dbconn;
 import Domain.BoardVo;
 import Domain.SearchCriteria;
@@ -36,9 +38,6 @@ public class BoardDAO {
 			pstmt.setString(4, fbContent);
 			pstmt.setString(5, fbWriter);
 			pstmt.setString(6, fileName);
-			
-			System.out.println(fbCategory);
-			
 			value = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -67,7 +66,6 @@ public class BoardDAO {
 				bv.setFbContent(rs.getString("fbcontent"));
 				bv.setFbWriter(rs.getString("fbwriter"));
 				bv.setFilename(rs.getString("filename"));
-				
 				System.out.println(bv.getFilename());
 				
 			}
@@ -79,6 +77,13 @@ public class BoardDAO {
 				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					rs.close();
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return bv;

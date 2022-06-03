@@ -44,7 +44,6 @@ public class BoardController extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 데이터 인코딩 설정
 		request.setCharacterEncoding("UTF-8");
-		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		// 경로 추출
