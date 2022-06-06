@@ -428,11 +428,13 @@ if (session.getAttribute("midx") == null){
             </div>
             <table class="table">
               <thead>
-                <th scope="col">번호</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">게시일</th>
-                <th scope="col">조회수</th>
+	              <tr style="text-align:center">
+	                <th scope="col">번호</th>
+	                <th scope="col">제목</th>
+	                <th scope="col">작성자</th>
+	                <th scope="col">게시일</th>
+	                <th scope="col">조회수</th>
+	              </tr>
               </thead>
               <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
               <tbody>
@@ -440,15 +442,15 @@ if (session.getAttribute("midx") == null){
               
 <% for (GroupVo gv : glist){%>
                 <tr>
-                  <th><%=gv.getGbidx() %></th>
+                  <td style="text-align:center"><%=gv.getGbidx() %></td	>
                   <td>
                    <a href="<%=request.getContextPath() %>/group/groupView.do?gbidx=<%=gv.getGbidx() %>" style="text-decoration: none; color:black;"><%=gv.getGbtitle() %></a>
                 	</td>
-                <td>
-                	<a href="#" style="text-decoration: none; color:black;"><%=gv.getGbwriter() %></a>
+                <td style="text-align:center">
+                	<%=gv.getGbwriter() %>
                	</td>
-                <td><%=gv.getGbwritetime() %></td>
-                <td><%=gv.getGbhit() %></td>
+                <td style="text-align:center"><%=gv.getGbwritetime() %></td>
+                <td style="text-align:center"><%=gv.getGbhit() %></td>
               </tr>
 <%} %>
 
@@ -498,8 +500,6 @@ if (pm.isNext() && pm.getEndPage() > 0) {
 
                     </p>
                   </div>
-
-           
           </div>
         </div>
       </div>

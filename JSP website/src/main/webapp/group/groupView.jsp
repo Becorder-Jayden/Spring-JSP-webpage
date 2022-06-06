@@ -234,25 +234,27 @@ if (session.getAttribute("midx") == null){
          	&nbsp;
 	      <table class="table">
 	               <thead>
-	                 <th scope="col">번호</th>
-	                 <th scope="col">제목</th>
-	                 <th scope="col">작성자</th>
-	                 <th scope="col">게시일</th>
-	                 <th scope="col">조회수</th>
+		               <tr style="text-align:center">
+		                 <th scope="col">번호</th>
+		                 <th scope="col">제목</th>
+		                 <th scope="col">작성자</th>
+		                 <th scope="col">게시일</th>
+		                 <th scope="col">조회수</th>
+		               </tr>
 	               </thead>
 	               <tbody>
 	               
 <% for (GroupVo gvv : glist) { %>	               
 	                 <tr>
-	                   <td><%=gvv.getGbidx() %></td>
+	                   <td style="text-align:center"><%=gvv.getGbidx() %></td>
 	                   <td>
 		                   <a href="<%=request.getContextPath() %>/group/groupView.do?gbidx=<%=gvv.getGbidx() %>" style="text-decoration: none; color:black;"><%=gvv.getGbtitle() %></a>
 		                </td>
-		                <td>
+		                <td style="text-align:center">
 		                	<%=gvv.getGbwriter() %>
 	                	</td>
-		                <td><%=gvv.getGbwritetime() %></td> 
-		                <td><%=gvv.getGbhit()%></td>
+		                <td style="text-align:center"><%=gvv.getGbwritetime() %></td> 
+		                <td style="text-align:center"><%=gvv.getGbhit()%></td>
 		              </tr>
 <%} %>
 	              </tbody>
