@@ -12,11 +12,10 @@ if (session.getAttribute("midx") == null){
 	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
 	out.println("</script>");
 }
-
 %>
 <%
 	ArrayList<GroupVo> glist = (ArrayList<GroupVo>)request.getAttribute("glist");
-	GroupVo gv = (GroupVo)request.getAttribute("gv");	
+	GroupVo gv = (GroupVo)request.getAttribute("gv");
 	PageMaker pm = (PageMaker)request.getAttribute("pm");
 %>
 
@@ -106,7 +105,7 @@ if (session.getAttribute("midx") == null){
           <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p>어제보다 나은 오늘 ☆★</p>
+          <p>어제보다 가벼운 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -125,16 +124,16 @@ if (session.getAttribute("midx") == null){
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>
@@ -147,7 +146,6 @@ if (session.getAttribute("midx") == null){
       > 
 
 				<% 
-					
 				  // 로그인 전 : 로그인 / 회원가입
 					if (session.getAttribute("midx") == null) {
 						out.println("<div name='login'>");
@@ -195,34 +193,27 @@ if (session.getAttribute("midx") == null){
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
                  		<form name="write">
-                  	<h3>게시글 쓰기</h3>
+                  	<h3>게시글 보기</h3>
            	         	<table class="table" >
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">작성자</th>
-					         				<td style="text-align:left;" colspan="2">
-	 					         				<div class="col-sm-3">
-	 						         				<input name="gbwriter" type="text" class="form-control col-sm-3" value="<%=session.getAttribute("memberId") %>" readonly>
-	 					         				</div>
- 				         					</td>
+					         				<td style="text-align:left;" colspan="2"><%=gv.getGbwriter()%></td>
 					         			</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">제목</th>
-					         				<td style="text-align:left;" colspan="2">
- 														<input name="gbtitle" type="text" class="form-control">
- 													</td>
+					         				<td style="text-align:left;" colspan="2"><%=gv.getGbtitle() %></td>
 					       				</tr>
 					         			<tr>
 					         				<th class="col-sm-2" scope="col">내용</th>
 					         				<td style="text-align:left;" colspan="2">
 						         				<div style="min-height: 200px;">
-					         						<textarea name="gbcontent" class="form-control" id="" cols="75" rows="10" style="resize: none;"></textarea>
+						         				
+<% if (gv.getGbfilename() != null ) { %>						         				
+						         					<img src="<%=request.getContextPath() %>/imgs/<%=gv.getGbfilename() %>" style="width:500px">
+						         					<br>
+<%} %>
+					         						<%=gv.getGbcontent()%>">
 						         				</div>
-			         						</td>
-					       				</tr>
-					       				<tr>
-					         				<th class="col-sm-2" scope="col">첨부파일</th>
-					         				<td style="text-align:left;" colspan="2">
-				         						<input class="form-control" type="file" name="filename"> <!-- getFileNames 메서드로 읽어들이기 위해 name 옵션 필요(명칭은 중요하지 않아보인다) --> 
 			         						</td>
 					       				</tr>
 			         				</table>
@@ -249,67 +240,68 @@ if (session.getAttribute("midx") == null){
 	                 <th scope="col">게시일</th>
 	                 <th scope="col">조회수</th>
 	               </thead>
-	               <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
 	               <tbody>
 	               
 <% for (GroupVo gvv : glist) { %>	               
-	               
 	                 <tr>
-	                   <td><%=gvv.getGbidx() %></th>
+	                   <td><%=gvv.getGbidx() %></td>
 	                   <td>
-		                   <a href="<%=request.getContextPath() %>/group/groupView.do?gbidx=<%=gvv.getGbidx()	 %>" style="text-decoration: none; color:black;"><%=gvv.getGbtitle()%></a>
+		                   <a href="<%=request.getContextPath() %>/group/groupView.do?gbidx=<%=gvv.getGbidx() %>" style="text-decoration: none; color:black;"><%=gvv.getGbtitle() %></a>
 		                </td>
 		                <td>
 		                	<%=gvv.getGbwriter() %>
 	                	</td>
-		                <td><%=gvv.getGbwritetime() %></td>
+		                <td><%=gvv.getGbwritetime() %></td> 
 		                <td><%=gvv.getGbhit()%></td>
 		              </tr>
 <%} %>
-	      
-	      
 	              </tbody>
 	            </table>
-              <div class="row text-center" style="font-size: 20px; margin:auto;">
-   							<p>
+	                  <div class="row text-center" style="font-size: 20px; margin:auto;">
+	                   	<p>
+
 <%
 /* 페이징 이동 */
 // 맨앞 : first page 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/group/groupWrite.do?page=1"
+							+"/group/groupView.do?page=1"
 							+"' style='text-decoration:none;'>◀</a>");
 }
 	
 // < : prev page array 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/group/groupWrite.do?page="+(pm.getStartPage()-1)
+							+"/group/groupView.do?page="+(pm.getStartPage()-1)
 							+"' style='text-decoration:none;'>◁</a>");
 }
 
 // 페이지 번호
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
-							+"/group/groupWrite.do?page="+i
-							+"' style='text-decoration:none;'>"+i+"</a>");			
+							+"/group/groupView.do?page="+i
+							+"&gbidx="+gv.getGbidx()+"' style='text-decoration:none;'>"+i+"</a>");			
 }
 
 // > : next page array 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/group/groupWrite.do?page="+(pm.getEndPage()+1)
+							+"/group/groupView.do?page="+(pm.getEndPage()+1)
 							+"' style='text-decoration:none;'>▷</a>");
 }
 
 // 맨뒤: last page 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/group/groupWrite.do?page="+(pm.getTotalCount()/20+1)				// Q.페이지 계산 분모를 20이 아니라 변수로 불러오는 방법?
+							+"/group/groupView.do?page="+(pm.getTotalCount()/20+1)				// Q.페이지 계산 분모를 20이 아니라 변수로 불러오는 방법?
 							+"' style='text-decoration:none;'>▶</a>");
 }
-%>	            
-	            </p>
+%>
+
+
+
+                    </p>
+                  </div>	            
 	      </div>
 	    </div>
   </body>

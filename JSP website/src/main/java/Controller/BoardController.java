@@ -1,13 +1,8 @@
 package Controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Locale.Category;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,11 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import Domain.BoardVo;
 import Domain.CommentVo;
@@ -52,7 +45,7 @@ public class BoardController extends HttpServlet {
 		String command = uri.substring(project.length());
 		
 		// 경로 확인
-		System.out.println("command :" + command);
+		System.out.println("command: " + command);
 	
 		// 데이터 저장 경로 설정
 		String uploadPath = "E:\\Open API A반\\Back-end\\JSP website\\src\\main\\webapp\\";
@@ -99,6 +92,7 @@ public class BoardController extends HttpServlet {
 			/*게시판에 DB 출력*/
 			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
 			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
+			
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			

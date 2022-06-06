@@ -163,7 +163,7 @@
       </div>
 
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
-      <!-- 페이지 부분 -->
+      <!-- 페이지 부분 --> 
       <div
         class="page"
         id="page"
@@ -337,31 +337,31 @@ for (BoardVo bvv : alist) {
 // 맨앞 : first page 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page=1' style='text-decoration:none;'>◀</a>");
+							+"/board/boardView.do?page=1&fbidx="+bv.getFbidx()+"' style='text-decoration:none;'>◀</a>");
 }
 	
 // < : prev page array 이동
 if (pm.isPrev()) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getStartPage()-1)+"' style='text-decoration:none;'>◁</a>");
+							+"/board/boardView.do?page="+(pm.getStartPage()-1)+"&fbidx="+bv.getFbidx()+"' style='text-decoration:none;'>◁</a>");
 }
 
 // 페이지 번호
 for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
 	out.println("<a href='"+request.getContextPath() 
-							+"/board/boardWrite.do?page="+i+"' style='text-decoration:none;'>"+i+"</a>");			
+							+"/board/boardView.do?page="+i+"&fbidx="+bv.getFbidx()+"' style='text-decoration:none;'>"+i+"</a>");			
 }
 
 // > : next page array 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getEndPage()+1)+"' style='text-decoration:none;'>▷</a>");
+							+"/board/boardView.do?page="+(pm.getEndPage()+1)+"&fbidx="+bv.getFbidx()+"' style='text-decoration:none;'>▷</a>");
 }
 
 // 맨뒤: last page 이동
 if (pm.isNext() && pm.getEndPage() > 0) {
 	out.println("<a href='"+request.getContextPath()
-							+"/board/boardWrite.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"' style='text-decoration:none;'>▶</a>");
+							+"/board/boardView.do?page="+(pm.getTotalCount()/scri.getPerPageNum()+1)+"&fbidx="+bv.getFbidx()+"' style='text-decoration:none;'>▶</a>");
 }
 %>                  
                   </p>

@@ -60,12 +60,11 @@ public class PageMaker {
 	
 	// Q. 무엇을 위한 매서드? A. 페이징 
 	public void calcData() {				// Q. 자바에서 나누기는 정수부분만 가져오는가? A. 그렇다 1/3 = 0, 1/(double)3 = 0.33
+		
 		endPage = (int) (Math.ceil(scri.getPage()/(double)displayPageNum) * displayPageNum);
-		
 		startPage = (endPage - displayPageNum) + 1;
-		
 		int tempEndPage = (int) Math.ceil(totalCount/(double)scri.getPerPageNum());	// tempEndPage = 최종적인 마지막 페이지 
-		
+
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}

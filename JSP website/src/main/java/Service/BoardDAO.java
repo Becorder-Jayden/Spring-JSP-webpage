@@ -66,26 +66,19 @@ public class BoardDAO {
 				bv.setFbContent(rs.getString("fbcontent"));
 				bv.setFbWriter(rs.getString("fbwriter"));
 				bv.setFilename(rs.getString("filename"));
-				System.out.println(bv.getFilename());
-				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
-				pstmt.close();
+				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				try {
-					rs.close();
-					conn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 			}
 		}
+			
 		return bv;
 
 	}

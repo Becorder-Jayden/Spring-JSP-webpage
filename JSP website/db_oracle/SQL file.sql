@@ -96,9 +96,8 @@ CREATE TABLE groupboard (
 	);
 
 
-
 --테이블 확인
-SELECT * FROM GROUPBOARD ;
+SELECT * FROM GROUPBOARD ORDER BY GBIDX DESC;
 --데이터 삽입
 INSERT INTO GROUPBOARD(gbidx, gbtitle, midx, gbwriter, gbwritetime,gbhit,gbcontent)
 VALUES(GBIDX_SEQ.NEXTVAL,'gbtitle', 1,'gbwriter',sysdate,1,'gbcontent');
@@ -109,10 +108,11 @@ ADD CONSTRAINT fk_mIdx4 FOREIGN KEY(mIdx) REFERENCES member(mIdx);
 ALTER TABLE groupboard drop CONSTRAINT fk_midx4;
 -- gbidx_seq 생성
 CREATE SEQUENCE gbidx_seq INCREMENT BY 1 START WITH 1;
-
-
---
-SELECT midx groupboard MINUS SELECT midx FROM member;
+-- 6/2 외래키 설정을 제거하고 계속 진행하면 오류가 발생하나?
+-- 기본값 설정
+ALTER TABLE groupboard MODIFY gbwritetime DEFAULT SYSDATE;
+ALTER TABLE groupboard MODIFY gbhit DEFAULT 0;
+ALTER TABLE groupboard MODIFY gbhit NOT NULL;
 
 
 --- bulletinBoard
@@ -140,7 +140,7 @@ SELECT * from BULLETINBOARD ORDER BY FBIDX DESC;
 INSERT INTO BULLETINBOARD(fbIdx,MIDX,fbCategory,fbTitle,fbContent,fbWriter,fbWriteDate) VALUES(FBIDX_SEQ.NEXTVAL, 42, '카테고리', '제목', '내용', '게시자',SYSDATE);
 
 -- 데이터 열 추가 (이미지)
-ALTER TABLE bulletinBoard ADD(filename VARCHAR2(100));
+ALTER TABLE groupboard ADD(img VARCHAR2(100));
 
 -- 데이터 타입 수정: null 허용
 ALTER TABLE bulletinboard MODIFY fbWriter NOT NULL;
@@ -198,6 +198,7 @@ DROP TABLE crewMaker;
 ALTER TABLE member MODIFY memberGender VARCHAR2(2);
 ALTER TABLE member MODIFY membergender DEFAULT 'N';
 
+
 -- 데이터 확인
 SELECT * FROM member;
 
@@ -237,3 +238,4 @@ DELETE bulletincomment WHERE cmidx = 64;
 SELECT * FROM BULLETINBOARD a ORDER BY a.FBIDX DESC;
 DELETE FROM BULLETINBOARD WHERE fbcategory IS NULL;
 ALTER TABLE bulletinBoard MODIFY fbcategory NOT NULL;
+SELECT * FROM groupboard WHERE GBIDX = 43;

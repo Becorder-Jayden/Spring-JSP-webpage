@@ -1,6 +1,5 @@
 package Domain;
 
-import java.sql.Clob;
 import java.sql.Date;
 
 public class GroupVo {
@@ -10,13 +9,13 @@ public class GroupVo {
 	private Number pidx;
 	private String gbtitle;
 	private String gbwriter;
-	private Clob gbcontent;
-	private Date writetime;
-	private Number gbhits;
+	private String gbcontent;
+	private Date gbwritetime;
+	private Number gbhit;
 	private String gbattendant;
-	private String gbgoal;
 	private String gbdwriter;
 	private String gbdmention;
+	private String gbfilename;
 
 	
 	public Number getGbidx() {
@@ -49,35 +48,29 @@ public class GroupVo {
 	public void setGbwriter(String gbwriter) {
 		this.gbwriter = gbwriter;
 	}
-	public Clob getGbcontent() {
+	public String getGbcontent() {
 		return gbcontent;
 	}
-	public void setGbcontent(Clob gbcontent) {
+	public void setGbcontent(String gbcontent) {
 		this.gbcontent = gbcontent;
 	}
-	public Date getWritetime() {
-		return writetime;
+	public Date getGbwritetime() {
+		return gbwritetime;
 	}
-	public void setWritetime(Date writetime) {
-		this.writetime = writetime;
+	public void setGbwritetime(Date gbwritetime) {
+		this.gbwritetime = gbwritetime;
 	}
-	public Number getGbhits() {
-		return gbhits;
+	public Number getGbhit() {
+		return gbhit;
 	}
-	public void setGbhits(Number gbhits) {
-		this.gbhits = gbhits;
+	public void setGbhit(Number gbhit) {
+		this.gbhit = gbhit;
 	}
 	public String getGbattendant() {
 		return gbattendant;
 	}
 	public void setGbattendant(String gbattendant) {
 		this.gbattendant = gbattendant;
-	}
-	public String getGbgoal() {
-		return gbgoal;
-	}
-	public void setGbgoal(String gbgoal) {
-		this.gbgoal = gbgoal;
 	}
 	public String getGbdwriter() {
 		return gbdwriter;
@@ -92,4 +85,10 @@ public class GroupVo {
 		this.gbdmention = gbdmention;
 	}
 	
+	public String getGbfilename() {
+		return gbfilename;
+	}
+	public void setGbfilename(String gbfilename) {
+		this.gbfilename = gbfilename;
+	}
 }

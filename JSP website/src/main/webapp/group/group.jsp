@@ -1,3 +1,4 @@
+<%@page import="Domain.PageMaker"%>
 <%@page import="Domain.GroupVo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
@@ -15,6 +16,7 @@ if (session.getAttribute("midx") == null){
 %>
 <%
 	ArrayList<GroupVo> glist = (ArrayList<GroupVo>)request.getAttribute("glist");
+	PageMaker pm = (PageMaker) request.getAttribute("pm");
 %>
 
 
@@ -111,16 +113,16 @@ if (session.getAttribute("midx") == null){
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>
@@ -377,37 +379,6 @@ if (session.getAttribute("midx") == null){
           <!-- C.공지글 배경색 다르게 설정 -->
           <div class="row">
             
-            
-            <!-- 모달 생성 -->
-            <div class="modal fade" id="groupBoard" tabindex="-1">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <div class="modal-title" id="groupBoard">그룹 게시판 글쓰기</div>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="제목을 입력하세요.">
-                        </div>
-                      <div class="input-group">
-                        <textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="내용을 입력하세요." style="resize:none;"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button class="btn btn-primary">등록</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-           <div>
-            
-            
             <h3>그룹 통계 및 그래프</h3>
             <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
             <!-- 1차 목표: 데이터 표 그리기, 2차 목표: 통계 그래프 그리기 -->
@@ -453,6 +424,7 @@ if (session.getAttribute("midx") == null){
              <!-- 모달(글쓰기) 실행 버튼 -->
             <div class="col">
               <button class="btn btn-primary" type="button" onclick="location.href='<%=request.getContextPath()%>/group/groupWrite.do'">글 쓰기</button>
+              <button class="btn btn-secondary" type="button" onclick="location.href='<%=request.getContextPath()%>/group/groupBoard.do'">더보기</button>
             </div>
             <table class="table">
               <thead>
@@ -464,19 +436,70 @@ if (session.getAttribute("midx") == null){
               </thead>
               <!-- C.게시일 : 1분, 5분, 10분, 15분, 30분, 45분, 1시간, 2시간 ... 1일, 2일 ... 1주 전.. 1년 전.. 등  -->
               <tbody>
+              
+              
+<% for (GroupVo gv : glist){%>
                 <tr>
-                  <th>1</th>
+                  <th><%=gv.getGbidx() %></th>
                   <td>
-                   <a href="#" style="text-decoration: none; color:black;">[공지] 안녕하세요 첫 공지글 입니다. (3)</a>
-                </td>
+                   <a href="<%=request.getContextPath() %>/group/groupView.do?gbidx=<%=gv.getGbidx() %>" style="text-decoration: none; color:black;"><%=gv.getGbtitle() %></a>
+                	</td>
                 <td>
-                	<a href="#" style="text-decoration: none; color:black;">침착맨</a>
+                	<a href="#" style="text-decoration: none; color:black;"><%=gv.getGbwriter() %></a>
                	</td>
-                <td>1달 전</td>
-                <td>234</td>
+                <td><%=gv.getGbwritetime() %></td>
+                <td><%=gv.getGbhit() %></td>
               </tr>
+<%} %>
+
+
              </tbody>
            </table>
+	                  <div class="row text-center" style="font-size: 20px; margin:auto;">
+	                   	<p>
+										
+<%
+/* 페이징 이동 */
+// 맨앞 : first page 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/group/group.do?page=1"
+							+"' style='text-decoration:none;'>◀</a>");
+}
+	
+// < : prev page array 이동
+if (pm.isPrev()) {
+	out.println("<a href='"+request.getContextPath()
+							+"/group/group.do?page="+(pm.getStartPage()-1)
+							+"' style='text-decoration:none;'>◁</a>");
+}
+
+// 페이지 번호
+for (int i = pm.getStartPage(); i <= pm.getEndPage(); i++){
+	out.println("<a href='"+request.getContextPath() 
+							+"/group/group.do?page="+i
+							+"' style='text-decoration:none;'>"+i+"</a>");			
+}
+
+// > : next page array 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/group/group.do?page="+(pm.getEndPage()+1)
+							+"' style='text-decoration:none;'>▷</a>");
+}
+
+// 맨뒤: last page 이동
+if (pm.isNext() && pm.getEndPage() > 0) {
+	out.println("<a href='"+request.getContextPath()
+							+"/group/group.do?page="+(pm.getTotalCount()/20+1)				// Q.페이지 계산 분모를 20이 아니라 변수로 불러오는 방법?
+							+"' style='text-decoration:none;'>▶</a>");
+}
+%>
+
+                    </p>
+                  </div>
+
+           
           </div>
         </div>
       </div>
