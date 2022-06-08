@@ -14,6 +14,7 @@ if (session.getAttribute("midx")==null) {
 %>
 <%
 	ArrayList<PersonalVo> plist = (ArrayList<PersonalVo>)request.getAttribute("plist");
+	PersonalVo pv = (PersonalVo)request.getAttribute("pv");
 %>
 
 
@@ -59,8 +60,8 @@ if (session.getAttribute("midx")==null) {
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('date', 'Time of Day');
-      data.addColumn('number', 'Rating');
+      data.addColumn('date', '날짜');
+      data.addColumn('number', '체중');
 
       data.addRows([
         [new Date(2022, 6, 1), 75],  [new Date(2022, 6, 2), 77],  [new Date(2022, 6, 3), 73],
@@ -72,7 +73,7 @@ if (session.getAttribute("midx")==null) {
 
       var options = {
         title: '체중 변화 그래프',
-        width: 900,
+        width: 700,
         height: 500,
         hAxis: {
           format: 'M/d',
@@ -335,6 +336,11 @@ if (session.getAttribute("midx")==null) {
           <br>
           <br>
           
+          <!-- 테스트 -->
+          
+          
+          <%=pv.getPbdate()%>
+         
           <div class="row">
             <h3>업로드 기록</h3>
           </div>
@@ -343,16 +349,16 @@ if (session.getAttribute("midx")==null) {
               <tr>
                 <th>번호</th><th>날짜</th><th>체중</th><th>연속기록</th><th>메모</th><th>사진</th>
               </tr>
-<% for (PersonalVo pv : plist) {%>              
+<% for (PersonalVo pvv : plist) {%>              
               <tr style="height:100px">
-                <td><%=pv.getPbidx() %></td>
-                <td><%=pv.getPbdate() %></td>
-                <td><%=pv.getPbweight() %></td>
+                <td><%=pvv.getPbidx() %></td>
+                <td><%=pvv.getPbdate() %></td>
+                <td><%=pvv.getPbweight() %></td>
                 <td>null일차</td>
-                <td><%=pv.getPbMemo() %></td>
+                <td><%=pvv.getPbMemo() %></td>
                 <td>
-<% if (pv.getPbweightimg() != null) {%>
-                	<img src="<%=request.getContextPath() %>/imgs/<%=pv.getPbweightimg() %>" style="height:100px;">
+<% if (pvv.getPbweightimg() != null) {%>
+                	<img src="<%=request.getContextPath() %>/imgs/<%=pvv.getPbweightimg() %>" style="height:100px;">
 <%} %>               	
                	</td>
               </tr>

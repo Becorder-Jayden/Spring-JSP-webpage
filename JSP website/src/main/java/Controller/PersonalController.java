@@ -49,6 +49,14 @@ public class PersonalController extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			int midx = (int) session.getAttribute("midx");
+
+			
+			// 테스트 용
+			pd = new PersonalDAO();
+			PersonalVo pv = pd.personalSelectOne(midx, 2);
+			request.setAttribute("pv", pv);
+			//
+			
 			
 			ArrayList<PersonalVo> plist = pd.personalSelectALL(midx);
 			request.setAttribute("plist", plist);

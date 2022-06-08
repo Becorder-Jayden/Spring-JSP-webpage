@@ -51,14 +51,13 @@ public class PersonalDAO {
 		ResultSet rs = null;
 		
 		String sql = "SELECT * FROM "
-				+ "(SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) "
+				+ "(SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 "
+				+ "FROM personal ORDER BY PBIDX DESC) "
 				+ "WHERE midx = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, midx);
-			System.out.println("sql: " + sql);
-			System.out.println("midx: " + midx);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -74,5 +73,39 @@ public class PersonalDAO {
 			e.printStackTrace();
 		}
 		return plist;
+	}
+
+	
+	
+	
+	// 하나의 기록 가져오기 - 테스트
+	public PersonalVo personalSelectOne(int midx, int pbidx2) {
+		PersonalVo pv = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM (SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) WHERE midx = ? AND pbidx2 = ?";
+		System.out.println("sql:  "+ sql);
+		System.out.println("midx: " + midx);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, midx);
+			pstmt.setInt(2, pbidx2);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				pv = new PersonalVo();
+				pv.setMidx(rs.getInt("midx"));
+				pv.setPbidx(rs.getInt("pbidx2"));
+				pv.setPbcontinuous(rs.getInt("pbcontinuous"));
+				pv.setPbdate(rs.getDate("pbdate"));
+				pv.setPbweight(rs.getInt("pbweight"));
+				pv.setPbweightimg(rs.getString("pbweightimg"));
+				pv.setPbMemo(rs.getString("pbmemo"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pv;
 	}
 }
