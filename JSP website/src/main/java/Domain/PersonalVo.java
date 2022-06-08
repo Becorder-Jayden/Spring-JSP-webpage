@@ -1,17 +1,16 @@
 package Domain;
 
-import java.sql.Blob;
 import java.sql.Date;
 
 public class PersonalVo {
 
 	private Number midx;
-	private Number pidx;
-	private Date pdate;
-	private Number pweight;
-	private Number pcontinuous;
-	private Blob pweightimg;
-	private String pMemo;
+	private Number pbidx;
+	private Date pbdate;
+	private Number pbweight;
+	private Number pbcontinuous;
+	private String pbweightimg;
+	private String pbMemo;
 
 	
 	public Number getMidx() {
@@ -20,40 +19,42 @@ public class PersonalVo {
 	public void setMidx(Number midx) {
 		this.midx = midx;
 	}
-	public Number getPidx() {
-		return pidx;
+	public Number getPbidx() {
+		return pbidx;
 	}
-	public void setPidx(Number pidx) {
-		this.pidx = pidx;
+	public void setPbidx(Number pbidx) {
+		this.pbidx = pbidx;
 	}
-	public Date getPdate() {
-		return pdate;
+	public Date getPbdate() {
+		return pbdate;
 	}
-	public void setPdate(Date pdate) {
-		this.pdate = pdate;
+	public void setPbdate(Date pbdate) {
+		this.pbdate = pbdate;
 	}
-	public Number getPweight() {
-		return pweight;
+	public Number getPbweight() {
+		return pbweight;
 	}
-	public void setPweight(Number pweight) {
-		this.pweight = pweight;
+	public void setPbweight(Number pbweight) {
+		this.pbweight = pbweight;
 	}
-	public Number getPcontinuous() {
-		return pcontinuous;
+	public Number getPbcontinuous() {
+		return pbcontinuous;
 	}
-	public void setPcontinuous(Number pcontinuous) {
-		this.pcontinuous = pcontinuous;
+	public void setPbcontinuous(Number pbcontinuous) {
+		this.pbcontinuous = pbcontinuous;
 	}
-	public Blob getPweightimg() {
-		return pweightimg;
+	public String getPbweightimg() {
+		return pbweightimg;
 	}
-	public void setPweightimg(Blob pweightimg) {
-		this.pweightimg = pweightimg;
+	public void setPbweightimg(String pbweightimg) {
+		this.pbweightimg = pbweightimg;
 	}
-	public String getpMemo() {
-		return pMemo;
+	public String getPbMemo() {
+		return pbMemo;
 	}
-	public void setpMemo(String pMemo) {
-		this.pMemo = pMemo;
+	public void setPbMemo(String pbMemo) {
+		this.pbMemo = pbMemo;
 	}
+
+	
 }

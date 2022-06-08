@@ -37,6 +37,7 @@ if (session.getAttribute("midx") == null){
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script>
   	function groupGoalWriteFn() {
   		console.log("작동");
@@ -46,6 +47,44 @@ if (session.getAttribute("midx") == null){
   		fm.method = "post";
   		fm.submit();
   	}
+  	
+  	// 그래프 - 구글 차트
+  	google.charts.load('current', {packages: ['corechart', 'line']});
+  	google.charts.setOnLoadCallback(drawBackgroundColor);
+
+  	function drawBackgroundColor() {
+  	      var data = new google.visualization.DataTable();
+  	      data.addColumn('number', 'X');
+  	      data.addColumn('number', 'Dogs');
+
+  	      data.addRows([
+  	        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+  	        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+  	        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+  	        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+  	        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+  	        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+  	        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+  	        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+  	        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+  	        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+  	        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+  	        [66, 70], [67, 72], [68, 75], [69, 80]
+  	      ]);
+
+  	      var options = {
+  	        hAxis: {
+  	          title: 'Time'
+  	        },
+  	        vAxis: {
+  	          title: 'Popularity'
+  	        },
+  	        backgroundColor: '#f1f8e9'
+  	      };
+
+  	      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+  	      chart.draw(data, options);
+  	    }
   </script>
   </head>
   <body>
@@ -109,6 +148,9 @@ if (session.getAttribute("midx") == null){
             margin-top: 50px;
           "
         >
+          <div class="row" style="padding: 20px 0 20px 0">
+            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+          </div>        
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
@@ -374,47 +416,55 @@ if (session.getAttribute("midx") == null){
             </div>
           </div>
 
-           
+					&nbsp;
+          &nbsp;          
            
           <!-- C.공지글 배경색 다르게 설정 -->
           <div class="row">
             
-            <h3>그룹 통계 및 그래프</h3>
+            <h3>그룹 그래프</h3>
             <!-- 꺾은선 그래프 등 ex) 최대, 최소, 평균, 중앙값, 개별 달성도-->
             <!-- 1차 목표: 데이터 표 그리기, 2차 목표: 통계 그래프 그리기 -->
             <!-- 데이터 표 그리기 -->
             <div class="row">
-              <img src="../imgs/delta_graph.png" alt="그룹 통계 그래프">
-            </div>
-            <div class="row col-sm-5">
-              <div class="list-group">
-                <li class="list-group-item">종료일 까지 D-</li>
-                <li class="list-group-item">시작일로부터</li>
-                <li class="list-group-item">합산 감량 몸무게</li>
-                <li class="list-group-item">크루원 몸무게 평균</li>
-                <li class="list-group-item">시작일로부터</li>
-              </div>
+						  <div id="chart_div"></div>
             </div>
           </div>
           
-          <div class="row col-sm-3">
-            <h3>그룹 내 랭킹</h3>
-            <!-- C.순위와 이름이 떨어지도록 설정 -->
-            <div class="list-group">
-              <div class="list-group-item">
-                1 <span>기안84</span>
-              </div>
-              <div class="list-group-item">
-                2 <span>전무님</span>
-              </div>
-              <div class="list-group-item">
-                3 <span>주펄</span>
-              </div>
-            </div>
-          </div>
+          <br>
+          <br>
           
-          &nbsp;
-          &nbsp;
+          <div class="row">
+          	<div class="col-sm-5">
+         		  <h3>그룹 통계</h3>
+	            <div class="list-group">
+	              <li class="list-group-item">종료일 까지 D-</li>
+	              <li class="list-group-item">시작일로부터</li>
+	              <li class="list-group-item">합산 감량 몸무게</li>
+	              <li class="list-group-item">크루원 몸무게 평균</li>
+	              <li class="list-group-item">시작일로부터</li>
+	            </div>
+	          </div>
+          
+	          <div class="col-sm-5">
+	            <h3>그룹 내 랭킹</h3>
+	            <!-- C.순위와 이름이 떨어지도록 설정 -->
+	            <div class="list-group">
+	              <div class="list-group-item">
+	                1 <span>기안84</span>
+	              </div>
+	              <div class="list-group-item">
+	                2 <span>전무님</span>
+	              </div>
+	              <div class="list-group-item">
+	                3 <span>주펄</span>
+	              </div>
+	            </div>
+	          </div>
+          </div>
+
+          <br>
+          <br>
           
           <div name="groupboard">
            <div class="col-10">
@@ -453,7 +503,6 @@ if (session.getAttribute("midx") == null){
                 <td style="text-align:center"><%=gv.getGbhit() %></td>
               </tr>
 <%} %>
-
 
              </tbody>
            </table>

@@ -129,6 +129,9 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
+            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+          </div>        
+          <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">

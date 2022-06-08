@@ -109,7 +109,6 @@ public class MemberController {
 		
 		// 로그아웃 기능
 		else if (command.equals("/member/memberLogout.do")) {
-			System.out.println("실행");
 			
 			HttpSession session = request.getSession();			// 연결된 세션을 가져옴
 			session.invalidate(); 								// 세션 초기화

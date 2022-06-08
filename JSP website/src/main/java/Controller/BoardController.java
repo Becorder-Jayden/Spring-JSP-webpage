@@ -24,7 +24,6 @@ import Service.CommentDAO;
 
 
 // controller : 페이지 이동과 필요한 데이터 전송을 담당
-
 @WebServlet("/BoardController")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -80,7 +79,6 @@ public class BoardController extends HttpServlet {
 			scri.setKeyword(keyword);	// 키워드
 			scri.setSearchType(searchType);	// 검색 유형
 			scri.setCategory(category);
-			//request.setAttribute("scri", scri);	// 게시판에 보여질 글 분류를 위한 데이터 전송			
 
 			// BoardDAO → 전역변수로 이동
 			int cnt = bd.boardTotal(scri);

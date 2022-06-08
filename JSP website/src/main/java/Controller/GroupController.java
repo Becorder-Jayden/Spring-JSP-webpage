@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -158,9 +159,17 @@ public class GroupController extends HttpServlet{
 			gd = new GroupDAO();
 			GroupVo gv = gd.groupSelectOne(gbidx_);
 			request.setAttribute("gv", gv);
-
+			
 			ArrayList<GroupVo> glist = gd.selectGroupBoardAll(scri);
 			request.setAttribute("glist", glist);
+			
+			// 조회 수 카운트
+			HttpSession session = request.getSession();
+			String membername = (String) session.getAttribute("memberName");
+			if (!membername.equals(gv.getGbwriter())) {
+				gd.groupBoardCount(gbidx_);
+			};
+			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/group/groupView.jsp");
 			rd.forward(request, response);

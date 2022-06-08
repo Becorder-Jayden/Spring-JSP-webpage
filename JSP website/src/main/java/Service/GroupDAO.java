@@ -32,7 +32,7 @@ public class GroupDAO {
 				+ "b where rnum between ? and ?";
 		
 		try {
-			// 6.6 Q.왜 오류가 나는 건지?
+			// 6.6 Q.왜 오류가 나는 건지? A. finally 구문
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (scri.getPage()-1)*15+1);
 			pstmt.setInt(2, (scri.getPage()*15));
@@ -49,15 +49,7 @@ public class GroupDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				pstmt.close();
-				rs.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return glist;
 	}
 	
@@ -110,15 +102,14 @@ public class GroupDAO {
 			e.printStackTrace();
 		} 
 		
-		/* 6/6 finally를 하지 않으면 정상작동 됨. close구문 관련해서 이해 부족?
-		 * finally { try { conn.close(); rs.close(); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * }
-		 */
+		// Q. 6/6 finally를 하지 않으면 정상작동 됨. close구문 관련해서 이해 부족?
+		// a. finally 구문의 경우 컨트롤러 기준으로 마지막에 사용되는 메서드에 적용시켜서 연결관계를 끊는데 사용된다. 마지막이 아닌 메서드에 적용할 경우 오류가 발생할 수 있다. 
+
 		return gv;
 	}
 
+	
+	// 페이징 계산을 위한 데이터 개수 확인
 	public int groupTotal(SearchCriteria scri) {
 		int cnt = 0;
 		ResultSet rs = null;
@@ -134,15 +125,31 @@ public class GroupDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 		return cnt;
 	}
 
+	
+	// boardView가 실행되었을 때 조회수 증가
+	public int groupBoardCount(int gbidx) {
+	int cnt = 0;
+	String sql = "update groupboard set gbhit = gbhit+1 where gbidx = ?";
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, gbidx);
+		cnt = pstmt.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		try {
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		return cnt;
+	}
+	
 }

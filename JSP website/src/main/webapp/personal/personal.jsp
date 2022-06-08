@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="Domain.PersonalVo"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
 if (session.getAttribute("midx")==null) {
@@ -10,6 +12,11 @@ if (session.getAttribute("midx")==null) {
 	out.println("</script>");
 }
 %>
+<%
+	ArrayList<PersonalVo> plist = (ArrayList<PersonalVo>)request.getAttribute("plist");
+%>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +33,79 @@ if (session.getAttribute("midx")==null) {
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
+  <script>
+		
+  	function dailyFn() {
+  		var fm = document.daily;
+  		
+  		if (fm.pbWeight.value == "") {
+  			alert("현재 체중을 입력하세요.");
+  			fm.pbWeight.focus();
+  			return;
+  		}
+  		
+  		fm.action = "<%=request.getContextPath()%>/personal/personalWriteAction.do";
+  		fm.method = "post";
+  		fm.enctype = "multipart/form-data";
+  		fm.submit();
+  	}
+  
+  	
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Time of Day');
+      data.addColumn('number', 'Rating');
+
+      data.addRows([
+        [new Date(2022, 6, 1), 75],  [new Date(2022, 6, 2), 77],  [new Date(2022, 6, 3), 73],
+        [new Date(2022, 6, 4), 75],  [new Date(2022, 6, 5), 77],  [new Date(2022, 6, 6), 73],
+        [new Date(2022, 6, 7), 75],  [new Date(2022, 6, 8), 77],  [new Date(2022, 6, 9), 73],
+        
+      ]);
+
+
+      var options = {
+        title: '체중 변화 그래프',
+        width: 900,
+        height: 500,
+        hAxis: {
+          format: 'M/d',
+          gridlines: {count: 15}
+        },
+        vAxis: {
+          gridlines: {color: 'none'},
+          minValue: 0
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+
+      var button = document.getElementById('change');
+
+      button.onclick = function () {
+
+        // If the format option matches, change it to the new option,
+        // if not, reset it to the original format.
+        options.hAxis.format === 'yy/M/d' ?
+        options.hAxis.format = 'yyyy, MMM, dd' :
+        options.hAxis.format = 'yy/M/d';
+
+        chart.draw(data, options);
+      };
+    }
+
+
+  	
+  	
+  </script>
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -72,7 +152,7 @@ if (session.getAttribute("midx")==null) {
 %>    <br>
             n일 째 방문을 환영합니다.
           </p>
-          <p>어제보다 나은 오늘 ☆★</p>
+          <p>어제보다 가벼운 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -87,6 +167,9 @@ if (session.getAttribute("midx")==null) {
             margin-top: 50px;
           "
         >
+          <div class="row" style="padding: 20px 0 20px 0">
+            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+          </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
@@ -169,40 +252,35 @@ if (session.getAttribute("midx")==null) {
               </script>
             </h3>
             <div class="row" style="margin:auto;">
-              <div class="col-sm-3">
-                <input type="image" alt="인증사진 업로드" />
-                  <button href="#" class="btn btn-secondary">사진 업로드</button>
-              </div>
-              <div class="col-sm-9">
-                <div class="row">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="현재 체중">
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <button href="#" class="btn btn-primary">등록</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-floating col-sm-10">
-                    <textarea name="" id="" cols="40" rows="10" class="form-control" placeholder="운동/식단/기록 등" style="resize:none;"></textarea>
-                  </div>
-                </div>
-              </div>
+            	<form name="daily">
+	              <div class="col-sm-3">
+	                <input name="pbWeightImg" type="file" class="form-control" alt="인증사진 업로드" />
+	              </div>
+	              <div class="col-sm-9">
+	                <div class="row">
+	                  <div class="row">
+	                    <div class="col-sm-4">
+	                      <div class="input-group">
+	                        <input name="pbWeight" type="text" class="form-control" placeholder="현재 체중(단위: kg)">
+	                      </div>
+	                    </div>
+	                    <div class="col-sm-3">
+	                      <button type="button" onclick="dailyFn()" class="btn btn-primary">등록</button>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="row">
+	                  <div class="col-sm-10">
+	                    <textarea name="pbMemo" id="" cols="40" rows="5" class="form-control" placeholder="운동/식단 등 기록" style="resize:none;"></textarea>
+	                  </div>
+	                </div>
+	              </div>
+            	</form>
             </div>
           </div>
 
-          <!-- 잔디형 그래프 -->
-          <div class="row">
-            <h3>잔디 그래프</h3>
-            <div class="row" style="margin:auto;">
-              <!-- C.이미지 삽입으로 대체해야 함 -->
-              <img src="../imgs/grass_graph.PNG" alt="잔디 그래프" />
-            </div>
-          </div>
+					<br>
+					<br>
 
           <!-- 주간 기록 확인  -->
           <div class="row">
@@ -242,55 +320,46 @@ if (session.getAttribute("midx")==null) {
               </table>
             </div>
           </div>
+					
+					<br>
+					<br>
 
           <!-- 아래 편집 -->
           <div class="row">
             <h3>체중 변화 그래프</h3>
             <div class="row" style="margin:auto;">
-              <img src="../imgs/grass_graph.PNG" alt="체중 변화 그래프" />
+                <div id="chart_div" alt="체중 변화 그래프"></div>
             </div>
           </div>
+
+          <br>
+          <br>
+          
           <div class="row">
             <h3>업로드 기록</h3>
           </div>
           <div class="row">
             <table class="table" style="text-align: center;">
               <tr>
-                <th>번호</th><th>날짜</th><th>기록</th><th>연속기록</th><th>상세보기</th>
+                <th>번호</th><th>날짜</th><th>체중</th><th>연속기록</th><th>메모</th><th>사진</th>
               </tr>
-              <!-- C.아코디언 기능에 따라 보기/접기 변환 -->
-              <!-- Q. 5/18 HELP 필요 -->
-              <tr>
-                <td>4</td><td>2022/5/5</td><td>70kg</td></td><td>1일차</td>
+<% for (PersonalVo pv : plist) {%>              
+              <tr style="height:100px">
+                <td><%=pv.getPbidx() %></td>
+                <td><%=pv.getPbdate() %></td>
+                <td><%=pv.getPbweight() %></td>
+                <td>null일차</td>
+                <td><%=pv.getPbMemo() %></td>
                 <td>
-                  <a href="" id="seeDetails" style="text-decoration:none;" data-bs-toggle="collapse" data-bs-target="#details" aria-controls="details">
-                    접기
-                  </a>
-                  <tr>
-                    <td colspan="2">사진 <img src="" alt=""></td><td colspan="2">메모 <p>메모 내용입니다</p></td><td></td>
-                  </tr>
-                </td>
+<% if (pv.getPbweightimg() != null) {%>
+                	<img src="<%=request.getContextPath() %>/imgs/<%=pv.getPbweightimg() %>" style="height:100px;">
+<%} %>               	
+               	</td>
               </tr>
-              <tr>
-                <td>3</td><td>2022/5/3</td><td>70kg</td></td><td>3일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
-              </tr>
-              <tr>
-                <td>2</td><td>2022/5/2</td><td>70kg</td></td><td>2일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
-              </tr>
-              <tr>
-                <td>1</td><td>2022/5/1</td><td>70kg</td></td><td>1일차</td><td><a href="#" style="text-decoration:none;">보기</a></td>
-              </tr>
+<%} %>
             </table>
             <div class="row text-center" style="font-size: 20px; margin:auto;">
-              <p>
-                <a href="" style="text-decoration: none"><</a>
-                <a href="" style="text-decoration: none">1</a>
-                <a href="" style="text-decoration: none">2</a>
-                <a href="" style="text-decoration: none">3</a>
-                <a href="" style="text-decoration: none">4</a>
-                <a href="" style="text-decoration: none">5</a>
-                <a href="" style="text-decoration: none">></a>
-              </p>
+						<!-- 6/7. 페이징 구현 예정 -->
             </div>
         </div>
       </div>

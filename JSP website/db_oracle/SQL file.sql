@@ -16,6 +16,8 @@ ALTER TABLE 테이블명 MODIFY 컬럼명 데이터타입(길이);
 -- 컬럼 명 변경
 ALTER TABLE 테이블명 RENAME COLUMN 이전컬럼명 TO 새로운 컬럼명;
 
+-- null 허용
+ALTER TABLE [테이블명] MODIFY ([컬럼명] NULL);
 
 -- 시퀀스 생성
 CREATE SEQUENCE 시퀀스명
@@ -49,19 +51,42 @@ CREATE TABLE member (
 
 --- personalData
 -- 테이블 생성
-CREATE TABLE personalData (
+CREATE TABLE personal (
 	mIdx NUMBER NOT null,
-	pIdx NUMBER NOT NULL PRIMARY KEY,
-	pDate DATE NOT NULL,
-	pWeight NUMBER NOT null,
-	pContinuous NUMBER NOT null,
-	pWeightImg BLOB,
-	pMemo VARCHAR2(100)
+	pbIdx NUMBER NOT NULL PRIMARY KEY,
+	pbDate DATE dEFAULT SYSDATE NOT null,
+	pbWeight NUMBER NOT null,
+	pbContinuous NUMBER null,
+	pbWeightImg VARCHAR2(100),
+	pbMemo VARCHAR2(500)
 );
 
+select * FROM personal ORDER BY pbidx DESC;
+SELECT COUNT(*) FROM personal WHERE midx = 45;
+-- 컬럼 추가
+ALTER TABLE personal ADD(test int);
+
+
+SELECT * FROM (SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) WHERE midx = 45;
+-- 데이터 수정
+UPDATE personal SET pbidx2 = (SELECT RANK() OVER(partition BY midx ORDER BY pbidx) FROM personal);
+
+
 -- 외래키 추가
-ALTER TABLE personalData
+ALTER TABLE personal
 ADD CONSTRAINT fk_mIdx FOREIGN KEY(mIdx) REFERENCES member(mIdx);
+-- 외래키 삭제
+ALTER TABLE personal DROP constraint fk_midx;
+-- 데이터 추가
+INSERT INTO personal(midx,pbidx,pbweight,pbcontinuous,pbweightimg,pbmemo)
+VALUES (1, pbidx_seq.NEXTVAL, 2,null,null,5);
+-- sequence 생성
+CREATE SEQUENCE pbidx_seq INCREMENT BY 1 START WITH 1;
+-- NULL 수정
+ALTER TABLE PERSONAL MODIFY pbcontinuous NULL;
+-- 데이터 타입 변경
+ALTER TABLE personal MODIFY pbWeightImg VARCHAR2(100);
+
 
 
 --- crewMaker
@@ -229,7 +254,11 @@ b;
 --커밋
 COMMIT;
 
-SELECT COUNT(*) AS cnt from bulletinboard where fbtitle like '%%' and fbcategory = 'all';
+
+SELECT * FROM personal;
+
+
+
 
 SELECT * FROM bulletinboard ORDER BY FBIDX DESC;
 SELECT * FROM bulletincomment WHERE fbIdx=417 ORDER BY cmidx DESC;
@@ -238,4 +267,9 @@ DELETE bulletincomment WHERE cmidx = 64;
 SELECT * FROM BULLETINBOARD a ORDER BY a.FBIDX DESC;
 DELETE FROM BULLETINBOARD WHERE fbcategory IS NULL;
 ALTER TABLE bulletinBoard MODIFY fbcategory NOT NULL;
-SELECT * FROM groupboard WHERE GBIDX = 43;
+
+select count(*) as cnt from a_board where delyn='N';
+select * from groupboard WHERE gbidx = 53;
+SELECT * FROM groupboard ORDER BY GBIDX desc;
+UPDATE GROUPboard SET gbhit = gbhit + 1 WHERE gbidx = 55;
+update groupboard set gbhit = gbhit+1 where gbidx = 54;

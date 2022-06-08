@@ -122,6 +122,9 @@ if (session.getAttribute("midx") == null){
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
+            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+          </div>        
+          <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
@@ -194,6 +197,7 @@ if (session.getAttribute("midx") == null){
                 <div class="col-sm-11">
                   <!-- 글쓰기 입력 -->
                   <div class="container" style="text-align: center;">
+                 		
                  		<form name="write">
                   	<h3>게시글 쓰기</h3>
            	         	<table class="table" >
@@ -234,6 +238,7 @@ if (session.getAttribute("midx") == null){
 	                      </div>
 	                    </div>
 	                  </form>
+                 	
                  	</div>
   	            </div>
 		          </div>
