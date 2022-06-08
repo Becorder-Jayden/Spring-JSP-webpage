@@ -11,7 +11,31 @@ public class PersonalVo {
 	private Number pbcontinuous;
 	private String pbweightimg;
 	private String pbMemo;
-
+	
+	
+	//
+	private String pbyear;
+	private String pbMonth;
+	
+	
+	
+	public String getPbyear() {
+		return pbyear;
+	}
+	public void setPbyear(String pbyear) {
+		this.pbyear = pbyear;
+	}
+	public String getPbMonth() {
+		return pbMonth;
+	}
+	public void setPbMonth(String pbMonth) {
+		this.pbMonth = pbMonth;
+	}
+	
+	
+	
+	//
+	
 	
 	public Number getMidx() {
 		return midx;

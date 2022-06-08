@@ -1,3 +1,4 @@
+<%@page import="java.time.Year"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Domain.PersonalVo"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
@@ -37,7 +38,7 @@ if (session.getAttribute("midx")==null) {
   	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   
   <script>
-		
+		// 데이터 입력
   	function dailyFn() {
   		var fm = document.daily;
   		
@@ -53,61 +54,63 @@ if (session.getAttribute("midx")==null) {
   		fm.submit();
   	}
   
-  	
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+	      
+		// 그래프 그리기  	
+ 	  google.charts.load('current', {'packages':['corechart']});
+   	google.charts.setOnLoadCallback(drawChart);
+		
+    // 그래프 변수 설정
+    var data;
+		var options;
+		var chart;
+		
+		var years = [];
+    var months = [];
+    var days = [];
+    var weight = [];
 
+<% for (PersonalVo pvv : plist) { %>      
+    
+		var pbdate = '<%=pvv.getPbdate()%>'.split('-');
+		
+		years.push(parseInt(pbdate[0]));
+		months.push(parseInt(pbdate[1]));
+		days.push(parseInt(pbdate[2]));
+		weight.push(<%=pvv.getPbweight()%>);
+
+<%}%>
+		var len = years.length;
+
+
+		// 그래프 그리기
     function drawChart() {
 
-      var data = new google.visualization.DataTable();
-      data.addColumn('date', '날짜');
+      data = new google.visualization.DataTable();
+      data.addColumn('datetime', '날짜');
       data.addColumn('number', '체중');
+      
+      for (var i = 0; i < len; i++) {
+     		arr = [new Date(years[i], months[i]-1, days[i]), weight[i]];
+     		console.log(arr);
+  	  	data.addRow(arr);
+      }
+      
+			options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          hAxis:{
+	          format: 'MM-dd'
+        	  }
+        };
 
-      data.addRows([
-        [new Date(2022, 6, 1), 75],  [new Date(2022, 6, 2), 77],  [new Date(2022, 6, 3), 73],
-        [new Date(2022, 6, 4), 75],  [new Date(2022, 6, 5), 77],  [new Date(2022, 6, 6), 73],
-        [new Date(2022, 6, 7), 75],  [new Date(2022, 6, 8), 77],  [new Date(2022, 6, 9), 73],
-        
-      ]);
-
-
-      var options = {
-        title: '체중 변화 그래프',
-        width: 700,
-        height: 500,
-        hAxis: {
-          format: 'M/d',
-          gridlines: {count: 15}
-        },
-        vAxis: {
-          gridlines: {color: 'none'},
-          minValue: 0
-        }
-      };
-
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+  		chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
       chart.draw(data, options);
-
-      var button = document.getElementById('change');
-
-      button.onclick = function () {
-
-        // If the format option matches, change it to the new option,
-        // if not, reset it to the original format.
-        options.hAxis.format === 'yy/M/d' ?
-        options.hAxis.format = 'yyyy, MMM, dd' :
-        options.hAxis.format = 'yy/M/d';
-
-        chart.draw(data, options);
-      };
     }
-
-
-  	
-  	
+    
   </script>
-  </head>
+ 	</head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
       <!-- 사이드 메뉴 바 -->
@@ -329,7 +332,7 @@ if (session.getAttribute("midx")==null) {
           <div class="row">
             <h3>체중 변화 그래프</h3>
             <div class="row" style="margin:auto;">
-                <div id="chart_div" alt="체중 변화 그래프"></div>
+                <div id="curve_chart" alt="체중 변화 그래프"></div>
             </div>
           </div>
 
@@ -339,7 +342,9 @@ if (session.getAttribute("midx")==null) {
           <!-- 테스트 -->
           
           
-          <%=pv.getPbdate()%>
+          
+         
+         
          
           <div class="row">
             <h3>업로드 기록</h3>

@@ -74,7 +74,6 @@ public class PersonalDAO {
 		}
 		return plist;
 	}
-
 	
 	
 	
@@ -84,8 +83,6 @@ public class PersonalDAO {
 		ResultSet rs = null;
 		
 		String sql = "SELECT * FROM (SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) WHERE midx = ? AND pbidx2 = ?";
-		System.out.println("sql:  "+ sql);
-		System.out.println("midx: " + midx);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, midx);
