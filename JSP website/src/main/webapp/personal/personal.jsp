@@ -38,7 +38,38 @@ if (session.getAttribute("midx")==null) {
   	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   
   <script>
-		// 데이터 입력
+		/* 전역 변수 입력 */ 
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+  
+    // n주차 구하기 (참고: https://blog.naver.com/kwonhjae/222620941426)
+    /* 작동안됨 var weekNumOfMonth = function(date) {
+    	var WEEK_KOR = ["첫째주", "둘째주", "셋째주", "넷째주", "다섯째주"];
+    	var MONDAY_NUM = 1;	// 첫째주의 기준을 월요일(1)로 설정 
+    	
+    	var firstDate = new Date(date.getFullYear(), date.getMonth(), 1);
+    	var firstDayOfWeek = firstDate.getDay();
+    	
+    	var firstMonday = 1 + MONDAY_NUM - firstDayOfWeek;	// 첫째주 월요일
+    	if (firstMonday <= 0) {
+    		firstMonday = firstMoney + 7;	// 한주는 7일
+    	}
+    	var untilDateOfFirstWeek = firstMonday-7+3;	// 월요일 기준으로 계산 (월요일부터 한 주의 시작)
+    	var weekNum = Math.ceil((date.getDate()-untilDateOfFirstWeek) / 7) - 1; 
+    	
+    	if (weekNum < 0) { 	// 첫째 주 이하일 경우 전월 마지막 주 계산
+    		var lastdateOfMonth = new Date(date.getFullYear(), date.getMonth(), 0);
+    		var result = Util.Date.weekNumOfMonth(lastDateOfMonth);
+    		return result;
+    	}
+    	
+    	return [WEEK_KOR[weekNum], (date.getMonth()+1)+'월'];
+    } */
+  
+    
+  	// 데이터 입력
   	function dailyFn() {
   		var fm = document.daily;
   		
@@ -248,10 +279,6 @@ if (session.getAttribute("midx")==null) {
           <div class="row">
             <h3>일일 기록 등록 : 
               <script>
-                date = new Date();
-                year = date.getFullYear();
-                month = date.getMonth() + 1;
-                day = date.getDate();
                 document.write(year+"년 "+month+"월 "+day+"일");
               </script>
             </h3>
@@ -263,7 +290,7 @@ if (session.getAttribute("midx")==null) {
 	              <div class="col-sm-9">
 	                <div class="row">
 	                  <div class="row">
-	                    <div class="col-sm-4">
+	                    <div class="col-sm-5">
 	                      <div class="input-group">
 	                        <input name="pbWeight" type="text" class="form-control" placeholder="현재 체중(단위: kg)">
 	                      </div>
@@ -289,6 +316,11 @@ if (session.getAttribute("midx")==null) {
           <!-- 주간 기록 확인  -->
           <div class="row">
             <h3>주간 기록</h3>
+	          <h4>
+	            <script>
+								document.write(month+"월 " + "주차");            
+	            </script>
+	          </h4>
             <div class="row" style="margin:auto; text-align: center;">
               <table>
                 <tr>
@@ -358,7 +390,7 @@ if (session.getAttribute("midx")==null) {
               <tr style="height:100px">
                 <td><%=pvv.getPbidx() %></td>
                 <td><%=pvv.getPbdate() %></td>
-                <td><%=pvv.getPbweight() %></td>
+                <td><%=pvv.getPbweight() %>kg</td>
                 <td>null일차</td>
                 <td><%=pvv.getPbMemo() %></td>
                 <td>
