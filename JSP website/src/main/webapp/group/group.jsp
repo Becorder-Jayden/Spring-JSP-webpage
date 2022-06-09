@@ -3,7 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
-if (session.getAttribute("midx") == null){
+/* if (session.getAttribute("midx") == null){
 	
 	session.setAttribute("saveUrl", request.getRequestURI());
 	
@@ -11,7 +11,7 @@ if (session.getAttribute("midx") == null){
 	out.println("alert('로그인 해주세요.')");
 	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
 	out.println("</script>");
-}
+} */
 
 %>
 <%
@@ -103,15 +103,18 @@ if (session.getAttribute("midx") == null){
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath()%>">
-            <img src="../imgs/logo.jpg" alt="logo" style="width: 100%" />
+          <a href="<%=request.getContextPath()%>/main/main.do">
+            <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
-        <!-- 프로필 -->
+				<!-- 프로필 이미지 -->
         <div class="profile_img">
+
+<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
+        <!-- 프로필 -->
           <img
-            src="../imgs/profile_ex.jpg"
+            src="../imgs/profile_none.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -122,19 +125,30 @@ if (session.getAttribute("midx") == null){
           />
         </div>
         <br>
-        <!-- 각오 -->
-        <div class="motto">
-          <p>
+        <p>로그인이 필요합니다.</p>
+
+<% } else { %>
+          <img
+            src="../imgs/<%=session.getAttribute("memberimg")%>"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>  
+        <p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
-          <br>
-            n일 째 방문을 환영합니다.
-          </p>
-          <p>어제보다 나은 오늘 ☆★</p>
-        </div>
+				</p>
+				<p> 간단한 응원의 문구 </p>
+<%} %>
 
         <!-- 메뉴 -->
         <ul
@@ -149,7 +163,7 @@ if (session.getAttribute("midx") == null){
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+            <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
           </div>        
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>

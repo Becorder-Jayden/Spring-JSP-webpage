@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -46,23 +47,20 @@ public class PersonalController extends HttpServlet {
 		
 		if (command.equals("/personal/personal.do")) {
 
-			
 			HttpSession session = request.getSession();
-			int midx = (int) session.getAttribute("midx");
-
-			
-			// 테스트 용
-			pd = new PersonalDAO();
-			PersonalVo pv = pd.personalSelectOne(midx, 2);
-			request.setAttribute("pv", pv);
-			//
-			
-			
-			ArrayList<PersonalVo> plist = pd.personalSelectALL(midx);
-			request.setAttribute("plist", plist);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/personal/personal.jsp");
-			rd.forward(request, response);
+			if (session.getAttribute("midx") != null) {
+				int midx = (int)session.getAttribute("midx");
+				ArrayList<PersonalVo> plist = pd.personalSelectALL(midx);
+				request.setAttribute("plist", plist);
+				RequestDispatcher rd = request.getRequestDispatcher("/personal/personal.jsp");
+				rd.forward(request, response);
+			} else {
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('로그인 해주세요.')");
+				out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
+				out.println("</script>");
+			}
 		}
 
 		// 일일 몸무게 입력

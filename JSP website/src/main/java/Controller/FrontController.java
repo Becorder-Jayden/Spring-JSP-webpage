@@ -22,7 +22,11 @@ public class FrontController extends HttpServlet{
 		String[] subpath =  command.split("/");
 		String location = subpath[1];	// JspWebPage
 
-		if (location.equals("member")) {
+		if (location.equals("main")){
+			MainController mainc = new MainController();
+			mainc.doGet(request, response);
+		}
+		else if (location.equals("member")) {
 			MemberController mc = new MemberController();
 			mc.doGet(request, response);
 		} 

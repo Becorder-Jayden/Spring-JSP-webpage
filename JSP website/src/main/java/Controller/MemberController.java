@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import Domain.MemberVo;
 import Service.MemberDAO;
@@ -28,22 +32,36 @@ public class MemberController {
 		
 		System.out.println("command :" + command);					// 실행된 command 확인을 위한 sysout
 
+		String uploadPath = "E:\\Open API A반\\Back-end\\JSP website\\src\\main\\webapp\\";
+		String saveFolder = "imgs";
+		String saveFullPath = uploadPath + saveFolder;
 		
-		// 회원가입 : midx(회원고유번호), memberid(아이디), memberpassword(비밀번호), memberpasswordcheck(비밀번호 확인), memberemail(이메일), membername(회원명), membergender(성별)
+		
+		
+		
+		// 회원가입 : midx(회원고유번호), memberid(아이디), memberpassword(비밀번호), memberpasswordcheck(비밀번호 확인), memberemail(이메일), membername(회원명), membergender(성별), memberImg(프로필 사진)
 		if (command.equals("/member/memberJoinAction.do")) {
 			
-			// 가입 정보 불러오기
-			String mIdx = request.getParameter("MIDX");								// 값을 받아올 때 getParameter 사용
-			String memberId = request.getParameter("MEMBERID");
-			String memberPassword = request.getParameter("MEMBERPASSWORD");
-			String memberPasswordCheck = request.getParameter("MEMBERPASSWORDCHECK");		
-			String memberEmail = request.getParameter("MEMBEREMAIL");
-			String memberName = request.getParameter("MEMBERNAME");
-			String memberGender = request.getParameter("MEMBERGENDER");				// select 결과로 하나의 값을 갖기 때문에 getParameterValuse 사용 x
+			int sizeLimit = 1024*1024*15;
 			
+			MultipartRequest multi = new MultipartRequest(request, saveFullPath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());
+			
+			Enumeration files = multi.getFileNames();
+			
+			String file = (String) files.nextElement();
+			String memberImg = multi.getFilesystemName(file);
+			
+			String mIdx = multi.getParameter("MIDX");
+			String memberId = multi.getParameter("MEMBERID");
+			String memberPassword = multi.getParameter("MEMBERPASSWORD");
+			String memberPasswordCheck = multi.getParameter("MEMBERPASSWORDCHECK");
+			String memberEmail = multi.getParameter("MEMBEREMAIL");
+			String memberName = multi.getParameter("MEMBERNAME");
+			String memberGender = multi.getParameter("MEMBERGENDER");
+
 			// insterMember 메서드를 이용해 DB(MemberDAO)에 등록
 			MemberDAO md = new MemberDAO();
-			int value = md.insertMember(memberId, memberPassword, memberEmail, memberName, memberGender);
+			int value = md.insertMember(memberId, memberPassword, memberEmail, memberName, memberGender, memberImg);
 			
 			PrintWriter out = response.getWriter();
 			
@@ -59,17 +77,24 @@ public class MemberController {
 			}
 		}
 		
+		
+		
 		// 회원가입 페이지 이동
 		else if (command.equals("/member/memberJoin.do")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.jsp");
 			rd.forward(request, response);
 		}
 		
+		
+		
 		// 로그인 페이지 이동
 		else if (command.equals("/member/memberLogin.do")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/member/memberLogin.jsp");
 			rd.forward(request, response);
 		}
+		
+		
+		
 		
 		// 로그인 수행
 		else if (command.equals("/member/memberLoginAction.do")) {
@@ -86,6 +111,7 @@ public class MemberController {
 				session.setAttribute("midx", mv.getMidx());
 				session.setAttribute("memberId", mv.getMemberid());
 				session.setAttribute("memberName", mv.getMembername());
+				session.setAttribute("memberimg", mv.getMemberimg());
 				
 				if (session.getAttribute("saveUrl") != null) {									
 					response.sendRedirect((String)session.getAttribute("saveUrl"));			//6.2 Q.글쓰기버튼 - 로그인해주세요 - 로그인 후 - write.jsp로 이동하는 현상 발생?
@@ -101,11 +127,17 @@ public class MemberController {
 			}
 		}
 		
+		
+		
+		
 		// 마이페이지 이동
 		else if (command.equals("/member/memberMyPage.do")) {
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/member/memberMyPage.jsp");
 			rd.forward(request, response);
 		}
+		
+		
 		
 		// 로그아웃 기능
 		else if (command.equals("/member/memberLogout.do")) {
@@ -113,7 +145,7 @@ public class MemberController {
 			HttpSession session = request.getSession();			// 연결된 세션을 가져옴
 			session.invalidate(); 								// 세션 초기화
 			
-			response.sendRedirect(request.getContextPath() + "/");	// 인덱스 페이지로 이동하게 됨 (cf. "/"를 기입하지 않아도 자동으로 이동하긴 함)
+			response.sendRedirect(request.getContextPath() + "/main/main.do");	// 인덱스 페이지로 이동하게 됨 (cf. "/"를 기입하지 않아도 자동으로 이동하긴 함)
 			
 		}
 				

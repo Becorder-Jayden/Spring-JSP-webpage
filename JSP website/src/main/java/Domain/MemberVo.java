@@ -11,6 +11,7 @@ public class MemberVo {
 	private String memberemail;
 	private String membername;
 	private String membergender;
+	private String memberimg;
 
 	
 	// getter & setter : 클래스 필드에 직접 접근하는 것을 방지
@@ -50,4 +51,13 @@ public class MemberVo {
 	public void setMembergender(String membergender) {
 		this.membergender = membergender;
 	}
+	
+	// 6.9 추가 
+	public String getMemberimg() {
+		return memberimg;
+	}
+	public void setMemberimg(String memberimg) {
+		this.memberimg = memberimg;
+	}
+
 }

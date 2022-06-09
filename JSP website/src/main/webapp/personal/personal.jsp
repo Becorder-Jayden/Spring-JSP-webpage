@@ -3,7 +3,7 @@
 <%@page import="Domain.PersonalVo"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
-if (session.getAttribute("midx")==null) {
+if (session.getAttribute("midx") == null) {
 	
 	session.setAttribute("saveUrl", request.getRequestURI());
 	
@@ -15,7 +15,6 @@ if (session.getAttribute("midx")==null) {
 %>
 <%
 	ArrayList<PersonalVo> plist = (ArrayList<PersonalVo>)request.getAttribute("plist");
-	PersonalVo pv = (PersonalVo)request.getAttribute("pv");
 %>
 
 
@@ -38,7 +37,7 @@ if (session.getAttribute("midx")==null) {
   	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   
   <script>
-		/* 전역 변수 입력 */ 
+	/* 전역 변수 입력 */ 
     date = new Date();
     year = date.getFullYear();
     month = date.getMonth() + 1;
@@ -70,7 +69,11 @@ if (session.getAttribute("midx")==null) {
   
     
   	// 데이터 입력
+
+  	console.log(<%=session.getAttribute("midx")%>);
+  	
   	function dailyFn() {
+    	
   		var fm = document.daily;
   		
   		if (fm.pbWeight.value == "") {
@@ -85,16 +88,26 @@ if (session.getAttribute("midx")==null) {
   		fm.submit();
   	}
   
+	/* 업로드한 사진 미리보기 */
+  	function readImage(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					document.getElementById('preview').src = e.target.result;
+				};
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				document.getElementById('preview').src = "";
+			}
+	}	
+  	
+  	
 	      
-		// 그래프 그리기  	
+	/* 그래프 그리기 */ 	
  	  google.charts.load('current', {'packages':['corechart']});
    	google.charts.setOnLoadCallback(drawChart);
 		
     // 그래프 변수 설정
-    var data;
-		var options;
-		var chart;
-		
 		var years = [];
     var months = [];
     var days = [];
@@ -110,24 +123,21 @@ if (session.getAttribute("midx")==null) {
 		weight.push(<%=pvv.getPbweight()%>);
 
 <%}%>
-		var len = years.length;
-
 
 		// 그래프 그리기
     function drawChart() {
 
-      data = new google.visualization.DataTable();
+      var data = new google.visualization.DataTable();
       data.addColumn('datetime', '날짜');
       data.addColumn('number', '체중');
       
-      for (var i = 0; i < len; i++) {
+      for (var i = 0; i < years.length; i++) {
      		arr = [new Date(years[i], months[i]-1, days[i]), weight[i]];
-     		console.log(arr);
   	  	data.addRow(arr);
       }
       
-			options = {
-          title: '',
+			var options = {
+          title: '체중 변화 그래프',
           curveType: 'function',
           legend: { position: 'bottom' },
           hAxis:{
@@ -135,10 +145,10 @@ if (session.getAttribute("midx")==null) {
         	  }
         };
 
-  		chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+  		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
       chart.draw(data, options);
-    }
+    }	
     
   </script>
  	</head>
@@ -158,15 +168,18 @@ if (session.getAttribute("midx")==null) {
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath()%>">
-            <img src="../imgs/logo.jpg" alt="logo" style="width: 100%" />
+          <a href="<%=request.getContextPath()%>/main/main.do">
+            <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
-        <!-- 프로필 -->
+				<!-- 프로필 이미지 -->
         <div class="profile_img">
+
+<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
+        <!-- 프로필 -->
           <img
-            src="../imgs/profile_ex.jpg"
+            src="../imgs/profile_none.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -177,18 +190,30 @@ if (session.getAttribute("midx")==null) {
           />
         </div>
         <br>
-        <!-- 각오 -->
-        <div class="motto">
-          <p>
+        <p>로그인이 필요합니다.</p>
+
+<% } else { %>
+          <img
+            src="../imgs/<%=session.getAttribute("memberimg")%>"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>  
+        <p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
-%>    <br>
-            n일 째 방문을 환영합니다.
-          </p>
-          <p>어제보다 가벼운 오늘 ☆★</p>
-        </div>
+%>
+				</p>
+				<p> 간단한 응원의 문구 </p>
+<%} %>
 
         <!-- 메뉴 -->
         <ul
@@ -203,7 +228,7 @@ if (session.getAttribute("midx")==null) {
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+            <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
@@ -284,7 +309,32 @@ if (session.getAttribute("midx")==null) {
             </h3>
             <div class="row" style="margin:auto;">
             	<form name="daily">
-	              <div class="col-sm-3">
+            	
+            	<!-- 수정 중 -->
+            	<table>
+            		<tr>
+            			<td rowspan="2" class="col-sm-4">
+            				<img id = "preview" style="width:300px;">
+            				<input name="pbWeightImg" type="file" onchange="readImage(this);" class="form-control" alt="인증사진 업로드" />
+           				</td>
+            			<td>
+	            			<div class="input-group">
+	            				<input name="pbWeight" type="text" class="form-control" placeholder="현재 체중 (단위 : kg)">
+	            				<button type="button" onclick="dailyFn()" class="btn btn-primary input-append">등록</button>
+	            			</div>
+         					</td>
+            		</tr>
+            		<tr>
+            			<td><textarea name="pbMemo" id="" cols="80" rows="5" class="form-control" placeholder="운동/식단 등 기록" style="resize:none;"></textarea></td>
+            		</tr>
+            		
+            	</table>
+            	
+            	
+            	
+            	
+            	
+<!-- 	              <div class="col-sm-3">
 	                <input name="pbWeightImg" type="file" class="form-control" alt="인증사진 업로드" />
 	              </div>
 	              <div class="col-sm-9">
@@ -306,6 +356,7 @@ if (session.getAttribute("midx")==null) {
 	                  </div>
 	                </div>
 	              </div>
+ -->	              
             	</form>
             </div>
           </div>
@@ -324,7 +375,6 @@ if (session.getAttribute("midx")==null) {
             <div class="row" style="margin:auto; text-align: center;">
               <table>
                 <tr>
-                  <th>요일</th>
                   <th>월</th>
                   <th>화</th>
                   <th>수</th>
@@ -334,7 +384,6 @@ if (session.getAttribute("midx")==null) {
                   <th>일</th>
                 </tr>
                 <tr>
-                  <th>사진 등록</th>
                   <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
                   <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
                   <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
@@ -344,7 +393,6 @@ if (session.getAttribute("midx")==null) {
                   <td><img src="../imgs/representative_img.PNG" alt="등록" style="width:100px"/></td>
                 </tr>
                 <tr>
-                  <th>기록</th>
                   <td>70.2kg</td>
                   <td>74.2kg</td>
                   <td>70.9kg</td>
@@ -384,14 +432,13 @@ if (session.getAttribute("midx")==null) {
           <div class="row">
             <table class="table" style="text-align: center;">
               <tr>
-                <th>번호</th><th>날짜</th><th>체중</th><th>연속기록</th><th>메모</th><th>사진</th>
+                <th>번호</th><th>날짜</th><th>체중</th><th>메모</th><th>사진</th>
               </tr>
 <% for (PersonalVo pvv : plist) {%>              
               <tr style="height:100px">
                 <td><%=pvv.getPbidx() %></td>
                 <td><%=pvv.getPbdate() %></td>
                 <td><%=pvv.getPbweight() %>kg</td>
-                <td>null일차</td>
                 <td><%=pvv.getPbMemo() %></td>
                 <td>
 <% if (pvv.getPbweightimg() != null) {%>

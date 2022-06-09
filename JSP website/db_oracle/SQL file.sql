@@ -35,7 +35,7 @@ INSERT INTO a_board(BIDX,SUBJECT,CONTENT,WRITER,IP,MIDX) VALUES(bidx_seq.nextval
 SELECT * FROM all_constraints WHERE constraint_type='R';
 ----
 
-
+COMMIT;
 
 --- member
 -- 테이블 생성
@@ -48,6 +48,12 @@ CREATE TABLE member (
 	memberGender CHAR(1) DEFAULT 'N'
 );
 
+SELECT * FROM member;
+
+-- 데이터 컬럼 추가(프로필)
+ALTER TABLE member ADD(memberimg VARCHAR2(100));
+-- 데이터 컬럼 삭제
+ALTER TABLE member DROP COLUMN img;
 
 --- personalData
 -- 테이블 생성
@@ -254,11 +260,12 @@ b;
 --커밋
 COMMIT;
 
-
 SELECT * FROM personal;
+SELECT * FROM member;
+COMMIT;
 
-
-
+SELECT * FROM (SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) WHERE midx = 45 AND pbidx2 = 5;
+SELECT * FROM (SELECT MIDX, PBIDX, PBDATE, PPERSONALBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC) WHERE midx = 45;
 
 SELECT * FROM bulletinboard ORDER BY FBIDX DESC;
 SELECT * FROM bulletincomment WHERE fbIdx=417 ORDER BY cmidx DESC;

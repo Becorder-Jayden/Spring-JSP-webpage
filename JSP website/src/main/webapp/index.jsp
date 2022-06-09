@@ -1,6 +1,11 @@
+<%@page import="Domain.MemberVo"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="javax.swing.text.Document"%>
 <%@page import="java.io.Console"%>
+<%
+	MemberVo mv = (MemberVo) request.getAttribute("mv");
+%>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -34,15 +39,19 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath() %>">																																<!-- Q. #말고 다른 방법이 있을까? --><!-- A. 주소창에 request.getContextPath()를 입력하면 인덱스 페이지로 이동 -->
-            <img src="imgs/logo.jpg" alt="logo" style="width: 100%" />
+          <a href="<%=request.getContextPath() %>/main/main.do">			
+            <img src="imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
+
+
+
         <!-- 프로필 -->
         <div class="profile_img">
+<%-- <% if (mv.getMemberimg() == null) { %>
           <img
-            src="imgs/profile_ex.jpg"
+            src="imgs/profile_none.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -51,6 +60,18 @@
               margin-top: 50px;
             "
           />
+<% } else { %>
+          <img
+            src="imgs/<%=mv.getMemberimg() %>"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+<%} %> --%>
         </div>
         <br>
         <!-- 각오 -->
@@ -64,9 +85,6 @@
 	}
 %>         
             <br>
-            n일 째 방문을 환영합니다.
-          </p>
-          <p>어제보다 나은 오늘 ☆★</p>
         </div>
 
         <!-- 메뉴 -->
@@ -82,7 +100,7 @@
           "
         >
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>" style="text-decoration: none;"><li>메인</li></a>
+            <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
           </div>        
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none"
@@ -159,27 +177,27 @@
         <!-- 페이지 본문 내용 -->
         <div class="row" style="margin: auto">
           <div class="row" style="margin: auto">
-            <img src="./imgs/main.jpg" alt="메인 이미지" />
+            <img src="./imgs/main.png" alt="메인 이미지" />
           </div>
           <div class="row" style="margin: auto">
             <!-- C. 이미지 배치시 사이즈 조절 필요-->
             <div class="col-sm-4">
               <img
-                src="./imgs/main-part.jpg"
+                src="./imgs/records.png"
                 alt="main-part"
                 style="width: 100%"
               />
             </div>
             <div class="col-sm-4">
               <img
-                src="./imgs/main-part.jpg"
+                src="./imgs/gymMate.png"
                 alt="main-part"
                 style="width: 100%"
               />
             </div>
             <div class="col-sm-4">
               <img
-                src="./imgs/main-part.jpg"
+                src="./imgs/commu.png"
                 alt="main-part"
                 style="width: 100%"
               />

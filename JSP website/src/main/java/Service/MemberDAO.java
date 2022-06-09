@@ -21,11 +21,11 @@ public class MemberDAO {
 		this.conn = db.getConnection();
 	}
 
-	public int insertMember(String memberId, String memberPassword, String memberMail, String memberName, String memberGender) {
+	public int insertMember(String memberId, String memberPassword, String memberMail, String memberName, String memberGender, String memberImg) {
 		int value = 0;
 		
-		String sql = "insert into member(MIDX,MEMBERID,MEMBERPASSWORD,MEMBEREMAIL,MEMBERNAME,MEMBERGENDER)" 
-						+ "values(midx_seq.nextval, ?,?,?,?,?)";
+		String sql = "insert into member(MIDX,MEMBERID,MEMBERPASSWORD,MEMBEREMAIL,MEMBERNAME,MEMBERGENDER,MEMBERIMG)" 
+						+ "values(midx_seq.nextval, ?,?,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class MemberDAO {
 			pstmt.setString(3, memberMail);
 			pstmt.setString(4, memberName);
 			pstmt.setString(5, memberGender);
+			pstmt.setString(6, memberImg);
 			value = pstmt.executeUpdate();
 		
 		} catch (Exception e) {
@@ -99,6 +100,7 @@ public class MemberDAO {
 				mv.setMidx(rs.getInt("midx"));
 				mv.setMemberid(rs.getString("memberId"));
 				mv.setMembername(rs.getString("memberName"));
+				mv.setMemberimg(rs.getString("memberImg"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

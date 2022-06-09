@@ -117,7 +117,6 @@ public class GroupController extends HttpServlet{
 			String file = (String) files.nextElement();
 			String fileName = multi.getFilesystemName(file);
 			
-			
 			String gbtitle = multi.getParameter("gbtitle");
 			String gbcontent = multi.getParameter("gbcontent");
 			String gbwriter = multi.getParameter("gbwriter");
