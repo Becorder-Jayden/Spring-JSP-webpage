@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.eclipse.jdt.internal.compiler.flow.FinallyFlowContext;
-
 import Dbconn.Dbconn;
 import Domain.BoardVo;
 import Domain.SearchCriteria;
@@ -87,17 +85,29 @@ public class BoardDAO {
 	public ArrayList<BoardVo> boardSelectAll(SearchCriteria scri) {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		ResultSet rs = null;
-
+		
+		String sql = "";
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
-		String sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard  where fbtitle like ? and fbcategory like ?"
-				+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
 		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함
 		// 5.26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
+		
+		if (scri.getSearchType().equals("fbtitle")){
+			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbtitle like ? "
+					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
+
+		} else if (scri.getSearchType().equals("fbidx")) {
+			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbidx like ? "
+					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
+		
+		} else if (scri.getSearchType().equals("fbwriter")) {
+			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbwriter like ? "
+					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
+		}
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + scri.getKeyword() + "%");
-			pstmt.setString(2, "%" + scri.getCategory() + "%");
+			pstmt.setString(1, "%" + scri.getCategory() + "%");
+			pstmt.setString(2, "%" + scri.getKeyword() + "%");
 			pstmt.setInt(3, (scri.getPage() - 1) * 20 + 1);
 			pstmt.setInt(4, (scri.getPage() * 20));
 			rs = pstmt.executeQuery();
