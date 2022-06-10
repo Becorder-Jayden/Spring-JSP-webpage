@@ -187,39 +187,42 @@
           position: flex;
         "
       >
-        <!-- 페이지 본문 내용 -->
+        <!-- 로그인 입력 창 -->
         <div class="container" style="left: 200px; width:90%">
           <div class="row">
             <h1>로그인</h1>
-            
-            <!-- Q.페이지 중앙으로 이동 --> <!-- A. col 클래스에 margin:auto 적용: 가운데 정렬이 가능하다. -->
-            <div class="col-sm-4" style="margin:auto;">
-  				<div class="row">
-                   <img src="./imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
-              	</div> 
-               
-              	<form name="frm" class="container">
-		     	  <div class="row">
-		            <input class="form-control" type="text" placeholder="ID" name="ID" >
-		          </div>
-		            <div class="row">
-		          	  <input class="form-control" type="text" placeholder="Password" name="PASSWORD" >	 <!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
-		         	</div>
-	         		<div class="row">
-       	   		  <div class="form-check">
-	           		 	<input type="checkbox" class="form-check-input" name="rememberId">아이디 저장
-            	  </div>
-           	  </div>
-           	  <div class="row">
-	           	  <div class="form-check">
-            	  	<input type="checkbox" class="form-check-input" name="rememberPassword">비밀번호 저장
-  	         	  </div>
-           	  </div>
-          	  <div class="row" style="margin:auto;">
-        		    <button type="button" class="btn btn-primary" onclick="login()">LOGIN</button>
-          	  </div>
-	          	</form>
-	       	  </div>
+            <div class="col-sm-5" style="margin:auto">
+             	<form name="frm" class="container">
+		            <table class="table table-borderless">
+		            	<tr>
+		            		<td>
+		            			<img src="../imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
+	            			</td>
+            			</tr>
+		            	<tr>
+			            	<td>
+			            		<input class="form-control" type="text" placeholder="ID" name="ID" >
+		            		</td>
+	            		</tr>
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="text" placeholder="Password" name="PASSWORD">
+	            			</td>
+            			</tr><!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
+		            	<tr>
+		            		<td>
+			            		<div class="form-check">
+			            			<input type="checkbox" class="form-check-input" name="rememberId">아이디 저장
+			            		</div>
+			            		<div class="form-check">
+		            	  		<input type="checkbox" class="form-check-input" name="rememberPassword">비밀번호 저장
+	  	         	  		</div>	
+	            			</td>
+		            	<tr>
+		            	<td>
+		            		<button type="button" class="btn btn-primary col-sm-12" onclick="login()">LOGIN</button></td></tr>
+		            </table>
+		          </form>
             </div>
           </div>
         </div>

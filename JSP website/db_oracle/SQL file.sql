@@ -55,6 +55,8 @@ ALTER TABLE member ADD(memberimg VARCHAR2(100));
 -- 데이터 컬럼 삭제
 ALTER TABLE member DROP COLUMN img;
 
+
+
 --- personalData
 -- 테이블 생성
 CREATE TABLE personal (
@@ -281,4 +283,6 @@ update groupboard set gbhit = gbhit+1 where gbidx = 54;
 SELECT * FROM BULLETINBOARD ORDER BY fbIdx DESC;
 DELETE FROM BULLETINBOARD WHERE fbidx = 486;
 
-SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard  where fbtitle like ? and fbcategory like ? ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?
+SELECT * FROM member;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard  where fbtitle like '%%' and fbcategory like '%%' AND fbidx = '482' ORDER BY fbidx DESC)A) B;
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard  where fbtitle like '%%' and fbcategory like '%%' AND fbwriter = '3' ORDER BY fbidx DESC)A) B;

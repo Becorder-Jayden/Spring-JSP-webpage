@@ -116,4 +116,25 @@ public class MemberDAO {
 		return mv;
 	}
 	
+	public boolean checkId(String memberId) {
+		boolean check = false;
+		ResultSet rs = null;
+		
+		String sql = "select * from member where memberid = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				check = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return check;
+	}
+	
 }

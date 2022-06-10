@@ -16,7 +16,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
   <script>
-	
+		function checkId() {
+			var fm2 = document.frm;
+			alert('idcheck 실행중');
+			console.log(fm2);
+			
+		}
+  
+  
+  
   	function enroll() {
   		
 	   	// id, password, passwordcheck, email, name, gender 입력값 확인. null일 경우 alert 
@@ -26,6 +34,11 @@
 	   		alert("ID를 입력하세요.");
 	   		fm.MEMBERID.focus();
 	   		return;
+	   	} else if (fm.idDuplication.value == "idUncheck") {
+	   		alert('아이디 중복 확인이 필요합니다.')
+	   		return false;
+	   	
+	   		
 	   	} else if (fm.MEMBERPASSWORD.value == "") {
 	   		alert("비밀번호를 입력하세요.");
 	   		fm.MEMBERPASSWORD.focus();
@@ -74,8 +87,6 @@
 	}
 
   </script>
-  
-  
   </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
@@ -224,78 +235,81 @@
           position: flex;
         "
       >
-        <!-- 페이지 본문 내용 -->
+        <!-- 회원가입 입력 창 -->
         <div class="container" style="left: 200px; width:90%">
           <div class="row">
             <h1>회원가입</h1>
-            
-            <!-- Q.페이지 중앙으로 이동 --> <!-- A. margin:auto로 가운데 정렬이 가능하다. -->
-              <div class="col-sm-4" style="margin:auto;">
-                <div class="row">
-                    <img src="./imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
-                </div> 
-                
-                <div class="container">
-                  <form name="frm" class="input-group">
-                  	<div class="row" style="margin: auto;">
-                  		<input class="form-control" type="file" name="MEMBERIMG">
-                  	</div>
-                    <div class="row" style="margin: auto;">
-                      <input class="form-control" type="text" name="MEMBERID" placeholder="ID">
-                    </div>
-                    <div class="row" style="margin: auto;">
-                      <input class="form-control" type="text" name="MEMBERPASSWORD" placeholder="Password">
-                    </div>
-                    <div class="row" style="margin: auto;">
-                      <input class="form-control" type="text" name="MEMBERPASSWORDCHECK" placeholder="Password 확인">
-                    </div>
-                    <div class="row" style="margin: auto;">
-                      <input class="form-control" type="text" name="MEMBEREMAIL" placeholder="Email">
-                    </div>
-                    <div class="row" style="margin: auto;">
-                      <input class="form-control" type="text" name="MEMBERNAME" placeholder="이름 또는 닉네임">
-                    </div>
-                    <div class="row" style="margin: auto;">
-                      <div class="btn-group" style="margin:auto;">
-                        <div class="col-sm-4">
+            <div class="col-sm-5" style="margin:auto">
+             	<form name="frm" class="container">
+		            <table class="table table-borderless">
+		            	<tr>
+		            		<td>
+		            			<img src="../imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
+	            			</td>
+            			</tr>
+		            	<tr>
+			            	<td>
+			            		<div class="input-group">
+				            		<input class="form-control" type="text" name="MEMBERID" placeholder="ID">
+												<button type="button" name="idCheck" class="btn btn-secondary" onclick="checkId()'">중복 확인</button>
+			            		</div>
+		            		</td>
+	            		</tr>
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="text" name="MEMBERPASSWORD" placeholder="Password">
+	            			</td>
+            			</tr><!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="text" name="MEMBERPASSWORDCHECK" placeholder="Password 확인">
+	            			</td>
+            			</tr>
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="text" name="MEMBEREMAIL" placeholder="Email">
+	            			</td>
+            			</tr>
+		            	<tr>
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="text" name="MEMBERNAME" placeholder="이름 또는 닉네임">
+	            			</td>
+            			</tr>
+		            	<tr>
+		            	<tr>
+		            		<td>
+		            			<div class="btn-group col-sm-12" style="margin:auto;">
                           <input class="btn-check" type="radio" name="MEMBERGENDER" id="radioBtn1" value="M">
                           <label class="btn btn-outline-secondary" for="radioBtn1" >
                           	남성
                           </label> 
-                        </div>
-                        <div class="col-sm-4">
                           <input class="btn-check" type="radio" name="MEMBERGENDER" id="radioBtn2" value="F">
                           <label class="btn btn-outline-secondary" for="radioBtn2">
                             여성
                           </label> 
-                        </div>
-                        <div class="col-sm-4">
                           <input class="btn-check" type="radio" name="MEMBERGENDER" id="radioBtn3" value="N">
                           <label class="btn btn-outline-secondary" for="radioBtn3">
                             비공개
                           </label> 
-                        </div>
-                      </div>
-                    </div>
-                  	<!-- Q. SNS을 이용한 로그인 기능 -->
-	        					<div class="row">
-	                 	   SNS을 이용한 로그인 기능 만들기
-	                	</div>
-	                	<br>
-                    <div class="row">
-                    <div class="col-sm-6" style="text-align: center;">
-                      <button type="button" class="btn btn-primary" onclick="enroll()">등록</button>
-                    </div>
-                    <div class="col-sm-6" style="text-align: center;">
-                      <button type="button" class="btn btn-secondary" onclick="reset()">리셋</button>
-                    </div>
-                  </div>
-               	</form>
-              </div>
+                    	</div>
+	            			</td>
+            			</tr>
+		            	<tr>
+		            		<td>
+		            			<input class="form-control" type="file" name="MEMBERIMG" placeholder="프로필 사진 등록">
+	            			</td>
+            			</tr>
+		            	<tr>
+		            		<td>
+		            			<button type="button" class="btn btn-primary col-sm-12" onclick="enroll()">회원가입</button>
+		            		</td>
+	            		</tr>
+		            </table>
+		          </form>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </body>
 </html>

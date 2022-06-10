@@ -81,8 +81,12 @@ public class MemberController {
 		
 		// 회원가입 페이지 이동
 		else if (command.equals("/member/memberJoin.do")) {
+			
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/member/memberJoin.jsp");
 			rd.forward(request, response);
+		
+		
 		}
 		
 		
@@ -127,7 +131,17 @@ public class MemberController {
 			}
 		}
 		
-		
+		// 아이디 중복 체크
+		else if (command.equals("/member/checkIdAction.do")) {
+
+			String memberid = request.getParameter("MEMBERID");
+			System.out.println("memberid: " + memberid);
+			MemberDAO md = new MemberDAO();
+			boolean value = md.checkId(memberid);
+			System.out.println("value: " + value);
+			
+			response.sendRedirect(request.getContextPath() +"/member/memberJoin.do");
+		}
 		
 		
 		// 마이페이지 이동

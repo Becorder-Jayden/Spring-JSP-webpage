@@ -229,7 +229,7 @@
             <h1>마이페이지</h1>
             
             <!-- Q.페이지 중앙으로 이동 --> <!-- A. margin:auto로 가운데 정렬이 가능하다. -->
-              <div class="col-sm-4" style="margin:auto;">
+              <div class="col-sm-6" style="margin:auto;">
                 <div class="container">
                   <form name="frm" class="input-group">
                   	<div class="row" style="margin: auto;">

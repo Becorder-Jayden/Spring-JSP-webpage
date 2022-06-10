@@ -87,22 +87,22 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		String sql = "";
+		String sqlCase = "";
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
 		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함
 		// 5.26 Q.오라클에서 추가한 데이터는 왜 안불러와지나요? A. commit을 하지 않으면 불러와지지 않음
 		
-		if (scri.getSearchType().equals("fbtitle")){
-			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbtitle like ? "
-					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
-
-		} else if (scri.getSearchType().equals("fbidx")) {
-			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbidx like ? "
-					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
 		
+		if (scri.getSearchType().equals("fbidx")) {
+			sqlCase = " and fbidx like ?"; 
 		} else if (scri.getSearchType().equals("fbwriter")) {
-			sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? and fbwriter like ? "
-					+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
+			sqlCase = " and fbwriter like ?";
+		} else {
+			sqlCase = " and fbtitle like ?"; 
 		}
+		
+		sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? " + sqlCase + ""
+				+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
