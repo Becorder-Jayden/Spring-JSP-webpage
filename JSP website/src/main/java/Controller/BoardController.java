@@ -80,7 +80,7 @@ public class BoardController extends HttpServlet {
 			scri.setSearchType(searchType);	// 검색 유형
 			scri.setCategory(category);
 
-			// BoardDAO → 전역변수로 이동
+			bd = new BoardDAO();
 			int cnt = bd.boardTotal(scri);
 
 			PageMaker pm = new PageMaker();
@@ -179,6 +179,7 @@ public class BoardController extends HttpServlet {
 			// DB에 데이터 입력
 			bd = new BoardDAO();
 			int value = bd.insertBoard(midx, fbCategory, fbTitle, fbContent, fbWriter, fileName);
+			
 			if (value==1) {
 				response.sendRedirect(request.getContextPath()+"/board/board.do");
 			}
@@ -244,6 +245,22 @@ public class BoardController extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
+		
+		// 게시글 삭제
+		else if (command.equals("/board/boardDeleteAction.do")) {
+			
+			String fbidx = request.getParameter("fbidx");
+			int fbidx_ = Integer.parseInt(fbidx);
+			
+			cd = new CommentDAO();
+			int value = cd.deleteBoard(fbidx_);
+			
+			response.sendRedirect(request.getContextPath()+"/board/board.do");
+			
+		}
+		
+		
+		// 댓글 등록
 		else if (command.equals("/board/boardCommentAction.do")) {
 			
 			// 세션으로 부터 정보를 연결
@@ -258,11 +275,12 @@ public class BoardController extends HttpServlet {
 			// 데이터 담기
 			cd = new CommentDAO();
 			int value = cd.insertComment(fbidx, cmWriter, cmComment, midx);
-			
 			// 결과 처리
 			response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
 		}
 		
+		
+		// 댓글 삭제
 		else if (command.equals("/board/boardCommentDeleteAction.do")) {
 			
 			// 변수 가져오기
@@ -276,6 +294,8 @@ public class BoardController extends HttpServlet {
 			
 			response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
 		}
+		
+		
 	}
 			
 

@@ -48,7 +48,7 @@ CREATE TABLE member (
 	memberGender CHAR(1) DEFAULT 'N'
 );
 
-SELECT * FROM member;
+SELECT * FROM member WHERE memberimg IS NOT NULL;
 
 -- 데이터 컬럼 추가(프로필)
 ALTER TABLE member ADD(memberimg VARCHAR2(100));
@@ -67,8 +67,6 @@ CREATE TABLE personal (
 	pbMemo VARCHAR2(500)
 );
 
-select * FROM personal ORDER BY pbidx DESC;
-SELECT COUNT(*) FROM personal WHERE midx = 45;
 -- 컬럼 추가
 ALTER TABLE personal ADD(test int);
 
@@ -92,6 +90,7 @@ CREATE SEQUENCE pbidx_seq INCREMENT BY 1 START WITH 1;
 ALTER TABLE PERSONAL MODIFY pbcontinuous NULL;
 -- 데이터 타입 변경
 ALTER TABLE personal MODIFY pbWeightImg VARCHAR2(100);
+
 
 
 
@@ -203,24 +202,20 @@ CREATE TABLE bulletincomment(
 -- 외래키 추가
 ALTER TABLE bulletincomment
 ADD CONSTRAINT fk_bidx FOREIGN KEY(fbidx) REFERENCES BULLETINBOARD(fbidx);
-
 -- 시퀀스 추가
 CREATE SEQUENCE cmidx_seq INCREMENT BY 1 START WITH 1;
-
 -- 데이터 추가
 INSERT INTO bulletincomment(FBIDX,CMIDX,CMWRITER,CMCOMMENT,MIDX) VALUES('417', cmidx_seq.NEXTVAL, '댓글작성자', '댓글 내용','3');
-
 -- 테이블 데이터 유형변경
 alter TABLE bulletincomment MODIFY cmwriter VARCHAR2(100);
-
 -- 테이블 데이터 컬럼 추가
 alter TABLE bulletincomment ADD(midx number);
-
 -- 테이블 확인
 SELECT * FROM BULLETINCOMMENT ;
-
 -- 데이터 삭제
 DELETE FROM bulletincomment WHERE midx IS NULL;
+
+
 
 -- 테이블 삭제
 DROP TABLE crewMaker;
@@ -260,7 +255,9 @@ b;
 --커밋
 COMMIT;
 
-SELECT * FROM personal;
+INSERT INTO BULLETINBOARD(FBIDX,MIDX,FBCATEGORY,FBTITLE,FBCONTENT,FBWRITER,FILENAME) values(fbidx_seq.nextval, ?,?,?,?,?,?);
+SELECT * FROM BULLETINBOARD ;
+SELECT * FROM BULLETINBOARD ORDER BY FBIDX desc;
 SELECT * FROM member;
 COMMIT;
 
@@ -280,3 +277,8 @@ select * from groupboard WHERE gbidx = 53;
 SELECT * FROM groupboard ORDER BY GBIDX desc;
 UPDATE GROUPboard SET gbhit = gbhit + 1 WHERE gbidx = 55;
 update groupboard set gbhit = gbhit+1 where gbidx = 54;
+
+SELECT * FROM BULLETINBOARD ORDER BY fbIdx DESC;
+DELETE FROM BULLETINBOARD WHERE fbidx = 486;
+
+SELECT * FROM(SELECT ROWNUM AS rnum, A.* FROM(SELECT * FROM bulletinboard  where fbtitle like ? and fbcategory like ? ORDER BY fbidx DESC)A) B WHERE rnum BETWEEN ? AND ?

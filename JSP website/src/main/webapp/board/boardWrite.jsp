@@ -84,31 +84,14 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="../index.jsp">
+          <a href="../main/main.do">
             <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
 				<!-- 프로필 이미지 -->
         <div class="profile_img">
-
-<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
-        <!-- 프로필 -->
-          <img
-            src="../imgs/profile_none.jpg"
-            alt="profile_img"
-            style="
-              height: 100px;
-              width: 100px;
-              border-radius: 50px;
-              margin-top: 50px;
-            "
-          />
-        </div>
-        <br>
-        <p>로그인이 필요합니다.</p>
-
-<% } else { %>
+<% if (session.getAttribute("midx") != null && session.getAttribute("memberimg") != null) { %>
           <img
             src="../imgs/<%=session.getAttribute("memberimg")%>"
             alt="profile_img"
@@ -120,17 +103,39 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
             "
           />
         </div>
-        <br>  
-        <p>
+        <br> 
+<%} else { %>
+        <img
+            src="../imgs/profile_none.jpg"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>
+<%} %>
+
+				<!-- 사용자 이름 -->
+				<div>
+<% if (session.getAttribute("midx") == null ) {%>
+				<p>로그인이 필요합니다.</p>
+<%} else {%>
+				<p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
 				</p>
-				<p> 간단한 응원의 문구 </p>
+				<p>오늘도 화이팅하세요!</p>
 <%} %>
-
+				</div>
+				
+				
         <!-- 메뉴 -->
         <ul
           style="
@@ -147,19 +152,19 @@ BoardVo bv = (BoardVo)request.getAttribute("bv");
             <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
           </div>        
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.jsp" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.jsp" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.jsp" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.jsp" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
           </div>
         </ul>
       </div>

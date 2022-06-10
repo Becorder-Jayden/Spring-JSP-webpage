@@ -1,3 +1,4 @@
+<%@page import="org.apache.catalina.SessionIdGenerator"%>
 <%@page import="oracle.jdbc.internal.XSSessionNamespace"%>
 <%@page import="Domain.CommentVo"%>
 <%@page import="Service.BoardDAO"%>
@@ -67,31 +68,15 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="../index.jsp">
+          <a href="../main/main.do">
             <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
+
 				<!-- 프로필 이미지 -->
         <div class="profile_img">
-
-<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
-        <!-- 프로필 -->
-          <img
-            src="../imgs/profile_none.jpg"
-            alt="profile_img"
-            style="
-              height: 100px;
-              width: 100px;
-              border-radius: 50px;
-              margin-top: 50px;
-            "
-          />
-        </div>
-        <br>
-        <p>로그인이 필요합니다.</p>
-
-<% } else { %>
+<% if (session.getAttribute("midx") != null && session.getAttribute("memberimg") != null) { %>
           <img
             src="../imgs/<%=session.getAttribute("memberimg")%>"
             alt="profile_img"
@@ -103,16 +88,38 @@
             "
           />
         </div>
-        <br>  
-        <p>
+        <br> 
+<%} else { %>
+        <img
+            src="../imgs/profile_none.jpg"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>
+<%} %>
+
+				<!-- 사용자 이름 -->
+				<div>
+<% if (session.getAttribute("midx") == null ) {%>
+				<p>로그인이 필요합니다.</p>
+<%} else {%>
+				<p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
 				</p>
-				<p> 간단한 응원의 문구 </p>
+				<p>오늘도 화이팅하세요!</p>
 <%} %>
+				</div>
+
 
         <!-- 메뉴 -->
         <ul
@@ -204,15 +211,15 @@
                   	<h3>게시글 보기</h3>
            	         	<table class="table" >
 					         			<tr>
-					         				<th class="col-sm-3" scope="col">작성자</th>
+					         				<th class="col-sm-2" scope="col">작성자</th>
 					         				<td style="text-align:left;" colspan="5"><%=bv.getFbWriter() %></td>
 					         			</tr>
 					         			<tr>
-					         				<th class="col-sm-3" scope="col">카테고리</th>
+					         				<th class="col-sm-2" scope="col">카테고리</th>
 					         				<td style="text-align:left;" colspan="5"><%=bv.getFbCategory() %></td>
 					       				</tr>
 					         			<tr>
-					         				<th class="col-sm-3" scope="col">제목</th>
+					         				<th class="col-sm-2" scope="col">제목</th>
 					         				<td style="text-align:left;" colspan="5"><%=bv.getFbTitle() %></td>
 					       				</tr>
 					         			<tr>
@@ -252,24 +259,20 @@
 				       						<td class="col-sm-6	" colspan="4">
 				       							<div class="input-group">
 						       						<input name="cmComment" type="text" class="form-control">
-	       										</div>
-			       							</td>
-			       							<td class="col">
-				       							<div class="input-group-append">
-					       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary">등록</button>
+					       							<button type="button" onclick="commentFn()" class="btn btn-outline-secondary input-append">등록</button>
 					       						</div>
 			       							</td>
 					       				</tr>
 <%} %>
 					         		</table>
 	                  </form>  
-					         		
+	                  
 <%
 	if (session.getAttribute("midx") == bv.getMidx()) {
 %>
 	                    <div class="row" style="text-align: right;">
 	                      <div class="col-sm-11">
-		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/board.do'" class="btn btn-danger">삭제</button> 
+		                      <button type="button" onclick="location.href='<%=request.getContextPath()%>/board/boardDeleteAction.do?fbidx=<%=bv.getFbidx() %>'" class="btn btn-danger">삭제</button> 
 		                      <button type="button" class="btn btn-secondary">수정</button>	
 	                      </div>
 	                    </div>

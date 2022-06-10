@@ -91,15 +91,34 @@ public class CommentDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 				
 		return value;
 	}
+
+	// 게시글 삭제: fbidx(게시글 번호)에 해당하는 게시글 삭제
+	public int deleteBoard(int fbidx) {
+		int value = 0;
+		
+		String sql = "DELETE FROM BULLETINBOARD WHERE fbidx = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fbidx);
+			value = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return value;
+	}
 	
-	// 댓글 수정: cmidx(댓글 번호)에 해당하는 댓글 수정
-//	public int modifyComment(int cmidx) {
-//		int value = 0;
-//		
-//	}
 	
 }

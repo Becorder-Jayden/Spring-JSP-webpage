@@ -43,35 +43,8 @@ if (session.getAttribute("midx") == null) {
     month = date.getMonth() + 1;
     day = date.getDate();
   
-    // n주차 구하기 (참고: https://blog.naver.com/kwonhjae/222620941426)
-    /* 작동안됨 var weekNumOfMonth = function(date) {
-    	var WEEK_KOR = ["첫째주", "둘째주", "셋째주", "넷째주", "다섯째주"];
-    	var MONDAY_NUM = 1;	// 첫째주의 기준을 월요일(1)로 설정 
-    	
-    	var firstDate = new Date(date.getFullYear(), date.getMonth(), 1);
-    	var firstDayOfWeek = firstDate.getDay();
-    	
-    	var firstMonday = 1 + MONDAY_NUM - firstDayOfWeek;	// 첫째주 월요일
-    	if (firstMonday <= 0) {
-    		firstMonday = firstMoney + 7;	// 한주는 7일
-    	}
-    	var untilDateOfFirstWeek = firstMonday-7+3;	// 월요일 기준으로 계산 (월요일부터 한 주의 시작)
-    	var weekNum = Math.ceil((date.getDate()-untilDateOfFirstWeek) / 7) - 1; 
-    	
-    	if (weekNum < 0) { 	// 첫째 주 이하일 경우 전월 마지막 주 계산
-    		var lastdateOfMonth = new Date(date.getFullYear(), date.getMonth(), 0);
-    		var result = Util.Date.weekNumOfMonth(lastDateOfMonth);
-    		return result;
-    	}
-    	
-    	return [WEEK_KOR[weekNum], (date.getMonth()+1)+'월'];
-    } */
-  
     
   	// 데이터 입력
-
-  	console.log(<%=session.getAttribute("midx")%>);
-  	
   	function dailyFn() {
     	
   		var fm = document.daily;
@@ -175,24 +148,7 @@ if (session.getAttribute("midx") == null) {
 
 				<!-- 프로필 이미지 -->
         <div class="profile_img">
-
-<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
-        <!-- 프로필 -->
-          <img
-            src="../imgs/profile_none.jpg"
-            alt="profile_img"
-            style="
-              height: 100px;
-              width: 100px;
-              border-radius: 50px;
-              margin-top: 50px;
-            "
-          />
-        </div>
-        <br>
-        <p>로그인이 필요합니다.</p>
-
-<% } else { %>
+<% if (session.getAttribute("midx") != null && session.getAttribute("memberimg") != null) { %>
           <img
             src="../imgs/<%=session.getAttribute("memberimg")%>"
             alt="profile_img"
@@ -204,17 +160,39 @@ if (session.getAttribute("midx") == null) {
             "
           />
         </div>
-        <br>  
-        <p>
+        <br> 
+<%} else { %>
+        <img
+            src="../imgs/profile_none.jpg"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>
+<%} %>
+
+				<!-- 사용자 이름 -->
+				<div>
+<% if (session.getAttribute("midx") == null ) {%>
+				<p>로그인이 필요합니다.</p>
+<%} else {%>
+				<p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
 				</p>
-				<p> 간단한 응원의 문구 </p>
+				<p>오늘도 화이팅하세요!</p>
 <%} %>
-
+				</div>
+				
+				
         <!-- 메뉴 -->
         <ul
           style="
@@ -299,7 +277,7 @@ if (session.getAttribute("midx") == null) {
           <div>
             <h1>퍼스널 데이터</h1>
           </div>
-
+					&nbsp;&nbsp;
           <!-- 기록 등록 -->
           <div class="row">
             <h3>일일 기록 등록 : 
@@ -363,15 +341,14 @@ if (session.getAttribute("midx") == null) {
 
 					<br>
 					<br>
-
+&nbsp;&nbsp;
           <!-- 주간 기록 확인  -->
           <div class="row">
-            <h3>주간 기록</h3>
-	          <h4>
+            <h3>주간 기록 : 
 	            <script>
 								document.write(month+"월 " + "주차");            
 	            </script>
-	          </h4>
+            </h3>
             <div class="row" style="margin:auto; text-align: center;">
               <table>
                 <tr>
@@ -407,7 +384,7 @@ if (session.getAttribute("midx") == null) {
 					
 					<br>
 					<br>
-
+					&nbsp;&nbsp;
           <!-- 아래 편집 -->
           <div class="row">
             <h3>체중 변화 그래프</h3>
@@ -415,17 +392,7 @@ if (session.getAttribute("midx") == null) {
                 <div id="curve_chart" alt="체중 변화 그래프"></div>
             </div>
           </div>
-
-          <br>
-          <br>
-          
-          <!-- 테스트 -->
-          
-          
-          
-         
-         
-         
+         &nbsp;&nbsp;
           <div class="row">
             <h3>업로드 기록</h3>
           </div>

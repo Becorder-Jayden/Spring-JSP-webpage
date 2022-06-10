@@ -66,6 +66,7 @@ public class BoardDAO {
 				bv.setFbContent(rs.getString("fbcontent"));
 				bv.setFbWriter(rs.getString("fbwriter"));
 				bv.setFilename(rs.getString("filename"));
+				bv.setMidx(rs.getInt("midx"));
 			}
 			
 		} catch (SQLException e) {

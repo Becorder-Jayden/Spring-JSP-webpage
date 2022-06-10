@@ -31,31 +31,14 @@
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath()%>/main/main.do">
+          <a href="../main/main.do">
           	<img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
 				<!-- 프로필 이미지 -->
         <div class="profile_img">
-
-<% if (session.getAttribute("midx") == null || session.getAttribute("memberimg") == null ) { %>
-        <!-- 프로필 -->
-          <img
-            src="../imgs/profile_none.jpg"
-            alt="profile_img"
-            style="
-              height: 100px;
-              width: 100px;
-              border-radius: 50px;
-              margin-top: 50px;
-            "
-          />
-        </div>
-        <br>
-        <p>로그인이 필요합니다.</p>
-
-<% } else { %>
+<% if (session.getAttribute("midx") != null && session.getAttribute("memberimg") != null) { %>
           <img
             src="../imgs/<%=session.getAttribute("memberimg")%>"
             alt="profile_img"
@@ -67,17 +50,39 @@
             "
           />
         </div>
-        <br>  
-        <p>
+        <br> 
+<%} else { %>
+        <img
+            src="../imgs/profile_none.jpg"
+            alt="profile_img"
+            style="
+              height: 100px;
+              width: 100px;
+              border-radius: 50px;
+              margin-top: 50px;
+            "
+          />
+        </div>
+        <br>
+<%} %>
+
+				<!-- 사용자 이름 -->
+				<div>
+<% if (session.getAttribute("midx") == null ) {%>
+				<p>로그인이 필요합니다.</p>
+<%} else {%>
+				<p>
 <%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
 %>
 				</p>
-				<p> 간단한 응원의 문구 </p>
+				<p>오늘도 화이팅하세요!</p>
 <%} %>
-
+				</div>
+				
+				
         <!-- 메뉴 -->
         <ul
           style="
@@ -162,9 +167,13 @@
           <div>
             <h1>이용 문의</h1>
           </div>
+         		&nbsp;
+           	&nbsp;
           <div class="row">
             <h3>FAQ</h3>
-            <h4>자주하는 질문 목록입니다.</h4>
+            &nbsp;
+            &nbsp;
+            <h5>자주하는 질문 목록입니다.</h5>
             <!-- C. 5/16 아코디언 작업하기 --> <!-- A. 5/17 완료 -->
             <div class="accordion" id="accordionParents">
               <div class="accordion-item">

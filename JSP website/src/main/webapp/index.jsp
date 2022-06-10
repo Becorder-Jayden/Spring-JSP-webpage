@@ -45,13 +45,11 @@
         </div>
 
 
-
-
-        <!-- 프로필 -->
+				<!-- 프로필 이미지 -->
         <div class="profile_img">
-<%-- <% if (mv.getMemberimg() == null) { %>
+<% if (session.getAttribute("midx") != null && session.getAttribute("memberimg") != null) { %>
           <img
-            src="imgs/profile_none.jpg"
+            src="../imgs/<%=session.getAttribute("memberimg")%>"
             alt="profile_img"
             style="
               height: 100px;
@@ -60,9 +58,11 @@
               margin-top: 50px;
             "
           />
-<% } else { %>
-          <img
-            src="imgs/<%=mv.getMemberimg() %>"
+        </div>
+        <br> 
+<%} else { %>
+        <img
+            src="../imgs/profile_none.jpg"
             alt="profile_img"
             style="
               height: 100px;
@@ -71,22 +71,27 @@
               margin-top: 50px;
             "
           />
-<%} %> --%>
         </div>
         <br>
-        <!-- 각오 -->
-        <div class="motto">
-          <!-- C. HTML교재 12-1 참고할 것  -->
-          <p>
-<%
+<%} %>
 
+				<!-- 사용자 이름 -->
+				<div>
+<% if (session.getAttribute("midx") == null ) {%>
+				<p>로그인이 필요합니다.</p>
+<%} else {%>
+				<p>
+<%
 	if (session.getAttribute("midx") != null) {
 		out.println(session.getAttribute("memberId") + "님");
 	}
-%>         
-            <br>
-        </div>
-
+%>
+				</p>
+				<p>오늘도 화이팅하세요!</p>
+<%} %>
+				</div>
+				
+				
         <!-- 메뉴 -->
         <ul
           style="
