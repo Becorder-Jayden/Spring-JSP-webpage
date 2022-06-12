@@ -140,7 +140,14 @@ public class MemberController {
 			boolean value = md.checkId(memberid);
 			System.out.println("value: " + value);
 			
-			response.sendRedirect(request.getContextPath() +"/member/memberJoin.do");
+			PrintWriter out = response.getWriter();
+			if (value) {
+				out.println("<script>alert('중복된 아이디 입니다. 다른 아이디를 입력하세요.');location.href='"+request.getContextPath()+"/member/memberJoin.do'</script>");
+				out.println("<script>var fm = document.frm;</script>");
+				
+			} else {
+				out.println("<script>alert('사용가능한 아이디 입니다');location.href='"+request.getContextPath()+"/member/memberJoin.do'</script>");
+			}
 		}
 		
 		

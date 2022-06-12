@@ -42,9 +42,6 @@ public class PersonalController extends HttpServlet {
 		PersonalDAO pd = new PersonalDAO();
 		
 		
-		
-		
-		
 		if (command.equals("/personal/personal.do")) {
 
 			HttpSession session = request.getSession();
@@ -79,13 +76,10 @@ public class PersonalController extends HttpServlet {
 			int midx = (int) session.getAttribute("midx");
 
 			String pbWeight = multi.getParameter("pbWeight");
-			int pbWeight_ = Integer.parseInt(pbWeight);
+			float pbWeight_ = Float.parseFloat(pbWeight);
 			// 6/7. form이 없으면 parameter를 가져올 수 없다
-			System.out.println("pbWeight_: " + pbWeight_);
-			
 
 			String pbMemo = multi.getParameter("pbMemo");
-			System.out.println("pbMemo: " + pbMemo);
 
 			pd = new PersonalDAO();
 			pd.insertPersonal(midx, pbWeight_, fileName, pbMemo);

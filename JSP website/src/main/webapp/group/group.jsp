@@ -17,8 +17,8 @@
 <%
 	ArrayList<GroupVo> glist = (ArrayList<GroupVo>)request.getAttribute("glist");
 	PageMaker pm = (PageMaker) request.getAttribute("pm");
+	String groupGoal = (String) request.getAttribute("groupGoal");
 %>
-
 
 
 
@@ -40,7 +40,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script>
   	function groupGoalWriteFn() {
-  		console.log("작동");
+  		alert("작동");
   		var fm = document.frm;
   		
   		fm.action = "<%=request.getContextPath()%>/group/groupGoalWriteAction.do";
@@ -258,7 +258,7 @@
                   <p>크루 목표</p>
                 </div>
                 <div class="col-sm-5">
-                  <p>80kg 달성</p>
+                  <p name="goal"><%=groupGoal %></p>
                 </div>
                 <div class="col-sm-4">
                   <!-- 모달 실행 트리거 -->

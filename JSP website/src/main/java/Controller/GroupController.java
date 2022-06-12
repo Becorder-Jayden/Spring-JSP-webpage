@@ -201,14 +201,15 @@ public class GroupController extends HttpServlet{
 		
 		
 		
-		
+		 
 		// 그룹 목표 설정 - 다시 설계해야 함 
 		else if (command.equals("/group/groupGoalWriteAction.do")) {
-			
+
 			String groupGoal = request.getParameter("groupGoal");
 			request.setAttribute("groupGoal", groupGoal);
+			System.out.println(groupGoal);
 			
-			// 이동
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/group/group.do");
 			rd.forward(request, response);
 		}

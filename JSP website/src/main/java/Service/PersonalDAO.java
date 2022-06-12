@@ -22,7 +22,7 @@ public class PersonalDAO {
 	}
 	
 	// 일일 몸무게 기록
-	public int insertPersonal(int mIdx, int pbWeight, String pbWeightImg, String pbMemo) {
+	public int insertPersonal(int mIdx, float pbWeight, String pbWeightImg, String pbMemo) {
 		int value = 0;
 		
 		String sql = "INSERT INTO personal(midx, pbidx, pbweight, pbcontinuous, pbweightimg, pbmemo)"
@@ -33,7 +33,7 @@ public class PersonalDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mIdx);
-			pstmt.setInt(2, pbWeight);
+			pstmt.setFloat(2, pbWeight);
 			pstmt.setString(3, pbWeightImg);
 			pstmt.setString(4, pbMemo);
 			value = pstmt.executeUpdate();
@@ -64,7 +64,7 @@ public class PersonalDAO {
 				PersonalVo pv = new PersonalVo();
 				pv.setPbidx(rs.getInt("pbidx2"));	// pbidx는 개인 게시판 DB에 저장된 모든 글에 적용되는 인덱스이다. midx별로 group을 지어 활용한 rank를 pbidx2라는 집계함수로 만들어 이를 개별 인덱스로 대체하였다. 
 				pv.setPbdate(rs.getDate("pbdate"));
-				pv.setPbweight(rs.getInt("pbweight"));
+				pv.setPbweight(rs.getFloat("pbweight"));
 				pv.setPbMemo(rs.getString("pbmemo"));
 				pv.setPbweightimg(rs.getString("pbweightimg"));
 				plist.add(pv);
@@ -95,7 +95,7 @@ public class PersonalDAO {
 				pv.setPbidx(rs.getInt("pbidx2"));
 				pv.setPbcontinuous(rs.getInt("pbcontinuous"));
 				pv.setPbdate(rs.getDate("pbdate"));
-				pv.setPbweight(rs.getInt("pbweight"));
+				pv.setPbweight(rs.getFloat("pbweight"));
 				pv.setPbweightimg(rs.getString("pbweightimg"));
 				pv.setPbMemo(rs.getString("pbmemo"));
 			}

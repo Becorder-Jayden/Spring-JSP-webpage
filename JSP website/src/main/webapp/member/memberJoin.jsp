@@ -16,14 +16,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
   <script>
-		function checkId() {
-			var fm2 = document.frm;
-			alert('idcheck 실행중');
-			console.log(fm2);
-			
-		}
-  
-  
+  	function checkId() {
+  		var fm2 = document.frm;
+  		
+  		fm2.action = "<%=request.getContextPath()%>/member/checkIdAction.do";
+  		fm2.method = "post";
+  		fm2.submit();	
+  		
+  	}
+  	
   
   	function enroll() {
   		
@@ -245,13 +246,13 @@
 		            	<tr>
 		            		<td>
 		            			<img src="../imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
-	            			</td>
+<!-- 	            			</td> -->
             			</tr>
 		            	<tr>
 			            	<td>
 			            		<div class="input-group">
-				            		<input class="form-control" type="text" name="MEMBERID" placeholder="ID">
-												<button type="button" name="idCheck" class="btn btn-secondary" onclick="checkId()'">중복 확인</button>
+				            		<input class="form-control" type="text" name="MEMBERID" placeholder="ID" autofocus>
+												<button type="button" name="idCheck" class="btn btn-secondary" onclick="checkId()">중복 확인</button>
 			            		</div>
 		            		</td>
 	            		</tr>

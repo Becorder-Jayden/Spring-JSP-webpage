@@ -48,14 +48,13 @@ CREATE TABLE member (
 	memberGender CHAR(1) DEFAULT 'N'
 );
 
-SELECT * FROM member WHERE memberimg IS NOT NULL;
 
 -- 데이터 컬럼 추가(프로필)
 ALTER TABLE member ADD(memberimg VARCHAR2(100));
 -- 데이터 컬럼 삭제
 ALTER TABLE member DROP COLUMN img;
-
-
+-- 데이터 추가
+UPDATE member SET memberimg = '주펄.png' WHERE midx = 81;
 
 --- personalData
 -- 테이블 생성
