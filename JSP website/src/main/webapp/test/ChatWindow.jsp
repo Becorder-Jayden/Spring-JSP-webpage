@@ -5,6 +5,7 @@
 <title>웹소켓 채팅</title>
 <script>
 	var webSocket = new WebSoket("<%= application.getInitParameter("CHAT_ADDR")%>/ChatingServer");
+	##
 	var chatWindow, chatMessage, chatId;
 	
 	// 채팅창이 열리면 대화창, 메시지 입력창, 대화명 표시란으로 사용할 DOM 객체 저장
