@@ -1,5 +1,4 @@
 # JSP-Webpage
-
 ---
 
 ## Jsp를 활용한 웹 사이트 제작
@@ -9,7 +8,6 @@
 주제 : 운동 기록 사이트 (Fitness Manager, EZEN go diet with)
 
 메인 목표 : **게시판 개발** (MVC 페이지 구성, Oracle DB 연동, 페이징, 검색, 댓글 등)
-
 ---
 
 ## 주요 기능
