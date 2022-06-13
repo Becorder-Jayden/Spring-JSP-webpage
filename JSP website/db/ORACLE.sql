@@ -90,8 +90,9 @@ CREATE SEQUENCE pbidx_seq INCREMENT BY 1 START WITH 1;
 -- NULL 수정
 ALTER TABLE PERSONAL MODIFY pbcontinuous NULL;
 -- 데이터 타입 변경
-ALTER TABLE personal MODIFY pbWeightImg VARCHAR2(100);
-
+ALTER TABLE personal MODIFY pbWeight FLOAT(10);
+SELECT * FROM personal;
+DELETE FROM personal;
 
 
 
@@ -125,6 +126,14 @@ CREATE TABLE groupboard (
 
 	CONSTRAINT fk_midx4 FOREIGN KEY(midx) REFERENCES member(midx)
 	);
+
+CREATE TABLE groupGoal (
+	gbIdx NUMBER NOT NULL,
+	gGoal VARCHAR2(200) NULL,
+
+ CONSTRAINT fk_gbIdx FOREIGN KEY(gbIdx) REFERENCES groupboard(gbIdx)
+ );
+
 
 
 --테이블 확인

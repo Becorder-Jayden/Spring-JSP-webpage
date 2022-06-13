@@ -206,7 +206,7 @@
 	            		</tr>
 		            	<tr>
 		            		<td>
-		            			<input class="form-control" type="text" placeholder="Password" name="PASSWORD">
+		            			<input class="form-control" type="password" placeholder="Password" name="PASSWORD">
 	            			</td>
             			</tr><!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
 		            	<tr>

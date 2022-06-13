@@ -285,6 +285,7 @@ if (session.getAttribute("midx") == null) {
                 document.write(year+"년 "+month+"월 "+day+"일");
               </script>
             </h3>
+            &nbsp;
             <div class="row" style="margin:auto;">
             	<form name="daily">
             	
@@ -338,9 +339,6 @@ if (session.getAttribute("midx") == null) {
             	</form>
             </div>
           </div>
-
-					<br>
-					<br>
 &nbsp;&nbsp;
           <!-- 주간 기록 확인  -->
           <div class="row">
@@ -349,6 +347,7 @@ if (session.getAttribute("midx") == null) {
 								document.write(month+"월 " + "주차");            
 	            </script>
             </h3>
+            &nbsp;
             <div class="row" style="margin:auto; text-align: center;">
               <table>
                 <tr>
@@ -388,6 +387,7 @@ if (session.getAttribute("midx") == null) {
           <!-- 아래 편집 -->
           <div class="row">
             <h3>체중 변화 그래프</h3>
+            &nbsp;
             <div class="row" style="margin:auto;">
                 <div id="curve_chart" alt="체중 변화 그래프"></div>
             </div>
@@ -396,6 +396,7 @@ if (session.getAttribute("midx") == null) {
           <div class="row">
             <h3>업로드 기록</h3>
           </div>
+          &nbsp;
           <div class="row">
             <table class="table" style="text-align: center;">
               <tr>

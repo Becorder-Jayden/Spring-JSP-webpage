@@ -135,7 +135,6 @@ public class MemberController {
 		else if (command.equals("/member/checkIdAction.do")) {
 
 			String memberid = request.getParameter("MEMBERID");
-			System.out.println("memberid: " + memberid);
 			MemberDAO md = new MemberDAO();
 			boolean value = md.checkId(memberid);
 			System.out.println("value: " + value);

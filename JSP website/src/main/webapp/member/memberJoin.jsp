@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
   <script>
-  	function checkId() {
+function checkId() {
   		var fm2 = document.frm;
   		
   		fm2.action = "<%=request.getContextPath()%>/member/checkIdAction.do";
@@ -24,22 +24,19 @@
   		fm2.submit();	
   		
   	}
+
   	
-  
+  	
   	function enroll() {
   		
 	   	// id, password, passwordcheck, email, name, gender 입력값 확인. null일 경우 alert 
 			var fm = document.frm;
+	   	console.log('fm 실행중');
 	   	
 	   	if (fm.MEMBERID.value == "") {
 	   		alert("ID를 입력하세요.");
 	   		fm.MEMBERID.focus();
 	   		return;
-	   	} else if (fm.idDuplication.value == "idUncheck") {
-	   		alert('아이디 중복 확인이 필요합니다.')
-	   		return false;
-	   	
-	   		
 	   	} else if (fm.MEMBERPASSWORD.value == "") {
 	   		alert("비밀번호를 입력하세요.");
 	   		fm.MEMBERPASSWORD.focus();
@@ -246,7 +243,7 @@
 		            	<tr>
 		            		<td>
 		            			<img src="../imgs/representative_img.PNG" alt="이미지/아이콘" style="width:300px;">
-<!-- 	            			</td> -->
+	            			</td>
             			</tr>
 		            	<tr>
 			            	<td>
@@ -258,12 +255,12 @@
 	            		</tr>
 		            	<tr>
 		            		<td>
-		            			<input class="form-control" type="text" name="MEMBERPASSWORD" placeholder="Password">
+		            			<input class="form-control" type="password" name="MEMBERPASSWORD" placeholder="Password">
 	            			</td>
             			</tr><!-- Q. 타입을 password로 바꾸니깐 로그인이 안됨? -->
 		            	<tr>
 		            		<td>
-		            			<input class="form-control" type="text" name="MEMBERPASSWORDCHECK" placeholder="Password 확인">
+		            			<input class="form-control" type="password" name="MEMBERPASSWORDCHECK" placeholder="Password 확인">
 	            			</td>
             			</tr>
 		            	<tr>

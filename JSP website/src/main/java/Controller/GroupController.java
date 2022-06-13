@@ -45,9 +45,6 @@ public class GroupController extends HttpServlet{
 		 String saveFolder = "imgs";
 		 String saveFullPath = uploadPath + saveFolder;
 		
-		// 전역 변수
-		GroupDAO gd = new GroupDAO();
-		
 		
 		
 		// 그룹 페이지 이동
@@ -60,6 +57,7 @@ public class GroupController extends HttpServlet{
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(page_);
 			
+			GroupDAO gd = new GroupDAO();
 			int cnt = gd.groupTotal(scri);
 			
 			PageMaker pm = new PageMaker();
@@ -87,6 +85,7 @@ public class GroupController extends HttpServlet{
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(page_);
 			
+			GroupDAO gd = new GroupDAO();
 			int cnt = gd.groupTotal(scri);
 			
 			PageMaker pm = new PageMaker();
@@ -124,7 +123,7 @@ public class GroupController extends HttpServlet{
 			HttpSession session = request.getSession();
 			int midx = (int) session.getAttribute("midx");
 			
-			gd = new GroupDAO();
+			GroupDAO gd = new GroupDAO();
 			int value = gd.insertGroupBoard(gbtitle, midx, gbwriter, gbcontent, fileName);
 			
 			if (value==1) {
@@ -145,6 +144,7 @@ public class GroupController extends HttpServlet{
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(page_);
 			
+			GroupDAO gd = new GroupDAO();
 			int cnt = gd.groupTotal(scri);
 			
 			PageMaker pm = new PageMaker();
@@ -185,12 +185,19 @@ public class GroupController extends HttpServlet{
 			SearchCriteria scri = new SearchCriteria();
 			scri.setPage(page_);
 			
+			GroupDAO gd = new GroupDAO();
 			int cnt = gd.groupTotal(scri);
 			
 			PageMaker pm = new PageMaker();
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 			request.setAttribute("pm", pm);
+
+			// 특정 gbidx로 이동해야 함
+			
+			
+			
+			
 			
 			ArrayList<GroupVo> glist = gd.selectGroupBoardAll(scri);
 			request.setAttribute("glist", glist);
@@ -201,19 +208,18 @@ public class GroupController extends HttpServlet{
 		
 		
 		
-		 
-		// 그룹 목표 설정 - 다시 설계해야 함 
-		else if (command.equals("/group/groupGoalWriteAction.do")) {
-
-			String groupGoal = request.getParameter("groupGoal");
-			request.setAttribute("groupGoal", groupGoal);
-			System.out.println(groupGoal);
-			
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/group/group.do");
-			rd.forward(request, response);
-		}
-		
+		/*
+		 * // 그룹 목표 설정 - 다시 설계해야 함 else if
+		 * (command.equals("/group/groupGoalWriteAction.do")) {
+		 * 
+		 * String gbidx = System.out.println(gbidx);
+		 * 
+		 * String groupGoal = request.getParameter("groupGoal");
+		 * request.setAttribute("groupGoal", groupGoal); System.out.println(groupGoal);
+		 * 
+		 * RequestDispatcher rd = request.getRequestDispatcher("/group/group.do");
+		 * rd.forward(request, response); }
+		 */
 	}
 
 }
