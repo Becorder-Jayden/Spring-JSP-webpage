@@ -25,8 +25,8 @@ public class BoardDAO {
 	public int insertBoard(int mIdx, String fbCategory, String fbTitle, String fbContent, String fbWriter, String fileName) {
 		int value = 0;
 
-		String sql = "INSERT INTO BULLETINBOARD(FBIDX,MIDX,FBCATEGORY,FBTITLE,FBCONTENT,FBWRITER,FILENAME)"
-				+ "values(fbidx_seq.nextval, ?,?,?,?,?,?)";
+		String sql = "INSERT INTO BULLETINBOARD(MIDX,FBCATEGORY,FBTITLE,FBCONTENT,FBWRITER,FILENAME)"
+				+ "values(?,?,?,?,?,?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -86,7 +86,6 @@ public class BoardDAO {
 		ArrayList<BoardVo> alist = new ArrayList<BoardVo>();
 		ResultSet rs = null;
 		
-		String sql = "";
 		String sqlCase = "";
 		// 쿼리문 between을 사용. 게시글의 한 화면에 보이는 글의 개수 조절
 		// 5.30 검색기능을 구현하기 위해 boardSelectAll에 where절이 잘 있는지 확인해야 함
@@ -101,15 +100,21 @@ public class BoardDAO {
 			sqlCase = " and fbtitle like ?"; 
 		}
 		
-		sql = "SELECT * FROM" + "(SELECT ROWNUM AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? " + sqlCase + ""
-				+ " ORDER BY fbidx DESC)" + "A) " + "B WHERE rnum BETWEEN ? AND ?";
+		String sql1 = "set @rownum:=0";
+		
+		String sql2 = "SELECT * FROM" + "(SELECT @rownum:=@rownum+1 AS rnum, A.* FROM" + "(SELECT * FROM bulletinboard where fbcategory like ? " + sqlCase + ""
+				+ " ORDER BY fbidx DESC)" 
+				+ "A) B " 
+				+ "WHERE rnum limit ?, 20";
 
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			
+			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, "%" + scri.getCategory() + "%");
 			pstmt.setString(2, "%" + scri.getKeyword() + "%");
-			pstmt.setInt(3, (scri.getPage() - 1) * 20 + 1);
-			pstmt.setInt(4, (scri.getPage() * 20));
+			pstmt.setInt(3, (scri.getPage() - 1) * 20);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

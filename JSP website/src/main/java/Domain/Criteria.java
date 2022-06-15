@@ -23,6 +23,6 @@ public class Criteria {
 
 	public Criteria() {							// Q.의미하는 바는? A. 게시판 세로 글 갯수
 		this.page = 1;
-		this.perPageNum = 20;				// 한 화면에 출력되는 게시글의 갯수와 일치시켜야 함
+		this.perPageNum = 20;					// 한 화면에 출력되는 게시글의 갯수와 일치시켜야 함
 	}
 }

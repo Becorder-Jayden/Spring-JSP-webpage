@@ -25,17 +25,20 @@ public class GroupDAO {
 		ArrayList<GroupVo> glist = new ArrayList<GroupVo>();
 		ResultSet rs = null;
 	
-		String sql = "select * from ("
-				+ "select rownum as rnum, a.* from ("
+		String sql1 = "set @rownum:=0";
+		String sql2 = "select * from ("
+				+ "select @rownum:=@rownum+1 as rnum, a.* from ("
 				+ "select * from groupboard order by gbidx desc)"
 				+ "a)"
-				+ "b where rnum between ? and ?";
+				+ "b where rnum limit ?, 10";
+		System.out.println("sql2: " + sql2);
 		
 		try {
-			// 6.6 Q.왜 오류가 나는 건지? A. finally 구문
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (scri.getPage()-1)*15+1);
-			pstmt.setInt(2, (scri.getPage()*15));
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, (scri.getPage()-1)*10+1);
 			rs = pstmt.executeQuery();
 			
 		while (rs.next()) {

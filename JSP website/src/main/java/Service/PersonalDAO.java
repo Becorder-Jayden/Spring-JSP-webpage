@@ -25,10 +25,8 @@ public class PersonalDAO {
 	public int insertPersonal(int mIdx, float pbWeight, String pbWeightImg, String pbMemo) {
 		int value = 0;
 		
-		String sql = "INSERT INTO personal(midx, pbidx, pbweight, pbcontinuous, pbweightimg, pbmemo)"
-				+ "VALUES (?, pbidx_seq.NEXTVAL, ?, NULL, ?, ?)";
-		
-		// C. pbcontinous : 연속된 기록 날짜 - 구현상의 어려워서 일단 null 값 입력
+		String sql = "INSERT INTO personal(midx, pbweight, pbweightimg, pbmemo)"
+				+ "VALUES (?, ?, ?, ?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -51,8 +49,8 @@ public class PersonalDAO {
 		ResultSet rs = null;
 		
 		String sql = "SELECT * FROM "
-				+ "(SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, pbContinuous, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 "
-				+ "FROM personal ORDER BY PBIDX DESC) "
+				+ "(SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 "
+				+ "FROM personal ORDER BY PBIDX DESC) a "
 				+ "WHERE midx = ?";
 		
 		try {

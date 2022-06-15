@@ -1,55 +1,126 @@
-﻿-- DDL, DML, DCL 학습하기
--- DDL: 테이블 수정 : CREATE, ALTER, DROP,
--- DML: 데이터 조작 : INSERT, UPDATE, DELETE, SELECT
--- DCL: 실행 : COMMIT, ROLLBACK -> MYSQL은 자동 COMIT이 실행된다. ROLLBACK 기능은 없음
+﻿-- member
+create table member (
+	midx int not null auto_increment primary key,
+	memberid varchar(50) not null,
+	memberpassword varchar(50) not null,
+	memberemail varchar(50) not null,
+	membername varchar(20) not null,
+	membergender varchar(1) default 'N' not null,
+	memberimg varchar(100)
+);
+select * from member;
+insert into member(memberid,memberpassword,memberemail,membername,membergender,memberimg)
+values('아이디1','패스워드1','이메일1','이름','F',null);
 
--- DDL 연습
-CREATE TABLE 이름 (
-	컬럼1 데이터타입 NULL여부 주요키나 제약조건 기본값,
-	컬럼1 데이터타입 NULL여부 주요키나 제약조건 기본값,
-	컬럼1 데이터타입 NULL여부 주요키나 제약조건 기본값
+-- personal
+create table personal (
+	midx int not null,
+	pbidx int not null primary key auto_increment,
+	pbdate datetime default current_timestamp,
+	pbweight float not null,
+	pbweightimg varchar(100),
+	pbmemo varchar(500),
+	foreign key(midx) references member(midx)
 );
 
--- a_member table 생성하기
-CREATE TABLE a_member (
-midx int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-memberid VARCHAR(20) NOT null,
-memberpwd VARCHAR(20) NOT null,
-membername VARCHAR(20) NOT null,
-memberemail VARCHAR(20) null,
-membergender CHAR(4) null,
-memberaddr VARCHAR(100) null,
-memberphone VARCHAR(15) null,
-memberjumin VARCHAR(15) NOT null,
-memberhobby VARCHAR(10) NULL,
-writeday DATETIME DEFAULT NOW(),
-memberip VARCHAR(20) NULL,
-delyn CHAR(1) DEFAULT 'N'
+insert into personal(midx,pbweight,pbweightimg,pbmemo)
+values(4,75,'이미지1',null);
+select * from personal;
+
+-- 외래키 추가
+select * from bulletinboard;
+insert into bulletinboard(midx,fbcategory,fbtitle,fbcontent,fbwriter,filename)
+values(2,'전체','제목1','내용1','작성자1',null);
+
+
+-- bulletinboard
+create table bulletinboard (
+	fbidx int not null primary key auto_increment,
+	midx int not null,
+	fbcategory varchar(20) not null,
+	fbtitle varchar(200) not null,
+	fbcontent text not null,
+	fbwriter varchar(20) not null,
+	fbwritedate datetime default current_timestamp,
+	filename varchar(100),
+	foreign key(midx) references member(midx)
 );
+select * from bulletinboard;
+drop table bulletinboard;
 
--- ORACLE VS MYSQL
---	VARCHAR2 -> VARCHAR
---	SEQUENCE -> AUTO_INCREMENT : 컬럼의 값 자동 증가
---	DATE, SYSTDATE -> DATETIME, NOW()
---	nvl(컬럼, 0) -> if null() : null 처리
---	substr(컬럼, 2, 1) -> substring(컬럼, 2, 1)
+-- fbidx auto_increment 설정
+alter table bulletinboard drop primary key;	-- 기존에 기본키가 등록되어 있으면 기본키 제거 후 추가해야 한다
+alter table bulletinboard modify fbidx int not null auto_increment primary key first;
 
--- 데이터 삽입하기
-INSERT INTO 테이블 이름(컬럼1, 컬럼2, 컬럼3 ...) VALUES(데이터1, 데이터2, 데이터3 ...);
+insert into bulletinboard(midx,fbcategory,fbtitle,fbcontent,fbwriter,filename)
+values(4,'전체','제목1','내용1','작성자1',null);
+select * from bulletinboard;
 
-INSERT INTO A_MEMBER(memberid,memberpwd,membername,memberemail,membergender,memberaddr,memberphone,memberjumin,memberhobby)
-VALUES('test', '1111', '홍길동', 'test@naver.com','M', '전주', '010-1111-2222', '111111-2222222', '축구');
-INSERT INTO A_MEMBER(memberid,memberpwd,membername,memberemail,membergender,memberaddr,memberphone,memberjumin,memberhobby)
-VALUES('test2', '2222', '홍길서', 'test@naver.com','F', '서울', '010-2222-3333', '222222-3333333', '농구');
 
--- null 처리
-select ifnull(memberip,0) from a_member;
+-- bulletincomment
+create table bulletincomment (
+	fbidx int not null,
+	cmidx int not null primary key auto_increment,
+	cmwriter varchar(50) not null,
+	cmcomment varchar(200) not null,
+	midx int not null,
+	foreign key(fbidx) references bulletinboard(fbidx),
+	foreign key(midx) references member(midx)
+);
+insert into bulletincomment(fbidx,cmwriter,cmcomment,midx)
+values(1,'작성자1','댓글1',4);
+select * from bulletincomment;
 
--- 회원 이름 중에 '서'라는 글자가 포함된 회원번호를 출력하시오
-select midx, membername from a_member where membername like '%서%';
-select midx, membername from a_member where membername like concat('%','서','%');
+-- groupboard
+create table groupboard (
+	gbidx int not null primary key auto_increment,
+	gbtitle varchar(200) not null,
+	midx int not null,
+	gbwriter varchar(20) not null,
+	gbwritetime datetime default current_timestamp,
+	gbhit int not null,
+	gbcontent text not null,
+	gbimg varchar(100),
+	foreign key(midx) references member(midx)
+);
+insert into groupboard(gbtitle,midx,gbwriter,gbhit,gbcontent,gbimg)
+values('제목1',4,'게시자1',0,'내용1',null);
+select * from groupboard;
 
--- 문자열 자르기
-select substring(membername,2,1) from a_member;
-select left(membername,2) from a_member;	-- only MYSQL
-select right(membername,2) from a_member;	-- only MYSQL
+-- groupgoal
+create table groupgoal (
+	gbidx int not null,
+	ggoal varchar(200),
+	foreign key(gbidx) references groupboard(gbidx)
+);
+insert into groupgoal(gbidx, ggoal)
+values(1,'화이팅1');
+
+select * from groupgoal;
+drop table groupgoal;
+
+-- faq
+create table faq (
+	qbidx int not null primary key auto_increment,
+	qquestion text not null,
+	qanswer text not null
+);
+insert into faq(qquestion, qanswer)
+value('질문1', '답장1');
+select * from faq;
+
+-- bulletinboard rownum 열 사용
+set @rownum:=0;
+select @rownum:=@rownum+1, a.* from bulletinboard a;
+
+-- groupboard rownum 열 사용
+
+--
+SELECT * FROM personal WHERE midx = 4;
+SELECT MIDX, PBIDX, PBDATE, PBWEIGHT, PBWEIGHTIMG, PBMEMO, RANK() OVER(PARTITION BY midx ORDER BY pbidx) pbidx2 FROM personal ORDER BY PBIDX DESC;
+SELECT * FROM(SELECT @rownum:=@rownum+1 AS rnum, A.* FROM(SELECT * FROM bulletinboard) A) B;
+SELECT * FROM(SELECT @rownum:=@rownum+1 AS rnum, A.* FROM(SELECT * FROM bulletinboard where fbcategory like ?  and fbtitle like ? ORDER BY fbidx DESC)A) B WHERE rnum limit 1 AND 10;
+SELECT * FROM(SELECT @rownum:=@rownum+1 AS rnum, A.* FROM(SELECT * FROM bulletinboard ORDER BY fbidx DESC)A) BWHERE rnum limit 1, 20;
+select * from bulletinboard b order by fbidx DESC;
+set @rownum:=0;
+select * from (select @rownum:=@rownum+1 as rnum, a.* from (select * from groupboard order by gbidx desc)a )b where rnum between 1 and 10;

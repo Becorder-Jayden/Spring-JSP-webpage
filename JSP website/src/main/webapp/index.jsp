@@ -1,3 +1,4 @@
+<%@page import="Dbconn.Dbconn"%>
 <%@page import="Domain.MemberVo"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="javax.swing.text.Document"%>
@@ -5,7 +6,10 @@
 <%
 	MemberVo mv = (MemberVo) request.getAttribute("mv");
 %>
-
+<% 
+	Dbconn dbconn = new Dbconn();
+	System.out.println("dbconn: " + dbconn);
+%>
 
 <!DOCTYPE html>
 <html lang="ko">

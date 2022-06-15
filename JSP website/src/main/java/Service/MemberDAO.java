@@ -24,8 +24,8 @@ public class MemberDAO {
 	public int insertMember(String memberId, String memberPassword, String memberMail, String memberName, String memberGender, String memberImg) {
 		int value = 0;
 		
-		String sql = "insert into member(MIDX,MEMBERID,MEMBERPASSWORD,MEMBEREMAIL,MEMBERNAME,MEMBERGENDER,MEMBERIMG)" 
-						+ "values(midx_seq.nextval, ?,?,?,?,?,?)";
+		String sql = "insert into member(MEMBERID,MEMBERPASSWORD,MEMBEREMAIL,MEMBERNAME,MEMBERGENDER,MEMBERIMG)" 
+						+ "values(?,?,?,?,?,?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
