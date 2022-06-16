@@ -1,4 +1,12 @@
+<%@page import="Domain.FaqVo"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Service.FaqDAO"%>
+<%@page import="Service.MemberDAO"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+	MemberDAO md = (MemberDAO) request.getAttribute("midx");
+	ArrayList<FaqVo> flist = (ArrayList<FaqVo>) request.getAttribute("flist");
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -173,49 +181,38 @@
             <h3>FAQ</h3>
             &nbsp;
             &nbsp;
-            <h5>자주하는 질문 목록입니다.</h5>
+						<div class="col">
+	          	<h5>자주하는 질문 목록입니다.</h5>
+	          </div>
+<% if (session.getAttribute("memberId").equals("admin")) { %>
+	          <div class="col" style="text-align: right">
+	          	<button class="btn btn-primary" style="text-align: right" onclick="location.href='<%=request.getContextPath()%>/faq/faqWrite.do'">FAQ 추가</button>
+	          </div>
+<%} %>
+
+
             <!-- C. 5/16 아코디언 작업하기 --> <!-- A. 5/17 완료 -->
-            <div class="accordion" id="accordionParents">
+              
+              
+<% for (FaqVo fv : flist) { %>              
+              
+            <div class="accordion " id="accordionParents">
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Q. 크루원이 도망가면 어떻게 하나요?
+                <h2 class="accordion-header" id="heading">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=fv.getQbidx() %>" aria-expanded="true" aria-controls="collapseOne">
+										<%=fv.getQquestion() %>
                   </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionParents">
+                <div id="collapse<%=fv.getQbidx() %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionParents">
                   <div class="accordion-body">
-                    A. 안타깝지만 도망간 사람을 잡으러 갈 수는 없습니다. 보내주세요.
+										<%=fv.getQanswer() %>
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo">
-                    Q. 크루는 어떻게 생성하나요?
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionParents">
-                  <div class="accordion-body">
-                    A. 크루 모집 게시판에서 크루 생성하기 버튼을 클릭하세요.
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree">
-                    Q. 어떻게 이용하는 건가요?
-                  </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionParents">
-                  <div class="accordion-body">
-                    A. 개발 테스트 중입니다. 이것저것 클릭해보세요.
-                  </div>
-                </div>
-              </div> 
             </div>
+<%} %>                
           </div>
         </div>
       </div>
-    </div>
   </body>
 </html>

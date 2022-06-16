@@ -1,24 +1,11 @@
-<%@page import="java.time.Year"%>
+<%@page import="Domain.FaqVo"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Domain.PersonalVo"%>
+<%@page import="Service.MemberDAO"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
-if (session.getAttribute("midx") == null) {
-	
-	session.setAttribute("saveUrl", request.getRequestURI());
-	
-	out.println("<script>");
-	out.println("alert('로그인 해주세요.')");
-	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
-	out.println("</script>");
-}
+	MemberDAO md = (MemberDAO) request.getAttribute("midx");
+	ArrayList<FaqVo> flist = (ArrayList<FaqVo>) request.getAttribute("flist");
 %>
-<%
-	ArrayList<PersonalVo> plist = (ArrayList<PersonalVo>)request.getAttribute("plist");
-%>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,97 +21,7 @@ if (session.getAttribute("midx") == null) {
     />
     <link href="main.css" id="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  
-  <script>
-	/* 전역 변수 입력 */ 
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-  
-    
-  	// 데이터 입력
-  	function dailyFn() {
-    	
-  		var fm = document.daily;
-  		
-  		if (fm.pbWeight.value == "") {
-  			alert("현재 체중을 입력하세요.");
-  			fm.pbWeight.focus();
-  			return;
-  		}
-  		
-  		fm.action = "<%=request.getContextPath()%>/personal/personalWriteAction.do";
-  		fm.method = "post";
-  		fm.enctype = "multipart/form-data";
-  		fm.submit();
-  	}
-  
-	/* 업로드한 사진 미리보기 */
-  	function readImage(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					document.getElementById('preview').src = e.target.result;
-				};
-				reader.readAsDataURL(input.files[0]);
-			} else {
-				document.getElementById('preview').src = "";
-			}
-	}	
-  	
-  	
-	      
-	/* 그래프 그리기 */ 	
- 	  google.charts.load('current', {'packages':['corechart']});
-   	google.charts.setOnLoadCallback(drawChart);
-		
-    // 그래프 변수 설정
-		var years = [];
-    var months = [];
-    var days = [];
-    var weight = [];
-
-<% for (PersonalVo pvv : plist) { %>      
-    
-		var pbdate = '<%=pvv.getPbdate()%>'.split('-');
-		
-		years.push(parseInt(pbdate[0]));
-		months.push(parseInt(pbdate[1]));
-		days.push(parseInt(pbdate[2]));
-		weight.push(<%=pvv.getPbweight()%>);
-
-<%}%>
-
-		// 그래프 그리기
-    function drawChart() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('datetime', '날짜');
-      data.addColumn('number', '체중');
-      
-      for (var i = 0; i < years.length; i++) {
-     		arr = [new Date(years[i], months[i]-1, days[i]), weight[i]];
-  	  	data.addRow(arr);
-      }
-      
-			var options = {
-          title: '체중 변화 그래프',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-          hAxis:{
-	          format: 'MM-dd'
-        	  }
-        };
-
-  		var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-      chart.draw(data, options);
-    }	
-    
-  </script>
- 	</head>
+  </head>
   <body>
     <div class="layout-container" style="max-width: 1000px">
       <!-- 사이드 메뉴 바 -->
@@ -141,8 +38,8 @@ if (session.getAttribute("midx") == null) {
       >
         <!-- 페이지 로고 -->
         <div class="logo">
-          <a href="<%=request.getContextPath()%>/main/main.do">
-            <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
+          <a href="../main/main.do">
+          	<img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
@@ -207,7 +104,7 @@ if (session.getAttribute("midx") == null) {
         >
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
-          </div>
+          </div>        
           <div class="row" style="padding: 20px 0 20px 0">
             <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
           </div>
@@ -226,7 +123,8 @@ if (session.getAttribute("midx") == null) {
         </ul>
       </div>
 
-
+      
+      <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
       <div
         class="nav"
         style="position: relative; left: 180px; justify-content: end"
@@ -259,11 +157,11 @@ if (session.getAttribute("midx") == null) {
 				%>
       </div>
 
-      
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        id="index"
+        class="page"
+        id="page"
         style="
           position: relative;
           left: 200px;
@@ -273,78 +171,61 @@ if (session.getAttribute("midx") == null) {
       >
         <!-- 페이지 본문 내용 -->
         <div class="container" style="left: 200px; width: 90%">
-          <!-- 페이지 이름 -->
           <div>
-            <h1>퍼스널 데이터</h1>
+            <h1>이용 문의</h1>
           </div>
-					&nbsp;&nbsp;
-          <!-- 기록 등록 -->
+         		&nbsp;
+           	&nbsp;
           <div class="row">
-            <h3>일일 기록 등록 : 
-              <script>
-                document.write(year+"년 "+month+"월 "+day+"일");
-              </script>
-            </h3>
+            <h3>FAQ</h3>
             &nbsp;
-            <div class="row" style="margin:auto;">
-            	<form name="daily">
-	            	<table>
-	            		<tr>
-	            			<td rowspan="2" class="col-sm-4">
-	            				<img id = "preview" style="width:300px;">
-	            				<input name="pbWeightImg" type="file" onchange="readImage(this);" class="form-control" alt="인증사진 업로드" />
-	           				</td>
-	            			<td>
-		            			<div class="input-group">
-		            				<input name="pbWeight" type="text" class="form-control" placeholder="현재 체중 (단위 : kg)">
-		            				<button type="button" onclick="dailyFn()" class="btn btn-primary input-append">등록</button>
-		            			</div>
-	         					</td>
-	            		</tr>
-	            		<tr>
-	            			<td><textarea name="pbMemo" id="" cols="80" rows="5" class="form-control" placeholder="운동/식단 등 기록" style="resize:none;"></textarea></td>
-	            		</tr>
-	            	</table>
-            	</form>
-            </div>
-          </div>
+            &nbsp;
+						<div class="col">
+	          	<h5>자주하는 질문 목록입니다.</h5>
+	          </div>
+				<form action="<%=request.getContextPath()%>/faq/faqWriteAction.do">
+		          <div class="col" style="text-align: right">
+		          	<input type="submit" class="btn btn-primary" style="text-align: right" value="등록">
+		          	<button type="button" class="btn btn-danger" style="text-align: right" onclick="location.href='<%=request.getContextPath()%>/faq/faq.do'">취소</button>
+		          </div>
 					&nbsp;
 					&nbsp;
-          <div class="row">
-            <h3>체중 변화 그래프</h3>
-            &nbsp;
-            <div class="row" style="margin:auto;">
-                <div id="curve_chart" alt="체중 변화 그래프"></div>
+					<div class="row">
+							<table class="col-sm-10" style="margin:auto;">
+								<tr>
+									<td class="col-sm-1">질문</td><td class="col-sm-10"><input class="form-control" name="qquestion"></td>
+								</tr>
+								<tr>
+									<td class="col-sm-1">답변</td><td class="col-sm-10"><input class="form-control" name="qanswer"></td>
+								</tr>
+							</table>
+						</div>
+				</form>		
+					</div>
+					&nbsp;
+					&nbsp;
+
+
+            <!-- C. 5/16 아코디언 작업하기 --> <!-- A. 5/17 완료 -->
+<% for (FaqVo fv : flist) { %>              
+              
+            <div class="accordion " id="accordionParents">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=fv.getQbidx() %>" aria-expanded="true" aria-controls="collapseOne">
+										<%=fv.getQquestion() %>
+                  </button>
+                </h2>
+                <div id="collapse<%=fv.getQbidx() %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionParents">
+                  <div class="accordion-body">
+										<%=fv.getQanswer() %>
+                  </div>
+                </div>
+              </div>
             </div>
+<%} %>                
+
           </div>
-         &nbsp;&nbsp;
-          <div class="row">
-            <h3>업로드 기록</h3>
-          </div>
-          &nbsp;
-          <div class="row">
-            <table class="table" style="text-align: center;">
-              <tr>
-                <th>번호</th><th>날짜</th><th>체중</th><th>메모</th><th>사진</th>
-              </tr>
-<% for (PersonalVo pvv : plist) {%>              
-              <tr style="height:100px">
-                <td><%=pvv.getPbidx() %></td>
-                <td><%=pvv.getPbdate() %></td>
-                <td><%=pvv.getPbweight() %>kg</td>
-                <td><%=pvv.getPbMemo() %></td>
-                <td>
-<% if (pvv.getPbweightimg() != null) {%>
-                	<img src="<%=request.getContextPath() %>/imgs/<%=pvv.getPbweightimg() %>" style="height:100px;">
-<%} %>               	
-               	</td>
-              </tr>
-<%} %>
-            </table>
-            <div class="row text-center" style="font-size: 20px; margin:auto;">
-            </div>
         </div>
-      </div>
-    </div>
   </body>
 </html>

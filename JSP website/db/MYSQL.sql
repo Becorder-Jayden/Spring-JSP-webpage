@@ -114,6 +114,8 @@ set @rownum:=0;
 select @rownum:=@rownum+1, a.* from bulletinboard a;
 
 -- groupboard rownum 열 사용
+set @rownum:=0;
+select * from (select @rownum:=@rownum+1 as rnum, a.* from (select * from groupboard order by gbidx desc)a )b where rnum between 1 and 10;
 
 --
 SELECT * FROM personal WHERE midx = 4;
@@ -124,3 +126,4 @@ SELECT * FROM(SELECT @rownum:=@rownum+1 AS rnum, A.* FROM(SELECT * FROM bulletin
 select * from bulletinboard b order by fbidx DESC;
 set @rownum:=0;
 select * from (select @rownum:=@rownum+1 as rnum, a.* from (select * from groupboard order by gbidx desc)a )b where rnum between 1 and 10;
+select * from groupboard order by gbidx desc;

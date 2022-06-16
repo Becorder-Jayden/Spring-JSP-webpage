@@ -17,8 +17,8 @@ public class Dbconn {
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
-			// jdbc 패키지에 있는 클래스를 가져옴
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			// jdbc 패키지에 있는 클래스를 가져옴
 			// Class.forName("oracle.jdbc.driver.OracleDriver");
 			// 접속 정보를 활용해서 연결 객체를 만듬
 			conn = DriverManager.getConnection(url, user, password);

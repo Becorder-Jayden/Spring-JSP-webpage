@@ -18,7 +18,6 @@ public class BoardDAO {
 	public BoardDAO() {
 		Dbconn db = new Dbconn(); // db 접속정보 전달
 		this.conn = db.getConnection(); // db 연결
-
 	}
 
 	// 자유게시판 글쓰기

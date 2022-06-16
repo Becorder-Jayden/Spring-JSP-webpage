@@ -31,7 +31,6 @@ public class GroupDAO {
 				+ "select * from groupboard order by gbidx desc)"
 				+ "a)"
 				+ "b where rnum limit ?, 10";
-		System.out.println("sql2: " + sql2);
 		
 		try {
 			pstmt = conn.prepareStatement(sql1);
