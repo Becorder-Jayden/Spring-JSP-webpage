@@ -1,19 +1,27 @@
-<%@page import="Domain.FaqVo"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="Service.FaqDAO"%>
-<%@page import="Service.MemberDAO"%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%
-	MemberDAO md = (MemberDAO) request.getAttribute("midx");
-	ArrayList<FaqVo> flist = (ArrayList<FaqVo>) request.getAttribute("flist");
+if (session.getAttribute("midx") == null){
+	
+	String uri = request.getRequestURI();
+	session.setAttribute("saveUrl", uri.substring(0, uri.length()-3) + "do");
+	
+	out.println("<script>");
+	out.println("alert('로그인 해주세요.')");
+	out.println("location.href='"+request.getContextPath()+"/member/memberLogin.do'");
+	out.println("</script>");
+}
 %>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>퍼스널 데이터</title>
+    <title>크루 모집</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -40,7 +48,7 @@
         <!-- 페이지 로고 -->
         <div class="logo">
           <a href="../main/main.do">
-          	<img src="../imgs/logo.png" alt="logo" style="width: 100%" />
+            <img src="../imgs/logo.png" alt="logo" style="width: 100%" />
           </a>
         </div>
 
@@ -89,8 +97,8 @@
 				<p>오늘도 화이팅하세요!</p>
 <%} %>
 				</div>
-				
-				
+
+
         <!-- 메뉴 -->
         <ul
           style="
@@ -107,24 +115,34 @@
             <a href="<%=request.getContextPath() %>/main/main.do" style="text-decoration: none;"><li>메인</li></a>
           </div>        
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none;"><li>퍼스널 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/personal/personal.do" style="text-decoration: none"
+              ><li>퍼스널 데이터</li></a
+            >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"><li>그룹 데이터</li></a>
+            <a href="<%=request.getContextPath() %>/group/group.do" style="text-decoration: none"
+              ><li>그룹 데이터</li></a
+            >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"><li>크루 모집</li></a>
+            <a href="<%=request.getContextPath() %>/crew/crew.do" style="text-decoration: none"
+              ><li>크루 모집</li></a
+            >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"><li>자유게시판</li></a>
+            <a href="<%=request.getContextPath() %>/board/board.do" style="text-decoration: none"
+              ><li>자유게시판</li></a
+            >
           </div>
           <div class="row" style="padding: 20px 0 20px 0">
-            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"><li>이용 문의</li></a>
+            <a href="<%=request.getContextPath() %>/faq/faq.do" style="text-decoration: none"
+              ><li>이용 문의</li></a
+            >
           </div>
         </ul>
       </div>
 
-      
+
       <!-- Q. 로그인, 회원가입 글씨 키우는 방법? -->
       <div
         class="nav"
@@ -157,12 +175,10 @@
 					};
 				%>
       </div>
-
       <!-- Q. side_menu가 끝나는 지점부터 page가 설정될 수 있도록 세팅하는 방법? -->
       <!-- 페이지 부분 -->
       <div
-        class="page"
-        id="page"
+        id="index"
         style="
           position: relative;
           left: 200px;
@@ -173,48 +189,54 @@
         <!-- 페이지 본문 내용 -->
         <div class="container" style="left: 200px; width: 90%">
           <div>
-            <h1>이용 문의</h1>
+            <h1>크루 모집</h1>
           </div>
-         		&nbsp;
-           	&nbsp;
+					&nbsp;
+		      &nbsp;
+      
           <div class="row">
-            <h3>FAQ</h3>
-            &nbsp;
-            &nbsp;
-						<div class="col">
-	          	<h5>자주하는 질문 목록입니다.</h5>
-	          </div>
-	          
-<% 
- 	String admin = "admin";
-	if (admin.equals(session.getAttribute("memberId"))) { 
-%>	          
-	          <div class="col" style="text-align: right">
-	          	<button class="btn btn-primary" style="text-align: right" onclick="location.href='<%=request.getContextPath()%>/faq/faqWrite.do'">FAQ 추가</button>
-	          </div>
-<%} %>
-
-
-            <!-- C. 5/16 아코디언 작업하기 --> <!-- A. 5/17 완료 -->
-<% for (FaqVo fv : flist) { %>              
-              
-            <div class="accordion " id="accordionParents">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="heading">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=fv.getQbidx() %>" aria-expanded="true" aria-controls="collapseOne">
-										<%=fv.getQquestion() %>
-                  </button>
-                </h2>
-                <div id="collapse<%=fv.getQbidx() %>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionParents">
-                  <div class="accordion-body">
-										<%=fv.getQanswer() %>
-                  </div>
-                </div>
+            <h3>크루 생성 페이지</h3>
+            <div class="row" style="margin: auto">
+              <div class="container">
+              <form action="<%=request.getContextPath()%>/crew/crewMakerAction.do" method="post">
+              	<input type="submit" class="btn btn-primary" value="크루 생성"> 
+              	<button type="button" class="btn btn-danger" onclick="location.href='<%=request.getContextPath() %>/crew/crew.do'">취소</button> 
               </div>
+	              <table class="table">
+	                <tr>
+	                  <th>크루명</th><td><input type="text" class="form-control" name="crewName"></td>
+	                </tr>
+									<tr>
+										<th>정원</th>
+										<td>
+											<select class="form-select" name="crewPersonnel">
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5명 이상</option>
+											</select>
+										</td>
+									</tr>
+	                <tr>
+	                  <th>크루 목표</th>
+	                  <td><input type="text" class="form-control" name="crewGoal"></td>
+	                </tr>
+	                <tr>
+	                  <th>기간</td>
+	                  <td>
+	                  	<input type="date" class="form-control" name="crewDateStart">
+	                  	<input type="date" class="form-control" name="crewDateEnd">
+                  	</td>
+	                </tr>
+	              </table>
+              </form>
             </div>
-<%} %>                
           </div>
+          &nbsp;
+          &nbsp;
         </div>
       </div>
+    </div>
   </body>
 </html>
+

@@ -198,10 +198,7 @@ if (session.getAttribute("midx") == null){
             <h3>나의 운동 그룹</h3>
             <div class="row" style="margin: auto">
               <div class="container">
-                <!-- 모달 트리거 생성 -->
-                <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#crewMaker">크루 만들기</button>
-                
-                <!-- 모달 창 생성 -->
+              	<input type="button" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/crew/crewMaker.do'" value="크루 만들기"> 
                 <div class="modal fade" id="crewMaker" tabindex="-1" aria-hidden="false">
                   <div class="modal-header">
                     <div class="modal-dialog">

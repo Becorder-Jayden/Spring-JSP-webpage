@@ -108,6 +108,7 @@ create table faq (
 insert into faq(qquestion, qanswer)
 value('질문1', '답장1');
 select * from faq;
+delete from faq where qbidx = 27;
 
 -- bulletinboard rownum 열 사용
 set @rownum:=0;
@@ -116,6 +117,25 @@ select @rownum:=@rownum+1, a.* from bulletinboard a;
 -- groupboard rownum 열 사용
 set @rownum:=0;
 select * from (select @rownum:=@rownum+1 as rnum, a.* from (select * from groupboard order by gbidx desc)a )b where rnum between 1 and 10;
+
+
+create table crew (
+	midx int not null,
+	cidx int not null primary key AUTO_INCREMENT,
+	cName varchar(200) not null,
+	cGoal varchar(400),
+	cPersonnel varchar(400) not null,
+	cDateStart date default CURRENT_DATE,
+	cDateEnd DATE,
+);
+
+
+
+
+
+
+
+
 
 --
 SELECT * FROM personal WHERE midx = 4;
@@ -127,3 +147,4 @@ select * from bulletinboard b order by fbidx DESC;
 set @rownum:=0;
 select * from (select @rownum:=@rownum+1 as rnum, a.* from (select * from groupboard order by gbidx desc)a )b where rnum between 1 and 10;
 select * from groupboard order by gbidx desc;
+select * from crew;
