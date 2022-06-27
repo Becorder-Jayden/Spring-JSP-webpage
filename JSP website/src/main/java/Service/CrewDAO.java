@@ -16,7 +16,7 @@ public class CrewDAO {
 		this.conn = db.getConnection();
 	}
 	
-	public int makeCrew(int midx, String cName, String cGoal, String cPersonnel, Date dateStart, Date dateEnd) {
+	public int makeCrew(int midx, String cName, String cGoal, String cPersonnel, String dateStart, String dateEnd) {
 		int value = 0;
 		
 		String sql = "insert into crew(midx,cName,cGoal,cPersonnel,cDateStart,cDateEnd)"
@@ -28,8 +28,8 @@ public class CrewDAO {
 			pstmt.setString(2, cName);
 			pstmt.setString(3, cGoal);
 			pstmt.setString(4, cPersonnel);
-			pstmt.setString(5, (java.sql.Date) dateStart);
-			pstmt.setString(6, (java.sql.Date) dateEnd);
+			pstmt.setString(5, dateStart);
+			pstmt.setString(6, dateEnd);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

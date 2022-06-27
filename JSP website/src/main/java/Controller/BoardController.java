@@ -23,49 +23,48 @@ import Service.BoardDAO;
 import Service.CommentDAO;
 
 
-// controller : 페이지 이동과 필요한 데이터 전송을 담당
+// controller : �럹�씠吏� �씠�룞怨� �븘�슂�븳 �뜲�씠�꽣 �쟾�넚�쓣 �떞�떦
 @WebServlet("/BoardController")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	public BoardController() {
 		super();
+		public BoardController() {
 	}
 
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 데이터 인코딩 설정
+		// �뜲�씠�꽣 �씤肄붾뵫 �꽕�젙
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		// 경로 추출
+		// 寃쎈줈 異붿텧
 		String uri = request.getRequestURI();
 		String project = request.getContextPath();
 		String command = uri.substring(project.length());
 		
-		// 경로 확인
+		// 寃쎈줈 �솗�씤
 		System.out.println("command: " + command);
 	
-		// 데이터 저장 경로 설정
-		String uploadPath = "E:\\Open API A반\\Back-end\\JSP website\\src\\main\\webapp\\";
+		// �뜲�씠�꽣 ���옣 寃쎈줈 �꽕�젙
+		String uploadPath = "E:\\Open API A諛�\\Back-end\\JSP website\\src\\main\\webapp\\";
 		String saveFolder = "imgs";
 		String saveFullPath = uploadPath + saveFolder;
 		
-		// 전역변수 설정
-		BoardDAO bd = new BoardDAO();	// board DB 접근
-		CommentDAO cd = new CommentDAO();	// comment DB 접근
+		// �쟾�뿭蹂��닔 �꽕�젙
+		BoardDAO bd = new BoardDAO();	// board DB �젒洹�
+		CommentDAO cd = new CommentDAO();	// comment DB �젒洹�
 		
 		
 		
-		// 게시판 이동
+		// 寃뚯떆�뙋 �씠�룞
 		if (command.equals("/board/board.do")) {
 			
-			/*페이징*/
+			/*�럹�씠吏�*/
 			String page = request.getParameter("page");
 			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
-			/*검색어*/
+			/*寃��깋�뼱*/
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
@@ -73,11 +72,11 @@ public class BoardController extends HttpServlet {
 			String category = request.getParameter("category");
 			if (category == null) category = "";
 			
-			/*분류 기준*/
+			/*遺꾨쪟 湲곗�*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);	// 페이징
-			scri.setKeyword(keyword);	// 키워드
-			scri.setSearchType(searchType);	// 검색 유형
+			scri.setPage(pagex);	// �럹�씠吏�
+			scri.setKeyword(keyword);	// �궎�썙�뱶
+			scri.setSearchType(searchType);	// 寃��깋 �쑀�삎
 			scri.setCategory(category);
 
 			bd = new BoardDAO();
@@ -87,47 +86,47 @@ public class BoardController extends HttpServlet {
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 
-			/*게시판에 DB 출력*/
-			// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
+			/*寃뚯떆�뙋�뿉 DB 異쒕젰*/
+			// DB �뜲�씠�꽣瑜� 媛��졇�삤湲� �쐞�빐 �뜲�씠�꽣 �뻾(alist) �젙�쓽 �썑 request�뿉 �쟾�넚
 			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);
 			
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
-			// 이동
+			// �씠�룞
 			RequestDispatcher rd = request.getRequestDispatcher("/board/board.jsp");
 			rd.forward(request, response);
 		}	
 		
 		
 		
-		// 게시판 글쓰기 이동
+		// 寃뚯떆�뙋 湲��벐湲� �씠�룞
 		else if (command.equals("/board/boardWrite.do")){
 			
-			/*페이징*/
+			/*�럹�씠吏�*/
 			String page = request.getParameter("page");
 			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
-			/*검색어*/
+			/*寃��깋�뼱*/
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
-			if (searchType == null) searchType = "";						// Q. 게시글 번호로 찾기 ? A. 구현 완료
+			if (searchType == null) searchType = "";						// Q. 寃뚯떆湲� 踰덊샇濡� 李얘린 ? A. 援ы쁽 �셿猷�
 			String category = request.getParameter("category");
 			if (category == null) category = "";
 			
-			/*분류 기준*/
+			/*遺꾨쪟 湲곗�*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);	// 페이징
-			scri.setKeyword(keyword);	// 키워드
-			scri.setSearchType(searchType);	// 검색 유형
+			scri.setPage(pagex);	// �럹�씠吏�
+			scri.setKeyword(keyword);	// �궎�썙�뱶
+			scri.setSearchType(searchType);	// 寃��깋 �쑀�삎
 			scri.setCategory(category);
 
-			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+			request.setAttribute("scri", scri);	// �럹�씠吏� 怨꾩궛�쓣 �쐞�빐 �쟾�넚			
 			
 			
-			// BoardDAO → 전역변수로 이동
+			// BoardDAO �넂 �쟾�뿭蹂��닔濡� �씠�룞
 			
 			int cnt = bd.boardTotal(scri);
 			
@@ -135,48 +134,48 @@ public class BoardController extends HttpServlet {
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 			
-			/*게시판에 DB 출력*/
-			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
+			/*寃뚯떆�뙋�뿉 DB 異쒕젰*/
+			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB �뜲�씠�꽣瑜� 媛��졇�삤湲� �쐞�빐 �뜲�씠�꽣 �뻾(alist) �젙�쓽 �썑 request�뿉 �쟾�넚
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
-			// 이동
+			// �씠�룞
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardWrite.jsp");
 			rd.forward(request, response);
 		}
 		
 		
-		// 게시판 글쓰기 동작
+		// 寃뚯떆�뙋 湲��벐湲� �룞�옉
 		else if (command.equals("/board/boardWriteAction.do")) {
 			
-			// 이미지 파일 입력
-			// cf. lib 파일에 cos.jar, imgscalr-lib.jar 파일 추가 필요
-			int sizeLimit = 1024*1024*15;		// 파일 크기를 15MB로 제한
+			// �씠誘몄� �뙆�씪 �엯�젰
+			// cf. lib �뙆�씪�뿉 cos.jar, imgscalr-lib.jar �뙆�씪 異붽� �븘�슂
+			int sizeLimit = 1024*1024*15;		// �뙆�씪 �겕湲곕�� 15MB濡� �젣�븳
 			
 			MultipartRequest multi = new MultipartRequest(request, saveFullPath, sizeLimit, "UTF-8", new DefaultFileRenamePolicy());
-			// DefaultFileRenamePolicy(): 파일 이름이 동일할 때 Rename 정책을 사용   
+			// DefaultFileRenamePolicy(): �뙆�씪 �씠由꾩씠 �룞�씪�븷 �븣 Rename �젙梨낆쓣 �궗�슜   
 			
 			
-			// 저장될 파일을 담는 객체 생성
-			Enumeration files = multi.getFileNames();			// jsp에서 name값을 통해 가져오기 때문에 input에 name 속성이 필요
+			// ���옣�맆 �뙆�씪�쓣 �떞�뒗 媛앹껜 �깮�꽦
+			Enumeration files = multi.getFileNames();			// jsp�뿉�꽌 name媛믪쓣 �넻�빐 媛��졇�삤湲� �븣臾몄뿉 input�뿉 name �냽�꽦�씠 �븘�슂
 			
 
-			// 담긴 파일 객체의 변수 가져오기
+			// �떞湲� �뙆�씪 媛앹껜�쓽 蹂��닔 媛��졇�삤湲�
 			String file = (String) files.nextElement();
 			String fileName = multi.getFilesystemName(file);
 			String originFileName = multi.getOriginalFileName(file);
 			
-			// 입력값을 받아옴	cf. 'multipart/form-data'로 데이터를 전송했으므로 multipartrequest를 통해 값을 받아오로독 한다 
+			// �엯�젰媛믪쓣 諛쏆븘�샂	cf. 'multipart/form-data'濡� �뜲�씠�꽣瑜� �쟾�넚�뻽�쑝誘�濡� multipartrequest瑜� �넻�빐 媛믪쓣 諛쏆븘�삤濡쒕룆 �븳�떎 
 			String fbWriter = multi.getParameter("FBWRITER");			
 			String fbCategory = multi.getParameter("FBCATEGORY");
 			String fbTitle = multi.getParameter("FBTITLE");
 			String fbContent = multi.getParameter("FBCONTENT");
 			
-			// 세션으로부터 현재 로그인한 회원의 정보(midx)를 가져옴
+			// �꽭�뀡�쑝濡쒕��꽣 �쁽�옱 濡쒓렇�씤�븳 �쉶�썝�쓽 �젙蹂�(midx)瑜� 媛��졇�샂
 			HttpSession session = request.getSession();
 			int midx = (int) session.getAttribute("midx");
 			
-			// DB에 데이터 입력
+			// DB�뿉 �뜲�씠�꽣 �엯�젰
 			bd = new BoardDAO();
 			int value = bd.insertBoard(midx, fbCategory, fbTitle, fbContent, fbWriter, fileName);
 			
@@ -189,15 +188,15 @@ public class BoardController extends HttpServlet {
 		}
 		
 		
-		// 게시글 보기
+		// 寃뚯떆湲� 蹂닿린
 		else if (command.equals("/board/boardView.do")) {
 			
-			/*페이징*/
+			/*�럹�씠吏�*/
 			String page = request.getParameter("page");
 			if (page == null) page = "1";
 			int pagex = Integer.parseInt(page);
 			
-			/*검색어*/
+			/*寃��깋�뼱*/
 			String keyword = request.getParameter("keyword");
 			if (keyword == null) keyword = "";
 			String searchType = request.getParameter("searchType");
@@ -205,16 +204,16 @@ public class BoardController extends HttpServlet {
 			String category = request.getParameter("category");
 			if (category == null) category = "";
 			
-			/*분류 기준*/
+			/*遺꾨쪟 湲곗�*/
 			SearchCriteria scri = new SearchCriteria();
-			scri.setPage(pagex);	// 페이징
-			scri.setKeyword(keyword);	// 키워드
-			scri.setSearchType(searchType);	// 검색 유형
+			scri.setPage(pagex);	// �럹�씠吏�
+			scri.setKeyword(keyword);	// �궎�썙�뱶
+			scri.setSearchType(searchType);	// 寃��깋 �쑀�삎
 			scri.setCategory(category);
-			request.setAttribute("scri", scri);	// 페이징 계산을 위해 전송			
+			request.setAttribute("scri", scri);	// �럹�씠吏� 怨꾩궛�쓣 �쐞�빐 �쟾�넚			
 			
 			
-			// BoardDAO → 전역변수로 이동
+			// BoardDAO �넂 �쟾�뿭蹂��닔濡� �씠�룞
 			
 			int cnt = bd.boardTotal(scri);
 			
@@ -222,31 +221,31 @@ public class BoardController extends HttpServlet {
 			pm.setScri(scri);
 			pm.setTotalCount(cnt);
 			
-			/*게시판에 DB 출력*/
-			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB 데이터를 가져오기 위해 데이터 행(alist) 정의 후 request에 전송
+			/*寃뚯떆�뙋�뿉 DB 異쒕젰*/
+			ArrayList<BoardVo> alist = bd.boardSelectAll(scri);		// DB �뜲�씠�꽣瑜� 媛��졇�삤湲� �쐞�빐 �뜲�씠�꽣 �뻾(alist) �젙�쓽 �썑 request�뿉 �쟾�넚
 			request.setAttribute("alist", alist);
 			request.setAttribute("pm", pm);
 			
-			// 게시글 인덱스 추출
+			// 寃뚯떆湲� �씤�뜳�뒪 異붿텧
 			String fbidx = request.getParameter("fbidx");
 			int fbidx_ = Integer.parseInt(fbidx);
 
-			// 게시글 보기
-			bd = new BoardDAO(); // 전역변수에 BoardDAO 존재
+			// 寃뚯떆湲� 蹂닿린
+			bd = new BoardDAO(); // �쟾�뿭蹂��닔�뿉 BoardDAO 議댁옱
 			BoardVo bv = bd.boardSelectOne(fbidx_);
 			request.setAttribute("bv", bv);
 
-			// 댓글
+			// �뙎湲�
 			ArrayList<CommentVo> clist = cd.selectComment(fbidx_);
 			request.setAttribute("clist", clist);
 			
-			/*이동*/
+			/*�씠�룞*/
 			RequestDispatcher rd = request.getRequestDispatcher("/board/boardView.jsp");
 			rd.forward(request, response);
 		}
 		
 		
-		// 게시글 삭제
+		// 寃뚯떆湲� �궘�젣
 		else if (command.equals("/board/boardDeleteAction.do")) {
 			
 			String fbidx = request.getParameter("fbidx");
@@ -260,30 +259,30 @@ public class BoardController extends HttpServlet {
 		}
 		
 		
-		// 댓글 등록
+		// �뙎湲� �벑濡�
 		else if (command.equals("/board/boardCommentAction.do")) {
 			
-			// 세션으로 부터 정보를 연결
+			// �꽭�뀡�쑝濡� 遺��꽣 �젙蹂대�� �뿰寃�
 			HttpSession session = request.getSession();
 			
 			int midx = (int) session.getAttribute("midx");
 			int fbidx = Integer.parseInt(request.getParameter("fbidx"));
 			String cmWriter = request.getParameter("cmWriter");
 			String cmComment = request.getParameter("cmComment");
-			// cmidx는 자동으로 설정되므로 변수로 사용하지 않는다.
+			// cmidx�뒗 �옄�룞�쑝濡� �꽕�젙�릺誘�濡� 蹂��닔濡� �궗�슜�븯吏� �븡�뒗�떎.
 			
-			// 데이터 담기
+			// �뜲�씠�꽣 �떞湲�
 			cd = new CommentDAO();
 			int value = cd.insertComment(fbidx, cmWriter, cmComment, midx);
-			// 결과 처리
+			// 寃곌낵 泥섎━
 			response.sendRedirect(request.getContextPath()+"/board/boardView.do?fbidx="+fbidx+"");
 		}
 		
 		
-		// 댓글 삭제
+		// �뙎湲� �궘�젣
 		else if (command.equals("/board/boardCommentDeleteAction.do")) {
 			
-			// 변수 가져오기
+			// 蹂��닔 媛��졇�삤湲�
 			HttpSession session = request.getSession();
 			
 			int fbidx = Integer.parseInt(request.getParameter("fbidx"));
